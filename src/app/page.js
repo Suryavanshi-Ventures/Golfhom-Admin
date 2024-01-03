@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Page() {
   return <>
@@ -8,10 +9,12 @@ export default function Page() {
         <h1 className="text-5xl font-medium text-center w-full">Welcome <span className="text-[#FF6764]">back!</span></h1>
 
         <div className="flex flex-col w-full gap-6">
-          <button className="bg-[#C7DEEB] text-white flex gap-4 rounded py-3 px-5 justify-center items-center shadow-lg cursor-pointer w-full">
-            <Image src="/phone.png" alt="Phone" width={20} height={20} />
-            SIGN IN WITH PHONE
-          </button>
+          <Link href="/component/singIn/page">
+            <button className="bg-[#C7DEEB] text-white flex gap-4 rounded py-3 px-5 justify-center items-center shadow-lg cursor-pointer w-full">
+              <Image src="/phone.png" alt="Phone" width={20} height={20} />
+              SIGN IN WITH PHONE
+            </button>
+          </Link>
           <button className="bg-[#FF6764] text-white flex gap-4 rounded py-4 px-5 justify-center items-center shadow-lg cursor-pointer w-full">
             <Image src="/google.png" alt="Phone" width={20} height={20} />
             SIGN IN WITH GOOGLE
@@ -24,7 +27,7 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="text-[#636363] mt-20">Copyrights 2024 Golfhom. All Rights Reserved.</div>
+      <div className="text-[#636363] mt-20 font-medium">Copyrights 2024 Golfhom. All Rights Reserved.</div>
     </div>
   </>
 }
