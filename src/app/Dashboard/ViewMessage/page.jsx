@@ -85,7 +85,7 @@ const Page = () => {
 
     return (
         <>
-            <div className="m-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {messageList?.map((data, index) => (
                     <div key={index} className="bg-white rounded-lg shadow-xl">
                         <h4 className="border-b-2 px-5 py-4"><span className="font-medium mr-1">Message Sender Name:</span> {data.name}</h4>

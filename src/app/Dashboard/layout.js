@@ -11,13 +11,13 @@ export default function RootLayout({ children }) {
         <>
             <div className="flex flex-col">
                 <Header />
-                <div className="flex flex-row">
-                    <div className="lg:basis-[22%] z-50 ">
+                <div className="flex flex-row bg-gray-200">
+                    <div className="lg:basis-[22%] z-50 py-8 pl-8">
                         <Sidebar />
                     </div>
 
-                    <div className='bg-gray-200 w-full lg:basis-5/6 z-50'>
-                        <div className="my-5 px-8 py-4 flex flex-col gap-8 min-h-screen">
+                    <div className='w-full lg:basis-5/6 z-50'>
+                        <div className="p-8 flex flex-col gap-8 min-h-screen">
                             {children}
                         </div>
                     </div>

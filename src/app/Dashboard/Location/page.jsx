@@ -46,15 +46,20 @@ const Page = () => {
 
     return (
         <>
-            <div>
+            <h2 className="font-semibold text-2xl">Location</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {locationList?.map((data) => (
-                    <div className="flex flex-col gap-3">
-                        <Image src="/sort.png" alt='Sort' width={100} height={70} />
-                        <h4>Recent Location</h4>
-                        <h4>View location of the property</h4>
-                        <h3>{data.name}</h3>
-                        <h3>{data.country}</h3>
-                        <h3>{data.region}</h3>
+                    <div key={data.id} className="flex-shrink-0 flex-grow-0 w-full bg-white rounded-lg shadow-lg">
+                        <div className="w-full">
+                            <Image src="/sort.svg" alt='Sort' width={100} height={70} className="w-full mb-4" />
+                        </div>
+                        <h4 className="font-semibold mx-4 my-1 text-base">Recent Location</h4>
+                        <small className="text-[#C2C2C2] font-normal px-4">View location of the property</small>
+                        <div className="flex p-4 gap-6">
+                            <button className="bg-[#C7DEEB] text-black border border-[#C2C2C2] rounded-lg py-2 px-4">{data.name}</button>
+                            <button className="bg-[#C7DEEB] text-black border border-[#C2C2C2] rounded-lg py-2 px-4">{data.country}</button>
+                            <button className="bg-[#C7DEEB] text-black border border-[#C2C2C2] rounded-lg py-2 px-4">{data.region}</button>
+                        </div>
                     </div>
                 ))}
             </div>

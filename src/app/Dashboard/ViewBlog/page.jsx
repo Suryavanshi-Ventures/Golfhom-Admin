@@ -46,15 +46,15 @@ const Page = () => {
 
     return (
         <>
-            <div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
                 {blogList?.map((data) => (
-                    <div className="flex flex-col gap-3">
-                        <Image src="/sort.png" alt='Sort' width={100} height={70} />
-                        <h4>{data.title}</h4>
-                        <h4>View location of the property</h4>
-                        <p>{data.body}</p>
-                        <h3>{data.slug}</h3>
-                        <h3>Created at: {data.createdAt}</h3>
+                    <div key={data.id} className="flex flex-col gap-3 p-4 bg-white rounded-lg border border-[#C2C2C2]">
+                        <div className="w-full">
+                            <Image src="/sort.svg" alt='Sort' width={100} height={70} className="w-full" layout="responsive" />
+                        </div>
+                        <h4 className="text-lg font-medium">{data.title}</h4>
+                        <p className="">{data.body}</p>
+                        <h3 className="text-[#888]"><span className="font-medium">Created at:</span> {data.createdAt}</h3>
                     </div>
                 ))}
             </div>
