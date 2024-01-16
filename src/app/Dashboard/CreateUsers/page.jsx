@@ -123,7 +123,7 @@ const Page = () => {
             {/* Create User */}
             <div className="w-full bg-white rounded-2xl p-7 shadow-md">
                 <div className="mb-5">
-                    <h5 className="mb-1 font-medium text-xl">Create User</h5>
+                    <h5 className="mb-1 font-medium text-2xl">Create User</h5>
                     <small className="text-base text-[#C2C2C2]">You can create normal users</small>
                 </div>
 
@@ -151,7 +151,7 @@ const Page = () => {
             {/* Create Admin */}
             <div className="w-full bg-white rounded-2xl p-7 shadow-md">
                 <div className="mb-5">
-                    <h5 className="mb-1 font-medium text-xl">Admin Creation</h5>
+                    <h5 className="mb-1 font-medium text-2xl">Admin Creation</h5>
                     <small className="text-base text-[#C2C2C2]">You can create sub admins accounts</small>
                 </div>
 

@@ -20,8 +20,20 @@ export default function Page() {
     const isAuthenticated = localStorage.getItem('access_token') || false;
     if (!isAuthenticated) {
       router.push('/');
+    } else {
+      const logoutTimeout = setTimeout(() => {
+        handleLogout();
+      }, 2 * 60 * 60 * 1000);
+
+      return () => clearTimeout(logoutTimeout);
     }
   }, [])
+
+  // Logout logic
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    router.push('/');
+  };
 
   // SIGNIN LOGIC
   const handleLogin = async () => {
@@ -46,21 +58,16 @@ export default function Page() {
         }),
       });
 
-      console.log("response", response);
       if (response.ok) {
         const data = await response.json();
-        console.log("data", data);
 
         const token = data.token;
-        console.log("token", token);
 
         localStorage.setItem('access_token', token);
         router.push('/Dashboard')
-        console.log("router", router);
 
       } else {
         const errorData = await response.json();
-        console.log("errorData", errorData);
 
         setErrorMessage(errorData.message);
       }

@@ -46,19 +46,19 @@ const Page = () => {
 
     return (
         <>
-            <h2 className="font-semibold text-2xl">Location</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <h2 className="font-medium text-2xl">Location</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {locationList?.map((data) => (
-                    <div key={data.id} className="flex-shrink-0 flex-grow-0 w-full bg-white rounded-lg shadow-lg">
+                    <div key={data.id} className="flex-shrink-0 flex-grow-0 w-full bg-white rounded-lg shadow-md">
                         <div className="w-full">
                             <Image src="/sort.svg" alt='Sort' width={100} height={70} className="w-full mb-4" />
                         </div>
                         <h4 className="font-semibold mx-4 my-1 text-base">Recent Location</h4>
                         <small className="text-[#C2C2C2] font-normal px-4">View location of the property</small>
-                        <div className="flex p-4 gap-6">
-                            <button className="bg-[#C7DEEB] text-black border border-[#C2C2C2] rounded-lg py-2 px-4">{data.name}</button>
-                            <button className="bg-[#C7DEEB] text-black border border-[#C2C2C2] rounded-lg py-2 px-4">{data.country}</button>
-                            <button className="bg-[#C7DEEB] text-black border border-[#C2C2C2] rounded-lg py-2 px-4">{data.region}</button>
+                        <div className="flex flex-row flex-wrap p-4 gap-6">
+                            <button className="bg-[#C7DEEB] text-black border border-[#C2C2C2] rounded-lg py-2 px-4 w-full sm:w-auto mb-2 sm:mb-0">{data.name}</button>
+                            <button className="bg-[#C7DEEB] text-black border border-[#C2C2C2] rounded-lg py-2 px-4 w-full sm:w-auto mb-2 sm:mb-0">{data.country}</button>
+                            <button className="bg-[#C7DEEB] text-black border border-[#C2C2C2] rounded-lg py-2 px-4 w-full sm:w-auto mb-2 sm:mb-0">{data.region}</button>
                         </div>
                     </div>
                 ))}
