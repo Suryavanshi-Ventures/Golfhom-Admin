@@ -74,7 +74,10 @@ const ViewUsers = () => {
             const viewUsersData = await response.json();
             console.log("viewUsersData", viewUsersData)
             if (viewUsersData.status === "success") {
-                setViewListUsers(viewUsersData.data);
+                const sortedUsers = viewUsersData.data.sort((a, b) => {
+                    return new Date(b.createdAt) - new Date(a.createdAt);
+                });
+                setViewListUsers(sortedUsers);
             }
 
         } catch (error) {

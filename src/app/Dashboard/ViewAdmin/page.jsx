@@ -67,9 +67,12 @@ const Page = () => {
                 throw new Error("Failed to fetch list");
             }
             const viewAdminData = await response.json();
-            console.log("viewAdminData", viewAdminData)
             if (viewAdminData.status === "success") {
-                setViewListAdmin(viewAdminData.data);
+                const sortedAdmins = viewAdminData.data.sort((a, b) => {
+                    return new Date(b.createdAt) - new Date(a.createdAt);
+                });
+
+                setViewListAdmin(sortedAdmins);
             }
         } catch (error) {
             console.log("error message", error)

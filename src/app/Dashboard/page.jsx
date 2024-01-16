@@ -7,8 +7,8 @@ const Page = () => {
         <div className="flex flex-col gap-8">
             <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4">
                 {/* Card 1 - Revenue */}
-                <div className="col-span-1 lg:col-span-1 xl:col-span-1 bg-white rounded-xl">
-                    <div className="card shadow-lg border border-gray-300 py-5 px-4">
+                <div className="col-span-1 lg:col-span-1 xl:col-span-1 bg-white shadow-md rounded-xl">
+                    <div className="py-5 px-4">
                         <div className="flex justify-between mb-2">
                             <div>
                                 <span className="text-[#636363] font-medium">Revenue</span>
@@ -24,8 +24,8 @@ const Page = () => {
                 </div>
 
                 {/* Card 2 - Booking */}
-                <div className="col-span-1 lg:col-span-1 xl:col-span-1 bg-white rounded-xl">
-                    <div className="card shadow-lg border border-gray-300 py-5 px-4">
+                <div className="col-span-1 lg:col-span-1 xl:col-span-1 bg-white shadow-md rounded-xl">
+                    <div className="py-5 px-4">
                         <div className="flex justify-between mb-2">
                             <div>
                                 <span className="text-[#636363] font-medium">Booking</span>
@@ -41,8 +41,8 @@ const Page = () => {
                 </div>
 
                 {/* Card 3 - User Traffic */}
-                <div className="col-span-1 lg:col-span-1 xl:col-span-1 bg-white rounded-xl">
-                    <div className="card shadow-lg border border-gray-300 py-5 px-4">
+                <div className="col-span-1 lg:col-span-1 xl:col-span-1 bg-white shadow-md rounded-xl">
+                    <div className="py-5 px-4">
                         <div className="flex justify-between mb-2">
                             <div>
                                 <span className="text-[#636363] font-medium">User traffic</span>
