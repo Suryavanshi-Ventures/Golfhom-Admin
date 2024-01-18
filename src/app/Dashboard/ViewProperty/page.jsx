@@ -2,12 +2,16 @@
 import ProtectedRoute from '@/component/Protected Route/page';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
+import { Pagination } from "@nextui-org/react";
 
 const Page = () => {
     const [propertyList, setPropertyList] = useState([]);
     const [token, setToken] = useState(null);
     const [totalPages, setTotalPages] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
+    const [propertyName, setPropertyName] = useState("");
+    const [noPropertiesMessage, setNoPropertiesMessage] = useState("");
+    const itemsPerPage = 10;
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
@@ -22,12 +26,12 @@ const Page = () => {
         if (token) {
             listProperty();
         }
-    }, [token, currentPage]);
+    }, [token, currentPage, propertyName]);
 
     // LIST API
     const listProperty = async () => {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/property?limit=6&page=${currentPage}`,
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/property?limit=${itemsPerPage}&page=${currentPage}&searchQuery=${propertyName}`,
                 {
                     method: "GET",
                     headers: {
@@ -45,9 +49,17 @@ const Page = () => {
             if (viewPropertyData.status === "success") {
                 const sortedUsers = viewPropertyData.data
                 setPropertyList(sortedUsers);
-                setTotalPages(Math.ceil(viewPropertyData.total / 6));
-            }
+                setTotalPages(viewPropertyData.count);
+                console.log(Math.ceil(viewPropertyData.total / itemsPerPage));
 
+                if (sortedUsers.length === 0) {
+                    setNoPropertiesMessage("No properties found with the given name...");
+                } else {
+                    setNoPropertiesMessage("");
+                }
+            } else {
+                setNoPropertiesMessage("Error fetching properties.");
+            }
         } catch (error) {
             console.log("error message", error)
         }
@@ -55,7 +67,25 @@ const Page = () => {
 
     return (
         <ProtectedRoute>
-            <h2 className="font-medium text-2xl">Recent Property Posts</h2>
+            <div className="flex justify-between">
+                <h2 className="font-medium text-2xl">Recent Property Posts</h2>
+                <div className=" flex  md:justify-start mr-5 items-center">
+                    <input
+                        className="bg-white w-96 rounded-full shadow-lg text-gray-600 px-4 outline-none h-12"
+                        placeholder="Search for property by name" value={propertyName}
+                        onChange={(e) => setPropertyName(e.target.value)}
+                    />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        strokeWidth={2} stroke="currentColor" className="w-6 h-6 -ml-[45px] text-[#FF6764]" onClick={listProperty}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    </svg>
+                </div>
+            </div>
+            {noPropertiesMessage && (
+                <div className="flex justify-center">
+                    <p className="text-[#FF6764] mt-5 bg-white rounded-lg py-5 px-10 w-fit">{noPropertiesMessage}</p>
+                </div>
+            )}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {propertyList?.map((data) => (
                     <div key={data.id} className="flex-shrink-0 flex-grow-0 w-full bg-white rounded-lg shadow-md">
@@ -78,21 +108,15 @@ const Page = () => {
                 ))}
             </div>
             <div className="flex justify-center mt-5">
-                {Array.from({ length: totalPages }).map((_, index) => (
-                    <button
-                        key={index}
-                        onClick={() => handlePageChange(index + 1)}
-                        className={`mx-1 px-3 py-1 text-lg rounded-md text-white shadow-sm ${currentPage === index + 1
-                            ? "bg-[#FFBD59] shadow-xl"
-                            : "bg-gray-100 shadow-md"
-                            }`}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
+                <Pagination
+                    showControls
+                    total={totalPages}
+                    initialPage={currentPage}
+                    onChange={handlePageChange}
+                />
             </div>
         </ProtectedRoute>
     )
 }
 
-export default Page
+export default Page;

@@ -45,9 +45,8 @@ const Page = () => {
         <>
             <div className='flex justify-between px-5 py-3'>
                 <Image src="/GOLFHOM-Logo.png" alt='Golfhom' width={160} height={160} />
-                <button className="toggle-sidebar bg-red-400 p-4 rounded-full text-white lg:hidden" onClick={toggleSidebar}>
-                    {/* <Image src="/icons/menu-icon.png" alt='Menu' width={20} height={20} /> */}
-                    tab
+                <button className="toggle-sidebar bg-[#C2C2C2] p-4 rounded-full text-white lg:hidden" onClick={toggleSidebar}>
+                    <Image src="/icons/hamburger.svg" alt='Menu' width={20} height={20} />
                 </button>
                 <h2 className='font-bold text-xl'>Welcome to Golfhom Dashboard</h2>
                 <div className='flex gap-3'>

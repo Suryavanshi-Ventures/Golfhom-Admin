@@ -128,7 +128,7 @@ const Page = () => {
                         <span className="text-[#4BAF4F] font-medium">$34 from last week</span> */}
                         <div>
                             <small>Total number of users</small>
-                            <div className="text-900 font-medium text-xl mb-2">$4800</div>
+                            <div className="text-900 font-medium text-xl mb-2">{viewListUsers.length}</div>
                         </div>
                     </div>
                 </div>

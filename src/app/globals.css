@@ -14,3 +14,7 @@
 .invert-icon {
     filter: invert(85%);
 }
+
+.text-primary-foreground {
+    background-color: #FF6764;
+}
