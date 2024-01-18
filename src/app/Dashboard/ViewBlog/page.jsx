@@ -1,6 +1,8 @@
 "use client"
 import Image from 'next/image'
+import ProtectedRoute from '@/component/Protected Route/page';
 import React, { useEffect, useState } from 'react'
+import Link from 'next/link';
 
 const Page = () => {
     const [token, setToken] = useState(null);
@@ -45,10 +47,10 @@ const Page = () => {
     };
 
     return (
-        <>
+        <ProtectedRoute>
             <div className="flex justify-between">
                 <h4 className="text-2xl font-medium">View Blog</h4>
-                <button className="bg-[#FF6764] border border-[#FF6764] px-4 py-1.5 rounded-lg text-white font-normal">Create blog</button>
+                <Link href="/Dashboard/ViewBlog/CreateBlog" className="bg-[#FF6764] border border-[#FF6764] px-4 py-1.5 rounded-lg text-white font-normal">Create blog</Link>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 shadow-md">
                 {blogList?.map((data) => (
@@ -62,7 +64,7 @@ const Page = () => {
                     </div>
                 ))}
             </div>
-        </>
+        </ProtectedRoute>
     )
 }
 

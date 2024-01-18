@@ -12,19 +12,15 @@ const ViewUsers = () => {
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [updateOpen, setUpdateOpen] = useState(false);
     const [userToDelete, setUserToDelete] = useState(null);
-    const [userUpdate, setUserUpdate] = useState(null);
-    const [error, setError] = useState(null);
-    const [newUserName, setNewUserName] = useState('');
-    const [newEmail, setNewEmail] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [newPassword, setNewPassword] = useState('');
+    const [error, setError] = useState(null);
+    // const [userUpdate, setUserUpdate] = useState(null);
+    // const [newUserName, setNewUserName] = useState('');
+    // const [newEmail, setNewEmail] = useState('');
 
     const handleCancelDelete = () => {
         setDeleteOpen(false);
-    };
-
-    const handleCancelUpdate = () => {
-        setUpdateOpen(false);
     };
 
     const handleModalOpen = (data) => {
@@ -32,12 +28,16 @@ const ViewUsers = () => {
         setDeleteOpen(true);
     }
 
-    const handleUpdateOpen = (data) => {
-        setUserUpdate(data);
-        setNewUserName(data.firstName + data.lastName);
-        setNewEmail(data.email);
-        setUpdateOpen(true);
-    };
+    // const handleCancelUpdate = () => {
+    //     setUpdateOpen(false);
+    // };
+
+    // const handleUpdateOpen = (data) => {
+    //     setUserUpdate(data);
+    //     setNewUserName(data.firstName + data.lastName);
+    //     setNewEmail(data.email);
+    //     setUpdateOpen(true);
+    // };
 
     const formatDate = (dateString) => {
         const options = { day: 'numeric', month: 'numeric', year: 'numeric' };
@@ -211,8 +211,8 @@ const ViewUsers = () => {
                             <th className="py-8 text-start bg-[#F7F7F7]">Email</th>
                             <th className="py-8 px-3 text-start bg-[#F7F7F7]">Created</th>
                             <th className="py-8 px-5 text-start bg-[#F7F7F7]">Status</th>
-                            <th className="py-8 text-center bg-[#F7F7F7]">Delete</th>
-                            <th className="py-8 px-4 text-center bg-[#F7F7F7] rounded-tr-lg">Update</th>
+                            <th className="py-8 text-center bg-[#F7F7F7] rounded-tr-lg">Delete</th>
+                            {/* <th className="py-8 px-4 text-center bg-[#F7F7F7] rounded-tr-lg">Update</th> */}
                         </tr>
                     </thead>
                     <tbody className="w-full bg-white">
@@ -224,7 +224,7 @@ const ViewUsers = () => {
                                     <td className="text-start">{formatDate(data.createdAt)}</td>
                                     <td><button className="text-center text-white px-6 py-1.5 rounded-sm bg-[#4BAF4F]">Active</button></td>
                                     <td className="pl-6" onClick={() => handleModalOpen(data.id)}><Image src="/icons/trash.svg" alt="Trash" width={20} height={20} /></td>
-                                    <td className="pl-12 text-center"><Image src="/icons/edit.svg" alt="Edit" width={20} height={20} onClick={() => handleUpdateOpen(data)} /></td>
+                                    {/* <td className="pl-12 text-center"><Image src="/icons/edit.svg" alt="Edit" width={20} height={20} onClick={() => handleUpdateOpen(data)} /></td> */}
                                 </tr>
                                 <tr>
                                     <td colSpan="6" className="border-b-2 border-[#C2C2C2]"></td>

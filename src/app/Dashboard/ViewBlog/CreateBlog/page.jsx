@@ -1,0 +1,159 @@
+"use client"
+import React, { useEffect, useRef, useState } from 'react'
+import axios from "axios";
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
+import ProtectedRoute from '@/component/Protected Route/page';
+// import { CKEditor } from 'ckeditor5-react';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import dynamic from 'next/dynamic';
+
+// const CKEditorDynamic = dynamic(() => import('@ckeditor/ckeditor5-react').then((mod) => mod.CKEditor), {
+//     ssr: false,
+// });
+
+const Page = () => {
+    const router = useRouter();
+    const [username, setUsername] = useState("");
+    const [amenities, setAmenities] = useState("");
+    const [bedroom, setBedroom] = useState("");
+    const [description, setDescription] = useState("");
+    const [token, setToken] = useState(null);
+    const [usernameError, setUsernameError] = useState(false);
+    const [amenitiesError, setAmenitiesError] = useState(false);
+    const [checkInError, setCheckInError] = useState(false);
+    const [bedroomError, setBedroomError] = useState(false);
+    const [descriptionError, setDescriptionError] = useState(false);
+    const fileInputRef = useRef(null);
+    const [imageError, setImageError] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [editorContent, setEditorContent] = useState('');
+
+    const handleImageClick = () => {
+        fileInputRef.current.click();
+    };
+
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+        setSelectedImage(URL.createObjectURL(selectedFile));
+    };
+
+    useEffect(() => {
+        const item = localStorage.getItem("access_token");
+        setToken(item);
+    }, [])
+
+    // CREATE USER API
+    async function handleCreateUser(e) {
+        e.preventDefault();
+
+        setUsernameError(!username);
+        setAmenitiesError(!amenities);
+        setImageError(!selectedImage);
+        setCheckInError(!checkIn);
+        setDescriptionError(!editorContent);
+
+        try {
+            const response = await axios.post(
+                `${process.env.NEXT_PUBLIC_API_URL}/blog`, {
+                title: username,
+                body: editorContent,
+                tags: amenities,
+            },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+            toast.success('Successfully Submitted', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            setTimeout(() => { router.push('/Dashboard/ViewProperty') }, 1500);
+
+        } catch (error) {
+            toast.error('Data Already Exists', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            console.log("error", error)
+        }
+    }
+
+    return (
+        <ProtectedRoute>
+            {/* Create Blog */}
+            <div className="w-full bg-white rounded-2xl p-7 shadow-md">
+                <div className="mb-5">
+                    <h5 className="mb-1 font-medium text-2xl">Create New Blog</h5>
+                    <small className="text-[#C2C2C2]">Create Blog</small>
+                </div>
+
+                <form className="flex flex-col gap-5">
+                    <div className="flex gap-5">
+                        <div className="flex flex-col gap-5 w-full">
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Title</label>
+                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder="Enter Title" onChange={(e) => setUsername(e.target.value)} />
+                                {usernameError && <div className="text-danger text-red-500 mt-1">Title is mandatory</div>}
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Body</label>
+                                {/* <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Description' onChange={(e) => setDescription(e.target.value)} /> */}
+                                {/* CKEditor integration */}
+                                {/* <CKEditor
+                                    editor={ClassicEditor}
+                                    data={editorContent}
+                                    onChange={(event, editor) => setEditorContent(editor.getData())}
+                                /> */}
+                                {descriptionError && <div className="text-danger text-red-500 mt-1">Body is mandatory</div>}
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Tags</label>
+                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Tags' onChange={(e) => setAmenities(e.target.value)} />
+                                {amenitiesError && <div className="text-danger text-red-500 mt-1">Tags is mandatory</div>}
+                            </div>
+                            <div className="flex flex-col gap-1.5 w-full">
+                                <label className="text-[#404040] text-md font-medium">Blog Image</label>
+                                <div onClick={handleImageClick}>
+                                    {selectedImage ? (
+                                        <img src={selectedImage} alt="selected" width={120} height={120} className="border border-[#636363] px-5 py-2 rounded-lg my-3" />
+                                    ) : (
+                                        <img src="/background.svg" alt="background" width={120} height={120} className="border border-[#636363] px-5 py-2 rounded-lg my-3" />
+                                    )}
+                                </div>
+                                <input
+                                    type="file"
+                                    ref={fileInputRef}
+                                    style={{ display: 'none' }}
+                                    onChange={handleFileChange}
+                                    className="border border-black rounded-[10px] px-4 py-2.5"
+                                />
+                                {imageError && <div className="text-danger text-red-500 mt-1">Blog Image is mandatory</div>}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex justify-start items-center">
+                        <button type="Submit" onClick={handleCreateUser} className="bg-[#FF6764] border border-red-400 py-2.5 text-white font-medium my-4 rounded-[4px] w-1/5">Save</button>
+                    </div>
+                </form>
+            </div>
+        </ProtectedRoute>
+    );
+};
+
+export default Page; 

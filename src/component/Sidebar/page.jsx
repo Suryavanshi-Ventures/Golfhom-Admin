@@ -25,10 +25,10 @@ const Page = () => {
     return (
         <>
             <div className='sidebar-container bg-white rounded-xl hidden lg:block'>
-                <div className='py-5 px-3 overflow-y-auto max-h-screen shadow-lg'>
+                <div className='py-5 px-3 overflow-y-auto h-screen shadow-lg'>
                     <div className='px-5 pb-5'>
-                        <div className='flex flex-col gap-2'>
-                            <Image src="/icons/avatar.jpg" alt='Profile' width={60} height={60} className='rounded-full' />
+                        <div className='flex flex-col'>
+                            <Image src="/icons/avatar.svg" alt='Profile' width={70} height={70} className='rounded-full' />
                             <h3>Username</h3>
                             <h4 className='text-[#C2C2C2]'>email@gamil.com</h4>
                         </div>
@@ -49,7 +49,7 @@ const Page = () => {
                             <h3>Create users</h3>
                         </Link>
                         <Link href="/Dashboard/ViewUsers" className="my-1 flex gap-2 cursor-pointer">
-                            <Image src="/icons/viewAllUser.svg" alt='Dashboard' width={20} height={10} className={`${isLinkActive('/Dashboard') ? 'invert' : 'text-black'}`} />
+                            <Image src="/icons/viewAllUser.svg" alt='Dashboard' width={20} height={20} className={`${isLinkActive('/Dashboard') ? 'invert' : 'text-black'}`} />
                             <h3>View all users</h3>
                         </Link>
                         <Link href="/Dashboard/ViewAdmin" className="my-1 flex gap-2 cursor-pointer">
@@ -65,9 +65,9 @@ const Page = () => {
 
                     <div className='p-5 flex flex-col gap-1'>
                         <h3 className='text-[#C2C2C2] font-medium'>Property</h3>
-                        <Link href="/Dashboard/ListProperty" className="my-1 flex gap-2 cursor-pointer">
+                        <Link href="/Dashboard/CreateProperty" className="my-1 flex gap-2 cursor-pointer">
                             <Image src="/icons/listProperty.svg" alt='Dashboard' width={20} height={10} className={`${isLinkActive('/Dashboard') ? 'invert' : 'text-black'}`} />
-                            <h3>List property</h3>
+                            <h3>Create property</h3>
                         </Link>
                         <Link href="/Dashboard/ViewProperty" className="my-1 flex gap-2 cursor-pointer">
                             <Image src="/icons/rental.svg" alt='Dashboard' width={20} height={10} className={`${isLinkActive('/Dashboard') ? 'invert' : 'text-black'}`} />

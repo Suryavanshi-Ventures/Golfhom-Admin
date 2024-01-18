@@ -1,5 +1,6 @@
 "use client"
 import Image from 'next/image'
+import ProtectedRoute from '@/component/Protected Route/page';
 import React, { useEffect, useState } from 'react'
 
 const Page = () => {
@@ -85,15 +86,14 @@ const Page = () => {
     };
 
     return (
-        <>
+        <ProtectedRoute>
             <div className="flex justify-between">
-                <h4 className="text-2xl font-medium">View All Messages</h4>
-                <button className="bg-[#FF6764] border border-[#FF6764] px-4 py-1.5 rounded-lg text-white font-normal">Message</button>
+                <h4 className="text-2xl font-medium">Messages</h4>
             </div>
-            <div className="bg-white pt-3 px-4 flex gap-8 items-center rounded-sm">
+            {/* <div className="bg-white pt-3 px-4 flex gap-8 items-center rounded-sm">
                 <div><h4 className="bg-[#FF6764] border border-[#FF6764] px-5 py-3 rounded-md text-white font-normal">Contact Us</h4></div>
                 <div><h4 className="font-medium">Contact to host</h4></div>
-            </div>
+            </div> */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 bg-white rounded-sm py-5 pl-5 pr-8 overflow-y-auto max-h-screen shadow-md">
                 {messageList?.map((data, index) => (
                     <div key={index} className="bg-white rounded-lg shadow-xl">
@@ -118,7 +118,7 @@ const Page = () => {
                     </div>
                 ))}
             </div>
-        </>
+        </ProtectedRoute>
     )
 }
 

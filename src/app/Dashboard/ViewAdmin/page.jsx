@@ -12,7 +12,7 @@ const Page = () => {
     const [adminToDelete, setAdminToDelete] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
-    const [adminUpdate, setUserUpdate] = useState(null);
+    // const [adminUpdate, setUserUpdate] = useState(null);
     const [newUserName, setNewUserName] = useState('');
     const [newEmail, setNewEmail] = useState('');
 
@@ -20,19 +20,19 @@ const Page = () => {
         setDeleteOpen(false);
     };
 
-    const handleCancelUpdate = () => {
-        setUpdateOpen(false);
-    };
+    // const handleCancelUpdate = () => {
+    //     setUpdateOpen(false);
+    // };
 
     const handleModalOpen = (data) => {
         setAdminToDelete(data);
         setDeleteOpen(true);
     }
 
-    const handleUpdateOpen = (data) => {
-        setUserUpdate(data);
-        setUpdateOpen(true);
-    }
+    // const handleUpdateOpen = (data) => {
+    //     setUserUpdate(data);
+    //     setUpdateOpen(true);
+    // }
 
     const formatDate = (dateString) => {
         const options = { day: 'numeric', month: 'numeric', year: 'numeric' };
@@ -192,8 +192,8 @@ const Page = () => {
                             <th className="py-8 text-start bg-[#F7F7F7]">Email</th>
                             <th className="py-8 px-3 text-start bg-[#F7F7F7]">Created</th>
                             <th className="py-8 px-5 text-start bg-[#F7F7F7]">Status</th>
-                            <th className="py-8 text-center bg-[#F7F7F7]">Delete</th>
-                            <th className="py-8 px-4 text-center bg-[#F7F7F7] rounded-tr-lg">Update</th>
+                            <th className="py-8 text-start bg-[#F7F7F7] rounded-tr-lg">Delete</th>
+                            {/* <th className="py-8 px-4 text-center bg-[#F7F7F7] rounded-tr-lg">Update</th> */}
                         </tr>
                     </thead>
                     <tbody className="w-full bg-white">
@@ -205,7 +205,7 @@ const Page = () => {
                                     <td className="text-start">{formatDate(data.createdAt)}</td>
                                     <td><button className="text-center text-white px-6 py-1.5 rounded-sm bg-[#4BAF4F]">Active</button></td>
                                     <td className="pl-3" onClick={() => handleModalOpen(data.id)}><Image src="/icons/trash.svg" alt="Trash" width={20} height={20} /></td>
-                                    <td className="pl-8 text-center"><Image src="/icons/edit.svg" alt="Edit" width={20} height={20} onClick={() => handleUpdateOpen(data)} /></td>
+                                    {/* <td className="pl-8 text-center"><Image src="/icons/edit.svg" alt="Edit" width={20} height={20} onClick={() => handleUpdateOpen(data)} /></td> */}
                                 </tr>
                                 <tr>
                                     <td colSpan="6" className="border-b-2 border-[#C2C2C2]"></td>

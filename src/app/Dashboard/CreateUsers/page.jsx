@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios";
 import { toast } from 'react-toastify';
+import ProtectedRoute from '@/component/Protected Route/page';
 import { useRouter } from 'next/navigation';
 
 const Page = () => {
@@ -119,63 +120,65 @@ const Page = () => {
     }
 
     return (
-        <div className="flex flex-row gap-4 columns-2">
-            {/* Create User */}
-            <div className="w-full bg-white rounded-2xl p-7 shadow-md">
-                <div className="mb-5">
-                    <h5 className="mb-1 font-medium text-2xl">Create User</h5>
-                    <small className="text-base text-[#C2C2C2]">You can create normal users</small>
+        <ProtectedRoute>
+            <div className="flex flex-row gap-4 columns-2">
+                {/* Create User */}
+                <div className="w-full bg-white rounded-2xl p-7 shadow-md">
+                    <div className="mb-5">
+                        <h5 className="mb-1 font-medium text-2xl">Create User</h5>
+                        <small className="text-[#C2C2C2]">You can create normal users</small>
+                    </div>
+
+                    <form className="flex flex-col gap-5">
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-[#404040] text-md">Username</label>
+                            <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder="Enter Username" onChange={(e) => setCreateUsername(e.target.value)} />
+                            {createUsernameError && <div className="text-danger text-red-500 mt-1">Username is mandatory</div>}
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-[#404040] text-md">Email</label>
+                            <input className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Your Email' onChange={(e) => setCreateEmail(e.target.value)} />
+                            {createEmailError && <div className="text-danger text-red-500 mt-1">Email is mandatory</div>}
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-[#404040] text-md">Password</label>
+                            <input type="password" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter your password' />
+                        </div>
+                        <div className="flex justify-center items-center">
+                            <button type="Submit" onClick={handleCreateUser} className="bg-[#FF6764] border border-red-400 py-2.5 text-white font-medium my-4 rounded-[4px] w-1/3">Submit</button>
+                        </div>
+                    </form>
                 </div>
 
-                <form className="flex flex-col gap-5">
-                    <div className="flex flex-col gap-1.5">
-                        <label className="text-[#404040] text-md">Username</label>
-                        <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder="Enter Username" onChange={(e) => setCreateUsername(e.target.value)} />
-                        {createUsernameError && <div className="text-danger text-red-500 mt-1">Username is mandatory</div>}
+                {/* Create Admin */}
+                <div className="w-full bg-white rounded-2xl p-7 shadow-md">
+                    <div className="mb-5">
+                        <h5 className="mb-1 font-medium text-2xl">Admin Creation</h5>
+                        <small className="text-[#C2C2C2]">You can create sub admins accounts</small>
                     </div>
-                    <div className="flex flex-col gap-1.5">
-                        <label className="text-[#404040] text-md">Email</label>
-                        <input className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Your Email' onChange={(e) => setCreateEmail(e.target.value)} />
-                        {createEmailError && <div className="text-danger text-red-500 mt-1">Email is mandatory</div>}
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                        <label className="text-[#404040] text-md">Password</label>
-                        <input type="password" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter your password' />
-                    </div>
-                    <div className="flex justify-center items-center">
-                        <button type="Submit" onClick={handleCreateUser} className="bg-[#FF6764] border border-red-400 py-2.5 text-white font-medium my-4 rounded-[4px] w-1/3">Submit</button>
-                    </div>
-                </form>
-            </div>
 
-            {/* Create Admin */}
-            <div className="w-full bg-white rounded-2xl p-7 shadow-md">
-                <div className="mb-5">
-                    <h5 className="mb-1 font-medium text-2xl">Admin Creation</h5>
-                    <small className="text-base text-[#C2C2C2]">You can create sub admins accounts</small>
+                    <form className="flex flex-col gap-5">
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-[#404040] text-md">Username</label>
+                            <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder="Enter Username" onChange={(e) => setUsername(e.target.value)} />
+                            {usernameError && <div className="text-danger text-red-500 mt-1">Username is mandatory</div>}
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-[#404040] text-md">Email</label>
+                            <input className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Your Email' onChange={(e) => setEmail(e.target.value)} />
+                            {emailError && <div className="text-danger text-red-500 mt-1">Email is mandatory</div>}
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-[#404040] text-md">Password</label>
+                            <input type="password" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter your password' />
+                        </div>
+                        <div className="flex justify-center items-center">
+                            <button type="Submit" onClick={createAdmin} className="bg-[#FF6764] border border-red-400 py-2.5 text-white font-medium my-4 rounded-[4px] w-1/3">Submit</button>
+                        </div>
+                    </form>
                 </div>
-
-                <form className="flex flex-col gap-5">
-                    <div className="flex flex-col gap-1.5">
-                        <label className="text-[#404040] text-md">Username</label>
-                        <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder="Enter Username" onChange={(e) => setUsername(e.target.value)} />
-                        {usernameError && <div className="text-danger text-red-500 mt-1">Username is mandatory</div>}
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                        <label className="text-[#404040] text-md">Email</label>
-                        <input className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Your Email' onChange={(e) => setEmail(e.target.value)} />
-                        {emailError && <div className="text-danger text-red-500 mt-1">Email is mandatory</div>}
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                        <label className="text-[#404040] text-md">Password</label>
-                        <input type="password" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter your password' />
-                    </div>
-                    <div className="flex justify-center items-center">
-                        <button type="Submit" onClick={createAdmin} className="bg-[#FF6764] border border-red-400 py-2.5 text-white font-medium my-4 rounded-[4px] w-1/3">Submit</button>
-                    </div>
-                </form>
             </div>
-        </div>
+        </ProtectedRoute>
     );
 };
 
