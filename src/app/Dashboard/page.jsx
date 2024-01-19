@@ -24,6 +24,13 @@ const Page = () => {
         }
     }, [token]);
 
+    useEffect(() => {
+        // Fetch messages and set the first message as selected
+        if (token && messageList.length > 0) {
+            setSelectedMessage(messageList[0]);
+        }
+    }, [token, messageList]);
+
     // LIST USERS API
     const listUsers = async () => {
         try {

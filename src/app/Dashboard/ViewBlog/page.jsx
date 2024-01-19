@@ -3,10 +3,24 @@ import Image from 'next/image'
 import ProtectedRoute from '@/component/Protected Route/page';
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
+import { Pagination } from "@nextui-org/react";
 
 const Page = () => {
     const [token, setToken] = useState(null);
     const [blogList, setBlogList] = useState([]);
+    const [totalPages, setTotalPages] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
+
+    const formatDate = (dateString) => {
+        const options = { month: 'long', day: 'numeric', year: 'numeric' };
+        const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
+        return formattedDate;
+    };
 
     useEffect(() => {
         const item = localStorage.getItem("access_token");
@@ -17,12 +31,12 @@ const Page = () => {
         if (token) {
             listBlog();
         }
-    }, [token]);
+    }, [currentPage, token]);
 
     // LIST API
     const listBlog = async () => {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog`,
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog?limit=${itemsPerPage}&page=${currentPage}`,
                 {
                     method: "GET",
                     headers: {
@@ -39,6 +53,7 @@ const Page = () => {
             console.log("blogData", blogData)
             if (blogData.status === "success") {
                 setBlogList(blogData.data);
+                setTotalPages(blogData.data.length);
             }
 
         } catch (error) {
@@ -56,13 +71,21 @@ const Page = () => {
                 {blogList?.map((data) => (
                     <div key={data.id} className="flex flex-col gap-3 p-4 bg-white rounded-lg border border-[#C2C2C2]">
                         <div className="w-full">
-                            <Image src="/sort.svg" alt='Sort' width={100} height={70} className="w-full" layout="responsive" />
+                            <Image src={data.image} alt='Sort' width={100} height={70} className="w-full" layout="responsive" />
                         </div>
                         <h4 className="text-lg font-medium">{data.title}</h4>
                         <p className="">{data.body}</p>
-                        <h3 className="text-[#888]"><span className="font-medium">Created at:</span> {data.createdAt}</h3>
+                        <h3 className="text-[#888]"><span className="font-medium">Created at:</span> {formatDate(data.createdAt)}</h3>
                     </div>
                 ))}
+            </div>
+            <div className="flex justify-center mt-5">
+                <Pagination
+                    showControls
+                    total={totalPages}
+                    initialPage={currentPage}
+                    onChange={handlePageChange}
+                />
             </div>
         </ProtectedRoute>
     )

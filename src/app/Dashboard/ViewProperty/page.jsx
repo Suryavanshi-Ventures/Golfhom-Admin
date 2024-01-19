@@ -1,8 +1,9 @@
 "use client"
 import ProtectedRoute from '@/component/Protected Route/page';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Pagination } from "@nextui-org/react";
+import Link from 'next/link';
 
 const Page = () => {
     const [propertyList, setPropertyList] = useState([]);
@@ -11,6 +12,7 @@ const Page = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [propertyName, setPropertyName] = useState("");
     const [noPropertiesMessage, setNoPropertiesMessage] = useState("");
+
     const itemsPerPage = 10;
 
     const handlePageChange = (newPage) => {
@@ -50,7 +52,6 @@ const Page = () => {
                 const sortedUsers = viewPropertyData.data
                 setPropertyList(sortedUsers);
                 setTotalPages(viewPropertyData.count);
-                console.log(Math.ceil(viewPropertyData.total / itemsPerPage));
 
                 if (sortedUsers.length === 0) {
                     setNoPropertiesMessage("No properties found with the given name...");
@@ -101,7 +102,7 @@ const Page = () => {
                             <small className="font-normal">{data.bathrooms} Bathroom</small>
                         </div>
                         <div className="flex justify-between p-4 gap-6">
-                            <button className="bg-[#FF6764] text-white border border-[#FF6764] rounded-md py-1 w-24">Edit</button>
+                            <Link href="/Dashboard/ViewProperty/UpdateProperty" className="bg-[#FF6764] text-white border border-[#FF6764] rounded-md py-1 w-24 text-center">Update</Link>
                             <button className="bg-black text-white border border-black rounded-md py-1 w-24">Delete</button>
                         </div>
                     </div>
