@@ -6,6 +6,7 @@ import Sidebar from '../Sidebar/page';
 const Page = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+    const [isLargeScreen, setIsLargeScreen] = useState(true);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -26,19 +27,23 @@ const Page = () => {
     };
 
     useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth <= 768) {
-                setIsSidebarVisible(true);
-            } else {
-                setIsSidebarVisible(false);
-            }
-        };
+        if (isLargeScreen) {
+            setIsSidebarVisible(false);
+        }
+    }, [isLargeScreen]);
 
-        window.addEventListener('resize', handleResize);
+    useEffect(() => {
+        const handleResize = () => {
+            setIsLargeScreen(window.innerWidth >= 1024);
+        };
 
         handleResize();
 
-        return () => window.removeEventListener('resize', handleResize);
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
     }, []);
 
     return (
@@ -52,8 +57,8 @@ const Page = () => {
                 <div className='flex gap-3'>
                     <h2 className='font-semibold'>{formattedDate}</h2>
                 </div>
+                {isSidebarVisible && <Sidebar />}
             </div>
-            {isSidebarVisible && <Sidebar />}
         </>
     )
 }

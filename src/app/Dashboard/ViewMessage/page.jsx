@@ -7,6 +7,8 @@ const Page = () => {
     const [token, setToken] = useState(null);
     const [messageList, setMessageList] = useState([]);
     const [expandedMessages, setExpandedMessages] = useState([]);
+    const [userToDelete, setUserToDelete] = useState(null);
+    const [deleteOpen, setDeleteOpen] = useState(false);
 
     const handleToggleReadMore = (messageId) => {
         setExpandedMessages((prev) => {
@@ -22,6 +24,15 @@ const Page = () => {
         const options = { month: 'long', day: 'numeric', year: 'numeric' };
         const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
         return formattedDate;
+    };
+
+    const handleModalOpen = (data) => {
+        setUserToDelete(data);
+        setDeleteOpen(true);
+    }
+
+    const handleCancelDelete = () => {
+        setDeleteOpen(false);
     };
 
     useEffect(() => {
@@ -64,9 +75,9 @@ const Page = () => {
     };
 
     // DELETE API
-    const handleDeleteMessage = async (messageData) => {
+    const handleDeleteMessage = async (messageId) => {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contactUs/${messageData}`,
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contactUs/${messageId}`,
                 {
                     method: "DELETE",
                     headers: {
@@ -75,11 +86,11 @@ const Page = () => {
                     },
                 }
             );
-            const responseData = await response.json();
-            setViewMessage((prevMessageList) => prevMessageList.filter(message => message.id !== messageData));
-            setViewListMessage(responseData);
+            if (!response.ok) {
+                throw new Error("Failed to delete message");
+            }
+            setMessageList((prevMessageList) => prevMessageList.filter(message => message.id !== messageId));
             setDeleteOpen(false);
-            setTimeout(() => { setDeleteOpen(false); }, 10000);
         } catch (error) {
             console.error("Error deleting message:", error);
         }
@@ -94,6 +105,18 @@ const Page = () => {
                 <div><h4 className="bg-[#FF6764] border border-[#FF6764] px-5 py-3 rounded-md text-white font-normal">Contact Us</h4></div>
                 <div><h4 className="font-medium">Contact to host</h4></div>
             </div> */}
+            {deleteOpen && (
+                <div className="fixed inset-0 bg-gray-300 bg-opacity-5 flex flex-col items-center justify-center z-50">
+                    <div className="flex flex-col bg-white rounded-lg p-5 gap-4 z-50">
+                        <p>Message Id : {userToDelete}</p>
+                        <p>You want to delete this message</p>
+                        <div className="flex gap-4 justify-center">
+                            <button onClick={() => handleDeleteMessage(userToDelete)} className="bg-[#FF6764] rounded-full px-4 py-1 text-white w-fit">Delete</button>
+                            <button onClick={handleCancelDelete} className="bg-gray-400 rounded-full px-4 py-1 text-white">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 bg-white rounded-sm py-5 pl-5 pr-8 overflow-y-auto max-h-screen shadow-md">
                 {messageList?.map((data, index) => (
                     <div key={index} className="bg-white rounded-lg shadow-xl">
@@ -113,7 +136,7 @@ const Page = () => {
                         <h4 className="border-y-2 px-5 py-4"><span className="font-medium mr-1">Email:</span> {data.email}</h4>
                         <div className="flex justify-between px-5 py-4">
                             <p className="text-[#FF6764]"><span className="font-medium mr-1">Received on:</span> {formatDate(data.updatedAt)}</p>
-                            <Image src="/icons/Delete.svg" alt='Delete' width={20} height={20} onClick={() => handleDeleteMessage(data.id)} className="cursor-pointer" />
+                            <Image src="/icons/Delete.svg" alt='Delete' width={20} height={20} onClick={() => handleModalOpen(data.id)} className="cursor-pointer" />
                         </div>
                     </div>
                 ))}

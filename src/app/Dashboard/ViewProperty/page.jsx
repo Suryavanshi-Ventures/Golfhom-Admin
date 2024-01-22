@@ -12,12 +12,23 @@ const Page = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [propertyName, setPropertyName] = useState("");
     const [noPropertiesMessage, setNoPropertiesMessage] = useState("");
+    // const [userToDelete, setUserToDelete] = useState(null);
+    // const [deleteOpen, setDeleteOpen] = useState(false);
 
     const itemsPerPage = 10;
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
     };
+
+    // const handleModalOpen = (data) => {
+    //     setUserToDelete(data);
+    //     setDeleteOpen(true);
+    // }
+
+    // const handleCancelDelete = () => {
+    //     setDeleteOpen(false);
+    // };
 
     useEffect(() => {
         const item = localStorage.getItem("access_token");
@@ -49,11 +60,11 @@ const Page = () => {
             const viewPropertyData = await response.json();
             console.log("viewPropertyData", viewPropertyData)
             if (viewPropertyData.status === "success") {
-                const sortedUsers = viewPropertyData.data
-                setPropertyList(sortedUsers);
+                const sortedProperties = viewPropertyData.data
+                setPropertyList(sortedProperties);
                 setTotalPages(viewPropertyData.count);
 
-                if (sortedUsers.length === 0) {
+                if (sortedProperties.length === 0) {
                     setNoPropertiesMessage("No properties found with the given name...");
                 } else {
                     setNoPropertiesMessage("");
@@ -65,6 +76,28 @@ const Page = () => {
             console.log("error message", error)
         }
     };
+
+    // DELETE API
+    // const handleDeleteProperty = async (propertyData) => {
+    //     try {
+    //         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/property/${propertyData}`,
+    //             {
+    //                 method: "DELETE",
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                     Authorization: `Bearer ${token}`,
+    //                 },
+    //             }
+    //         );
+    //         const responseData = await response.json();
+    //         setViewListUsers((prevPropertyList) => prevPropertyList.filter(property => property.id !== propertyData));
+    //         setDeleteViewListProperty(responseData);
+    //         setDeleteOpen(false);
+    //         setTimeout(() => { setDeleteOpen(false); }, 10000);
+    //     } catch (error) {
+    //         console.error("Error deleting property:", error);
+    //     }
+    // };
 
     return (
         <ProtectedRoute>
@@ -87,23 +120,37 @@ const Page = () => {
                     <p className="text-[#FF6764] mt-5 bg-white rounded-lg py-5 px-10 w-fit">{noPropertiesMessage}</p>
                 </div>
             )}
+            {/* {deleteOpen && (
+                <div className="fixed inset-0 bg-gray-300 bg-opacity-5 flex flex-col items-center justify-center z-50">
+                    <div className="flex flex-col bg-white rounded-lg p-5 gap-4 z-50">
+                        <p>Property Id : {userToDelete}</p>
+                        <p>You want to delete this property</p>
+                        <div className="flex gap-4 justify-center">
+                            <button onClick={() => handleDeleteProperty(userToDelete)} className="bg-[#FF6764] rounded-full px-4 py-1 text-white w-fit">Delete</button>
+                            <button onClick={handleCancelDelete} className="bg-gray-400 rounded-full px-4 py-1 text-white">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )} */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {propertyList?.map((data) => (
                     <div key={data.id} className="flex-shrink-0 flex-grow-0 w-full bg-white rounded-lg shadow-md">
                         <div className="w-full">
                             <Image src={data.imageUrl} alt='Sort' width={260} height={170} className="w-full mb-4 rounded-t-lg" />
                         </div>
-                        <div className="flex flex-wrap justify-end mx-4 my-1">
+                        <div className="flex flex-wrap justify-between mx-4 my-1">
                             <h4 className="font-semibold text-base">{data.name}</h4>
-                            <button className="bg-[#4BAF4F] text-white rounded-lg px-3 py-1">${data.price}</button>
                         </div>
+                        {/* <div className="flex justify-end px-4">
+                        </div> */}
                         <div className="flex flex-col px-4">
                             <small className="font-normal">{data.bedrooms} Bedroom</small>
                             <small className="font-normal">{data.bathrooms} Bathroom</small>
                         </div>
                         <div className="flex justify-between p-4 gap-6">
+                            <button className="bg-[#4BAF4F] text-white rounded-lg px-3 py-1">${data.price}</button>
                             <Link href="/Dashboard/ViewProperty/UpdateProperty" className="bg-[#FF6764] text-white border border-[#FF6764] rounded-md py-1 w-24 text-center">Update</Link>
-                            <button className="bg-black text-white border border-black rounded-md py-1 w-24">Delete</button>
+                            {/* <button onClick={() => handleModalOpen(data.id)} className="bg-black text-white border border-black rounded-md py-1 w-24">Delete</button> */}
                         </div>
                     </div>
                 ))}

@@ -123,7 +123,7 @@ const Page = () => {
         <ProtectedRoute>
             <div className="flex flex-row gap-4 columns-2">
                 {/* Create User */}
-                <div className="w-full bg-white rounded-2xl p-7 shadow-md">
+                <div className="w-full bg-white rounded-xl p-7 shadow-md">
                     <div className="mb-5">
                         <h5 className="mb-1 font-medium text-2xl">Create User</h5>
                         <small className="text-[#C2C2C2]">You can create normal users</small>
@@ -151,7 +151,7 @@ const Page = () => {
                 </div>
 
                 {/* Create Admin */}
-                <div className="w-full bg-white rounded-2xl p-7 shadow-md">
+                <div className="w-full bg-white rounded-xl p-7 shadow-md">
                     <div className="mb-5">
                         <h5 className="mb-1 font-medium text-2xl">Admin Creation</h5>
                         <small className="text-[#C2C2C2]">You can create sub admins accounts</small>

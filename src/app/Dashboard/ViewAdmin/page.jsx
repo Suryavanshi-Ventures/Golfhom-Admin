@@ -155,7 +155,7 @@ const Page = () => {
             {deleteOpen && (
                 <div className="fixed inset-0 bg-gray-300 bg-opacity-5 flex flex-col items-center justify-center z-50">
                     <div className="flex flex-col bg-white rounded-lg p-5 gap-4 z-50">
-                        <p>User Id : {adminToDelete}</p>
+                        <p>Admin Id : {adminToDelete}</p>
                         <p>You want to delete this Admin</p>
                         <div className="flex gap-4 justify-center">
                             <button onClick={() => handleDelete(adminToDelete)} className="bg-[#FF6764] rounded-full px-4 py-1 text-white w-fit">Delete</button>

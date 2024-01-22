@@ -8,6 +8,7 @@ const Page = () => {
     const [token, setToken] = useState(null);
     const [viewListUsers, setViewListUsers] = useState([]);
     const [propertyList, setPropertyList] = useState([]);
+    const [propertyListData, setPropertyListData] = useState([]);
     const [messageList, setMessageList] = useState([]);
     const [selectedMessage, setSelectedMessage] = useState(null);
 
@@ -25,7 +26,6 @@ const Page = () => {
     }, [token]);
 
     useEffect(() => {
-        // Fetch messages and set the first message as selected
         if (token && messageList.length > 0) {
             setSelectedMessage(messageList[0]);
         }
@@ -78,8 +78,10 @@ const Page = () => {
                 throw new Error("Failed to fetch list");
             }
             const viewPropertyData = await response.json();
+            console.log("viewPropertyData", viewPropertyData)
             if (viewPropertyData.status === "success") {
                 setPropertyList(viewPropertyData.count);
+                setPropertyListData(viewPropertyData.data);
             }
 
         } catch (error) {
@@ -118,6 +120,7 @@ const Page = () => {
     return (
         <div className="flex flex-col gap-8">
             <h5 className="text-2xl font-medium">Dashboard</h5>
+            {/* COUNT */}
             <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4">
                 {/* Card 1 - Revenue */}
                 <div className="col-span-1 lg:col-span-1 xl:col-span-1 bg-white shadow-md rounded-xl">
@@ -183,6 +186,34 @@ const Page = () => {
                 </div>
             </div>
 
+            {/* RECENT PROPERTY POSTS */}
+            <div className="flex flex-col gap-5">
+                <div className="flex justify-between">
+                    <h4 className="font-medium text-lg">Recent Property Posts</h4>
+                    <div>
+                        <Link href="/Dashboard/ViewProperty" type="button" className="bg-[#FF6764] border border-[#FF6764] px-4 py-1.5 rounded-lg text-white font-normal">View More</Link>
+                    </div>
+                </div>
+                <div className="flex flex-wrap">
+                    {propertyListData.slice(0, 5).map((data, index) => (
+                        <div key={index} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5" style={{ height: '300px' }}>
+                            <div className="flex flex-col h-[270px] w-52 relative bg-cover bg-center rounded-lg justify-end"
+                                style={{ backgroundImage: `url(${data.imageUrl})` }}
+                            >
+                                <div className="flex flex-col gap-1 text-white bg-gray bg-opacity-50 p-4 rounded-b-lg backdrop-blur-sm">
+                                    <h4 className="font-semibold text-base">{data.name.substring(0, 16) + (data.name.length > 16 ? '...' : '')}</h4>
+                                    <div className="flex flex-row justify-between items-center">
+                                        <small className="font-semibold">{data.ownerName}</small>
+                                        <small className="bg-[#4BAF4F] text-white rounded-lg px-2 py-1">${data.price}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* RECENT MESSAGES USER */}
             <div className="grid grid-cols-12 gap-4">
                 {/* First Card - Recent Users */}
                 <div className="col-span-12 xl:col-span-4">

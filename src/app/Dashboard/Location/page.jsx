@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image'
-import ProtectedRoute from '@/component/Protected Route/page';
+// import ProtectedRoute from '@/component/Protected Route/page';
 import React, { useEffect, useState } from 'react'
 
 const Page = () => {
@@ -46,7 +46,7 @@ const Page = () => {
     };
 
     return (
-        <ProtectedRoute>
+        <>
             <h2 className="font-medium text-2xl">Location</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {locationList?.map((data) => (
@@ -64,7 +64,7 @@ const Page = () => {
                     </div>
                 ))}
             </div>
-        </ProtectedRoute>
+        </>
     )
 }
 

@@ -3,19 +3,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useRef, useState } from 'react'
+import ProtectedRoute from '@/component/Protected Route/page';
 
 const Page = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
-    const [updateOpen, setUpdateOpen] = useState(false);
     const fileInputRef = useRef(null);
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
         setSelectedImage(URL.createObjectURL(selectedFile));
-    };
-
-    const handleUpdateOpen = (data) => {
-        setUpdateOpen(true);
     };
 
     const handleImageClick = () => {
@@ -23,7 +19,7 @@ const Page = () => {
     };
 
     // CREATE PROPERTY API
-    async function handleCreateUser(e) {
+    async function handleUpdateProperty(e) {
         e.preventDefault();
 
         // setUsernameError(!username);
@@ -43,10 +39,10 @@ const Page = () => {
         //     return;
         // }
 
-        const data = { name: username, ownerName: ownerName, description: description, accomodation: accommodation, bedrooms: bedroom, bathrooms: bathroom, checkIn: checkIn, checkOut: checkOut, amenities: amenities, image: image, price: prices }
+        // const data = { name: username, ownerName: ownerName, description: description, accomodation: accommodation, bedrooms: bedroom, bathrooms: bathroom, checkIn: checkIn, checkOut: checkOut, amenities: amenities, image: image, price: prices }
 
         try {
-            const response = await axios.post(
+            const response = await axios.PATCH(
                 `${process.env.NEXT_PUBLIC_API_URL}/property`, data, {
                 headers: {
                     "Content-Type": "application/json",
@@ -82,7 +78,7 @@ const Page = () => {
     }
 
     return (
-        <>
+        <ProtectedRoute>
             {/* UPDATE MODAL */}
             <div className="flex flex-col bg-white rounded-lg p-5 gap-4 z-50">
                 <h2 className="mb-1 font-medium text-2xl">Update Property</h2>
@@ -100,7 +96,7 @@ const Page = () => {
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Check In</label>
-                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Check In time' onChange={(e) => setCheckIn(e.target.value)} />
+                                <input type="text" pattern="\d*" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Check In time' onChange={(e) => setCheckIn(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Address</label>
@@ -108,11 +104,11 @@ const Page = () => {
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Bedrooms</label>
-                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Bedrooms' onChange={(e) => setBedroom(e.target.value)} />
+                                <input type="text" pattern="\d*" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Bedrooms' onChange={(e) => setBedroom(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Description</label>
-                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Description' onChange={(e) => setDescription(e.target.value)} />
+                                <textarea rows={3} cols={6} className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Description' onChange={(e) => setDescription(e.target.value)} />
                             </div>
                         </div>
 
@@ -123,11 +119,11 @@ const Page = () => {
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Prices(Day/Night)</label>
-                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Prices' onChange={(e) => setPrices(e.target.value)} />
+                                <input type="text" pattern="\d*" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Prices' onChange={(e) => setPrices(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Check out</label>
-                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Check Out time' onChange={(e) => setCheckOut(e.target.value)} />
+                                <input type="text" pattern="\d*" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Check Out time' onChange={(e) => setCheckOut(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Accommodation</label>
@@ -135,7 +131,7 @@ const Page = () => {
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Bathrooms</label>
-                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Bathrooms' onChange={(e) => setBathroom(e.target.value)} />
+                                <input type="text" pattern="\d*" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Bathrooms' onChange={(e) => setBathroom(e.target.value)} />
                             </div>
                         </div>
                     </div>
@@ -176,13 +172,13 @@ const Page = () => {
                             />
                         </div>
                     </div>
-                    <div className="flex gap-4 justify-end">
-                        <button onClick={(e) => handleUpdate(e, userUpdate)} className="bg-[#FF6764] rounded-sm px-4 py-1 text-white w-fit" disabled={isSubmitting}>{isSubmitting ? 'Updating...' : 'Update'}</button>
-                        <Link href="/Dashboard/ViewProperty" className="bg-gray-400 rounded-sm px-4 py-1 text-white">Cancel</Link>
+                    <div className="flex gap-4 justify-start">
+                        <button onClick={(e) => handleUpdateProperty(e, userUpdate)} className="bg-[#FF6764] rounded-[4px] px-4 py-1 text-white w-fit" disabled={isSubmitting}>{isSubmitting ? 'Updating...' : 'Update'}</button>
+                        <Link href="/Dashboard/ViewProperty" className="bg-gray-400 rounded-[4px] px-4 py-1 text-white">Cancel</Link>
                     </div>
                 </form>
             </div>
-        </>
+        </ProtectedRoute>
     )
 }
 

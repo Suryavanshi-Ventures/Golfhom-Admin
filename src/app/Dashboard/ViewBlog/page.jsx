@@ -4,12 +4,15 @@ import ProtectedRoute from '@/component/Protected Route/page';
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
 import { Pagination } from "@nextui-org/react";
+import DOMPurify from "dompurify";
 
 const Page = () => {
     const [token, setToken] = useState(null);
     const [blogList, setBlogList] = useState([]);
     const [totalPages, setTotalPages] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
+    const [blogToDelete, setBlogToDelete] = useState(null);
+    const [deleteOpen, setDeleteOpen] = useState(false);
     const itemsPerPage = 10;
 
     const handlePageChange = (newPage) => {
@@ -20,6 +23,15 @@ const Page = () => {
         const options = { month: 'long', day: 'numeric', year: 'numeric' };
         const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
         return formattedDate;
+    };
+
+    const handleModalOpen = (data) => {
+        setBlogToDelete(data);
+        setDeleteOpen(true);
+    }
+
+    const handleCancelDelete = () => {
+        setDeleteOpen(false);
     };
 
     useEffect(() => {
@@ -57,7 +69,29 @@ const Page = () => {
             }
 
         } catch (error) {
-            console.log("error message", error)
+            console.log("error blog", error)
+        }
+    };
+
+    // DELETE API
+    const handleDeleteBlog = async (blogId) => {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/${blogId}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            if (!response.ok) {
+                throw new Error("Failed to delete blog");
+            }
+            setBlogList((prevBlogList) => prevBlogList.filter(blog => blog.id !== blogId));
+            setDeleteOpen(false);
+        } catch (error) {
+            console.error("Error deleting blog:", error);
         }
     };
 
@@ -67,15 +101,34 @@ const Page = () => {
                 <h4 className="text-2xl font-medium">View Blog</h4>
                 <Link href="/Dashboard/ViewBlog/CreateBlog" className="bg-[#FF6764] border border-[#FF6764] px-4 py-1.5 rounded-lg text-white font-normal">Create blog</Link>
             </div>
+            {deleteOpen && (
+                <div className="fixed inset-0 bg-gray-300 bg-opacity-5 flex flex-col items-center justify-center z-50">
+                    <div className="flex flex-col bg-white rounded-lg p-5 gap-4 z-50">
+                        <p>Blog Id : {blogToDelete}</p>
+                        <p>You want to delete this blog</p>
+                        <div className="flex gap-4 justify-center">
+                            <button onClick={() => handleDeleteBlog(blogToDelete)} className="bg-[#FF6764] rounded-full px-4 py-1 text-white w-fit">Delete</button>
+                            <button onClick={handleCancelDelete} className="bg-gray-400 rounded-full px-4 py-1 text-white">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 shadow-md">
                 {blogList?.map((data) => (
                     <div key={data.id} className="flex flex-col gap-3 p-4 bg-white rounded-lg border border-[#C2C2C2]">
-                        <div className="w-full">
+                        <Link href="/Dashboard/ViewBlog/IndividualBlog" className="w-full">
                             <Image src={data.image} alt='Sort' width={100} height={70} className="w-full" layout="responsive" />
-                        </div>
+                        </Link>
                         <h4 className="text-lg font-medium">{data.title}</h4>
-                        <p className="">{data.body}</p>
-                        <h3 className="text-[#888]"><span className="font-medium">Created at:</span> {formatDate(data.createdAt)}</h3>
+                        <Link href="/Dashboard/ViewBlog/IndividualBlog"
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(data?.body),
+                            }}>
+                        </Link>
+                        <div className="flex justify-between px-5 py-4">
+                            <h3 className="text-[#888]"><span className="font-medium">Created at:</span> {formatDate(data.createdAt)}</h3>
+                            <Image src="/icons/Delete.svg" alt='Delete' width={20} height={20} onClick={() => handleModalOpen(data.id)} className="cursor-pointer" />
+                        </div>
                     </div>
                 ))}
             </div>

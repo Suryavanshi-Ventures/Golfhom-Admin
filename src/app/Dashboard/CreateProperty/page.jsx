@@ -5,11 +5,12 @@ import { toast } from 'react-toastify';
 import ProtectedRoute from '@/component/Protected Route/page';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Page = () => {
     const router = useRouter();
     const [username, setUsername] = useState("");
-    const [amenities, setAmenities] = useState("");
+    const [amenities, setAmenities] = useState([]);
     const [checkIn, setCheckIn] = useState("");
     const [address, setAddress] = useState("");
     const [bedroom, setBedroom] = useState("");
@@ -44,6 +45,7 @@ const Page = () => {
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
         setSelectedImage(URL.createObjectURL(selectedFile));
+        setImage(e.target.files[0]);
     };
 
     useEffect(() => {
@@ -51,8 +53,8 @@ const Page = () => {
         setToken(item);
     }, [])
 
-    // CREATE USER API
-    async function handleCreateUser(e) {
+    // CREATE PROPERTY API
+    async function handleCreateProperty(e) {
         e.preventDefault();
 
         setUsernameError(!username);
@@ -113,7 +115,7 @@ const Page = () => {
     return (
         <ProtectedRoute>
             {/* Create Property */}
-            <div className="w-full bg-white rounded-2xl p-7 shadow-md">
+            <div className="w-full bg-white rounded-xl p-7 shadow-md">
                 <div className="mb-5">
                     <h5 className="mb-1 font-medium text-2xl">Create New Property</h5>
                     <small className="text-[#C2C2C2]">Create Property</small>
@@ -129,12 +131,12 @@ const Page = () => {
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Amenities</label>
-                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Your Amenities' onChange={(e) => setAmenities(e.target.value)} />
+                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Your Amenities' onChange={(e) => setAmenities(e.target.value.split(','))} />
                                 {amenitiesError && <div className="text-danger text-red-500 mt-1">Amenities is mandatory</div>}
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Check In</label>
-                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Check In time' onChange={(e) => setCheckIn(e.target.value)} />
+                                <input type="text" pattern="\d*" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Check In time' onChange={(e) => setCheckIn(e.target.value)} />
                                 {checkInError && <div className="text-danger text-red-500 mt-1">Check In is mandatory</div>}
                             </div>
                             <div className="flex flex-col gap-1.5">
@@ -149,7 +151,7 @@ const Page = () => {
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Description</label>
-                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Description' onChange={(e) => setDescription(e.target.value)} />
+                                <textarea rows={3} cols={6} className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Description' onChange={(e) => setDescription(e.target.value)} />
                                 {descriptionError && <div className="text-danger text-red-500 mt-1">Description is mandatory</div>}
                             </div>
                         </div>
@@ -162,12 +164,12 @@ const Page = () => {
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Prices(Day/Night)</label>
-                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Prices' onChange={(e) => setPrices(e.target.value)} />
+                                <input type="text" pattern="\d*" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Prices' onChange={(e) => setPrices(e.target.value)} />
                                 {pricesError && <div className="text-danger text-red-500 mt-1">Prices is mandatory</div>}
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Check out</label>
-                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Check Out time' onChange={(e) => setCheckOut(e.target.value)} />
+                                <input type="text" pattern="\d*" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Check Out time' onChange={(e) => setCheckOut(e.target.value)} />
                                 {checkOutError && <div className="text-danger text-red-500 mt-1">Check out is mandatory</div>}
                             </div>
                             <div className="flex flex-col gap-1.5">
@@ -177,7 +179,7 @@ const Page = () => {
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Bathrooms</label>
-                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Bathrooms' onChange={(e) => setBathroom(e.target.value)} />
+                                <input type="text" pattern="\d*" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Bathrooms' onChange={(e) => setBathroom(e.target.value)} />
                                 {bathroomError && <div className="text-danger text-red-500 mt-1">Bathrooms is mandatory</div>}
                             </div>
                         </div>
@@ -220,8 +222,9 @@ const Page = () => {
                             />
                         </div>
                     </div>
-                    <div className="flex justify-start items-center">
-                        <button type="Submit" onClick={handleCreateUser} className="bg-[#FF6764] border border-red-400 py-2.5 text-white font-medium my-4 rounded-[4px] w-1/5">Save</button>
+                    <div className="flex justify-start items-center gap-4">
+                        <button type="Submit" onClick={handleCreateProperty} className="bg-[#FF6764] border border-red-400 px-4 py-1 text-white font-medium rounded-[4px]">Save</button>
+                        <Link href="/Dashboard/ViewProperty" className="bg-gray-400 rounded-[4px] px-4 py-1 text-white">Cancel</Link>
                     </div>
                 </form>
             </div>

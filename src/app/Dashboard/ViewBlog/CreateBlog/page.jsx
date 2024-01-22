@@ -4,29 +4,21 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import ProtectedRoute from '@/component/Protected Route/page';
-// import { CKEditor } from 'ckeditor5-react';
-// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-// import dynamic from 'next/dynamic';
-
-// const CKEditorDynamic = dynamic(() => import('@ckeditor/ckeditor5-react').then((mod) => mod.CKEditor), {
-//     ssr: false,
-// });
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const Page = () => {
     const router = useRouter();
-    const [username, setUsername] = useState("");
-    const [amenities, setAmenities] = useState("");
-    const [bedroom, setBedroom] = useState("");
-    const [description, setDescription] = useState("");
-    const [token, setToken] = useState(null);
-    const [usernameError, setUsernameError] = useState(false);
-    const [amenitiesError, setAmenitiesError] = useState(false);
-    const [checkInError, setCheckInError] = useState(false);
-    const [bedroomError, setBedroomError] = useState(false);
-    const [descriptionError, setDescriptionError] = useState(false);
     const fileInputRef = useRef(null);
+    const [token, setToken] = useState(null);
+    const [titleName, setTitleName] = useState("");
+    const [tag, setTag] = useState([]);
+    const [titleError, setTitleError] = useState(false);
+    const [tagError, setTagError] = useState(false);
+    const [editorContentError, setEditorContentError] = useState(false);
     const [imageError, setImageError] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
+    const [image, setImage] = useState(null);
     const [editorContent, setEditorContent] = useState('');
 
     const handleImageClick = () => {
@@ -36,6 +28,7 @@ const Page = () => {
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
         setSelectedImage(URL.createObjectURL(selectedFile));
+        setImage(selectedFile);
     };
 
     useEffect(() => {
@@ -47,26 +40,33 @@ const Page = () => {
     async function handleCreateUser(e) {
         e.preventDefault();
 
-        setUsernameError(!username);
-        setAmenitiesError(!amenities);
-        setImageError(!selectedImage);
-        setCheckInError(!checkIn);
-        setDescriptionError(!editorContent);
+        setTitleError(!titleName);
+        setTagError(!tag);
+        setImageError(!image);
+        setEditorContentError(!editorContent);
 
+        if (!titleName || !tag || !image || !editorContent) {
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("title", titleName);
+        formData.append("body", editorContent);
+        let newTags = typeof tag === "string" ? [tag] : tag;
+        formData.append("tag", JSON.stringify(newTags));
+        formData.append("image", image);
+        console.log("typeof", newTags)
+        // return false;
         try {
             const response = await axios.post(
-                `${process.env.NEXT_PUBLIC_API_URL}/blog`, {
-                title: username,
-                body: editorContent,
-                tags: amenities,
-            },
+                `${process.env.NEXT_PUBLIC_API_URL}/blog`,
+                formData,
                 {
                     headers: {
-                        "Content-Type": "application/json",
+                        "Content-Type": "multipart/form-data",
                         Authorization: `Bearer ${token}`
                     }
                 });
-
             toast.success('Successfully Submitted', {
                 position: "top-right",
                 autoClose: 5000,
@@ -77,7 +77,7 @@ const Page = () => {
                 progress: undefined,
                 theme: "light",
             });
-            setTimeout(() => { router.push('/Dashboard/ViewProperty') }, 1500);
+            setTimeout(() => { router.push('/Dashboard/ViewBlog') }, 1500);
 
         } catch (error) {
             toast.error('Data Already Exists', {
@@ -97,7 +97,7 @@ const Page = () => {
     return (
         <ProtectedRoute>
             {/* Create Blog */}
-            <div className="w-full bg-white rounded-2xl p-7 shadow-md">
+            <div className="w-full bg-white rounded-xl p-7 shadow-md">
                 <div className="mb-5">
                     <h5 className="mb-1 font-medium text-2xl">Create New Blog</h5>
                     <small className="text-[#C2C2C2]">Create Blog</small>
@@ -108,30 +108,29 @@ const Page = () => {
                         <div className="flex flex-col gap-5 w-full">
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Title</label>
-                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder="Enter Title" onChange={(e) => setUsername(e.target.value)} />
-                                {usernameError && <div className="text-danger text-red-500 mt-1">Title is mandatory</div>}
+                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder="Enter Title" onChange={(e) => setTitleName(e.target.value)} />
+                                {titleError && <div className="text-danger text-red-500 mt-1">Title is mandatory</div>}
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Body</label>
-                                {/* <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Description' onChange={(e) => setDescription(e.target.value)} /> */}
-                                {/* CKEditor integration */}
-                                {/* <CKEditor
+                                <CKEditor
                                     editor={ClassicEditor}
                                     data={editorContent}
                                     onChange={(event, editor) => setEditorContent(editor.getData())}
-                                /> */}
-                                {descriptionError && <div className="text-danger text-red-500 mt-1">Body is mandatory</div>}
+                                    className="border border-black rounded-[10px] px-4 py-2.5"
+                                />
+                                {editorContentError && <div className="text-danger text-red-500 mt-1">Body is mandatory</div>}
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Tags</label>
-                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Tags' onChange={(e) => setAmenities(e.target.value)} />
-                                {amenitiesError && <div className="text-danger text-red-500 mt-1">Tags is mandatory</div>}
+                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Tags' onChange={(e) => setTag(e.target.value)} />
+                                {tagError && <div className="text-danger text-red-500 mt-1">Tags is mandatory</div>}
                             </div>
                             <div className="flex flex-col gap-1.5 w-full">
                                 <label className="text-[#404040] text-md font-medium">Blog Image</label>
                                 <div onClick={handleImageClick}>
                                     {selectedImage ? (
-                                        <img src={selectedImage} alt="selected" width={120} height={120} className="border border-[#636363] px-5 py-2 rounded-lg my-3" />
+                                        <img src={selectedImage} alt="selected" width={120} height={120} className="border border-[#636363] rounded-lg my-3" />
                                     ) : (
                                         <img src="/background.svg" alt="background" width={120} height={120} className="border border-[#636363] px-5 py-2 rounded-lg my-3" />
                                     )}
