@@ -4,8 +4,12 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import ProtectedRoute from '@/component/Protected Route/page';
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import Link from 'next/link';
+import dynamic from "next/dynamic";
+
+const Editor = dynamic(() => import("../../../../component/Editor/page"), {
+    ssr: false,
+});
 
 const Page = () => {
     const router = useRouter();
@@ -20,6 +24,7 @@ const Page = () => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [image, setImage] = useState(null);
     const [editorContent, setEditorContent] = useState('');
+    const [data, setData] = useState({});
 
     const handleImageClick = () => {
         fileInputRef.current.click();
@@ -36,6 +41,11 @@ const Page = () => {
         setToken(item);
     }, [])
 
+
+    useEffect(() => {
+        setEditorContent(JSON.stringify(data));
+    }, [data]);
+
     // CREATE USER API
     async function handleCreateUser(e) {
         e.preventDefault();
@@ -43,7 +53,7 @@ const Page = () => {
         setTitleError(!titleName);
         setTagError(!tag);
         setImageError(!image);
-        setEditorContentError(!editorContent);
+        setEditorContentError(!data);
 
         if (!titleName || !tag || !image || !editorContent) {
             return;
@@ -111,14 +121,9 @@ const Page = () => {
                                 {titleError && <div className="text-danger text-red-500 mt-1">Title is mandatory</div>}
                             </div>
                             <div className="flex flex-col gap-1.5">
-                                <label className="text-[#404040] text-md font-medium">Body</label>
-                                <CKEditor
-                                    editor={ClassicEditor}
-                                    data={editorContent}
-                                    onChange={(event, editor) => setEditorContent(editor.getData())}
-                                    className="border border-black rounded-[10px] px-4 py-2.5"
-                                />
-                                {editorContentError && <div className="text-danger text-red-500 mt-1">Body is mandatory</div>}
+                                <label className="text-[#404040] text-md font-medium">Content</label>
+                                <Editor data={data.body} onChangeEditor={setEditorContent} />
+                                {editorContentError && <div className="text-danger text-red-500 mt-1">Content is mandatory</div>}
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Tags</label>
@@ -145,8 +150,9 @@ const Page = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex justify-start items-center">
-                        <button type="Submit" onClick={handleCreateUser} className="bg-[#FF6764] border border-red-400 py-2.5 text-white font-medium my-4 rounded-[4px] w-1/5">Save</button>
+                    <div className="flex justify-start items-center gap-3">
+                        <button type="Submit" onClick={handleCreateUser} className="bg-[#FF6764] border border-red-400 px-4 py-1 text-white font-medium my-4 rounded-[4px]">Save</button>
+                        <Link href="/Dashboard/ViewBlog" className="bg-gray-400 rounded-[4px] px-4 py-1 text-white">Back</Link>
                     </div>
                 </form>
             </div>

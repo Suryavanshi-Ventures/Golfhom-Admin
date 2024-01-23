@@ -36,8 +36,8 @@ const Page = () => {
                     <div className='px-5 pb-5'>
                         <div className='flex flex-col mb-4 px-3'>
                             <Image src="/icons/avatar.svg" alt='Profile' width={70} height={70} className='rounded-full' />
-                            <h3>Username</h3>
-                            <h4 className='text-[#C2C2C2]'>email@gamil.com</h4>
+                            <h3>Golfhom Admin</h3>
+                            <h4 className='text-[#C2C2C2]'>admin@golfhom.com</h4>
                         </div>
 
                         <Link href="/Dashboard" className='cursor-pointer'>

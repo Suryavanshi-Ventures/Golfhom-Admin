@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import ProtectedRoute from "@/component/Protected Route/page";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import Image from "next/image";
+// import DOMPurify from "dompurify";
 
 const Page = () => {
     const [token, setToken] = useState(null);
@@ -10,10 +12,21 @@ const Page = () => {
     const BlogId = SearchParams.get("id");
     const [blogList, setBlogList] = useState([]);
     const [blogData, setBlogData] = useState(null);
+    const [title, setTitle] = useState(null);
+    const [body, setBody] = useState(null);
+    const [tag, setTag] = useState(null);
+    const [blogImage, setBlogImage] = useState(null);
+    const [createdAt, setCreatedAt] = useState(null);
+
 
     // const [data, setData] = useState({
     //     blocks: [],
     // });
+    const formatDate = (dateString) => {
+        const options = { month: 'long', day: 'numeric', year: 'numeric' };
+        const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
+        return formattedDate;
+    };
 
     useEffect(() => {
         const item = localStorage.getItem("access_token");
@@ -28,13 +41,12 @@ const Page = () => {
 
     useEffect(() => {
         if (blogList && blogList?.data) {
-            setNewPropertyName(blogList?.data?.name);
-            setAmenities(blogList?.data?.amenities);
-            setCheckIn(blogList?.data?.checkIn);
-            setAddress(blogList?.data?.address);
-            setBedroom(blogList?.data?.bedrooms);
-            setDescription(blogList?.data?.description);
-            setOwnerName(blogList?.data?.ownerName);
+            setTitle(blogList?.data?.title);
+            setBody(blogList?.data?.body);
+            setTag(blogList?.data?.tag);
+            setBlogImage(blogList?.data?.image);
+            setCreatedAt(blogList?.data?.createdAt);
+
             // setNewContent(propertyList?.data?.content);
             // let content = JSON.parse(propertyList.data.content);
             // setData({ blocks: content.blocks });
@@ -68,19 +80,27 @@ const Page = () => {
         }
     };
 
-    useEffect(() => {
-        if (blogData && blogData.data) {
-            let content = JSON.parse(blogData.data.content);
-            setData({ blocks: content.blocks });
-        }
-    }, [blogData]);
-
-    return (
+    return false; (
         <ProtectedRoute>
             <div className="w-full bg-white rounded-xl p-7 shadow-md">
                 <div className="mb-5">
-                    <h5 className="mb-1 font-medium text-2xl">Create New Blog</h5>
-                    <small className="text-[#C2C2C2]">Create Blog</small>
+                    <input type="text" value={title} placeholder="Enter Tag"></input>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 shadow-md">
+                    <div>
+                        <div>
+                            <Image src={blogImage} alt='Sort' width={100} height={70} className="w-full" layout="responsive" />
+                        </div>
+                        <input type="text" value={tag} placeholder="Enter Tag"></input>
+                        <input type="text" value={body} placeholder="Enter Tag"></input>
+                        <input type="text" value={createdAt} placeholder="Enter Tag"></input>
+
+                        {/* <p dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(body),
+                        }}>
+                        </p> */}
+                    </div>
                 </div>
 
                 <div className="flex gap-4 justify-end">

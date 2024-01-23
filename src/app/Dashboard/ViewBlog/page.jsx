@@ -34,6 +34,14 @@ const Page = () => {
         setDeleteOpen(false);
     };
 
+    const truncateWords = (text, maxLength) => {
+        const words = text.split(' ');
+        if (words.length > maxLength) {
+            return words.slice(0, maxLength).join(' ') + '...';
+        }
+        return text;
+    };
+
     useEffect(() => {
         const item = localStorage.getItem("access_token");
         setToken(item);
@@ -113,27 +121,31 @@ const Page = () => {
                     </div>
                 </div>
             )}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 shadow-md">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5">
                 {blogList?.map((data) => (
-                    <div key={data.id} className="flex flex-col gap-3 p-4 bg-white rounded-lg border border-[#C2C2C2]">
+                    <div key={data.id} className="flex flex-col gap-3 justify-between p-4 bg-white rounded-lg border border-[#C2C2C2] shadow-md">
                         <Link
                             // href={`/Dashboard/ViewBlog/IndividualBlog/${data.id}`} 
                             href={{
                                 pathname: "/Dashboard/ViewBlog/IndividualBlog",
-                                query: { id: data.id },
+                                query: { id: data.slug },
                             }}
                             className="w-full">
                             <Image src={data.image} alt='Sort' width={100} height={70} className="w-full" layout="responsive" />
                         </Link>
-                        <h4 className="text-lg font-medium">{data.title}</h4>
-                        <Link href="/Dashboard/ViewBlog/IndividualBlog"
-                            dangerouslySetInnerHTML={{
-                                __html: DOMPurify.sanitize(data?.body),
-                            }}>
-                        </Link>
-                        <div className="flex justify-between px-5 py-4">
-                            <h3 className="text-[#888]"><span className="font-medium">Created at:</span> {formatDate(data.createdAt)}</h3>
-                            <Image src="/icons/Delete.svg" alt='Delete' width={20} height={20} onClick={() => handleModalOpen(data.id)} className="cursor-pointer" />
+                        <div className="flex flex-col gap-3">
+                            <h4 className="text-lg font-medium">{data.title}</h4>
+                            <div className="flex flex-col">
+                                <h5
+                                    dangerouslySetInnerHTML={{
+                                        __html: DOMPurify.sanitize(truncateWords(data?.body, 25)),
+                                    }}>
+                                </h5><Link href="/Dashboard/ViewBlog/IndividualBlog" className="text-[#FF6764] font-medium">Read More</Link>
+                            </div>
+                            <div className="flex justify-between py-4">
+                                <h3 className="text-[#888]"><span className="font-medium">Created at:</span> {formatDate(data.createdAt)}</h3>
+                                <Image src="/icons/Delete.svg" alt='Delete' width={20} height={20} onClick={() => handleModalOpen(data.id)} className="cursor-pointer" />
+                            </div>
                         </div>
                     </div>
                 ))}
