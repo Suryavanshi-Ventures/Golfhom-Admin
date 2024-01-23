@@ -14,6 +14,11 @@ const Page = () => {
     const [noPropertiesMessage, setNoPropertiesMessage] = useState("");
     // const [userToDelete, setUserToDelete] = useState(null);
     // const [deleteOpen, setDeleteOpen] = useState(false);
+    const [activeStatus, setActiveStatus] = useState('All');
+
+    const handleStatusClick = (status) => {
+        setActiveStatus(status);
+    };
 
     const itemsPerPage = 10;
 
@@ -37,14 +42,16 @@ const Page = () => {
 
     useEffect(() => {
         if (token) {
-            listProperty();
+            listProperty(activeStatus);
         }
-    }, [token, currentPage, propertyName]);
+    }, [token, currentPage, propertyName, activeStatus]);
 
     // LIST API
-    const listProperty = async () => {
+    const listProperty = async (status) => {
+        const statusQueryParam = status !== 'All' ? `&status=${status}` : '';
+
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/property?limit=${itemsPerPage}&page=${currentPage}&searchQuery=${propertyName}`,
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/property?limit=${itemsPerPage}&page=${currentPage}&searchQuery=${propertyName}${statusQueryParam}`,
                 {
                     method: "GET",
                     headers: {
@@ -105,7 +112,7 @@ const Page = () => {
                 <h2 className="font-medium text-2xl">Recent Property Posts</h2>
                 <div className=" flex  md:justify-start mr-5 items-center">
                     <input
-                        className="bg-white w-96 rounded-full shadow-lg text-gray-600 px-4 outline-none h-12"
+                        className="w-96 h-12 border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
                         placeholder="Search for property by name" value={propertyName}
                         onChange={(e) => setPropertyName(e.target.value)}
                     />
@@ -113,6 +120,44 @@ const Page = () => {
                         strokeWidth={2} stroke="currentColor" className="w-6 h-6 -ml-[45px] text-[#FF6764]" onClick={listProperty}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
+                </div>
+            </div>
+            <div className="bg-white py-3 px-4 flex gap-8 items-center rounded-md">
+                <div>
+                    <h4
+                        onClick={() => handleStatusClick('All')}
+                        className={`${activeStatus === 'All' ? 'bg-[#FF6764] border border-[#FF6764] text-white' : 'bg-white text-black'
+                            } cursor-pointer px-3 py-1 w-24 text-center rounded-md font-normal`}
+                    >
+                        All
+                    </h4>
+                </div>
+                <div>
+                    <h4
+                        onClick={() => handleStatusClick('Draft')}
+                        className={`${activeStatus === 'Draft' ? 'bg-[#FF6764] border border-[#FF6764] text-white' : 'bg-white text-black'
+                            } cursor-pointer px-3 py-1 w-24 text-center rounded-md font-normal`}
+                    >
+                        Draft
+                    </h4>
+                </div>
+                <div>
+                    <h4
+                        onClick={() => handleStatusClick('Active')}
+                        className={`${activeStatus === 'Active' ? 'bg-[#FF6764] border border-[#FF6764] text-white' : 'bg-white text-black'
+                            } cursor-pointer px-3 py-1 w-24 text-center rounded-md font-normal`}
+                    >
+                        Active
+                    </h4>
+                </div>
+                <div>
+                    <h4
+                        onClick={() => handleStatusClick('Inactive')}
+                        className={`${activeStatus === 'Inactive' ? 'bg-[#FF6764] border border-[#FF6764] text-white' : 'bg-white text-black'
+                            } cursor-pointer px-3 py-1 w-24 text-center rounded-md font-normal`}
+                    >
+                        Inactive
+                    </h4>
                 </div>
             </div>
             {noPropertiesMessage && (
@@ -136,7 +181,7 @@ const Page = () => {
                 {propertyList?.map((data) => (
                     <div key={data.id} className="flex-shrink-0 flex-grow-0 w-full bg-white rounded-lg shadow-md">
                         <div className="w-full">
-                            <Image src={data.imageUrl} alt='Sort' width={260} height={170} className="w-full mb-4 rounded-t-lg" />
+                            <Image src={data.imageUrl} alt='Property' width={260} height={170} className="w-full mb-4 rounded-t-lg" />
                         </div>
                         <div className="flex flex-wrap justify-between mx-4 my-1">
                             <h4 className="font-semibold text-base">{data.name}</h4>

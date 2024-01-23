@@ -28,7 +28,26 @@ const Page = () => {
     const [bathroom, setBathroom] = useState("");
     const [image, setImage] = useState("");
     const [otherImage, setOtherImage] = useState("");
+    const [amenityList, setAmenityList] = useState([]);
+    const [status, setStatus] = useState("");
 
+    const handleInputChange = (e) => {
+        setAmenities(e.target.value);
+    };
+
+    const handleAddAmenity = () => {
+        const trimmedAmenity = amenities.toString().trim();
+        if (trimmedAmenity !== '') {
+            setAmenityList([...amenityList, trimmedAmenity]);
+            setAmenities('');
+        }
+    };
+
+    const handleRemoveAmenity = (index) => {
+        const updatedAmenities = [...amenityList];
+        updatedAmenities.splice(index, 1);
+        setAmenityList(updatedAmenities);
+    };
 
     const fileInputRef = useRef(null);
     const handleFileChange = (e) => {
@@ -66,6 +85,7 @@ const Page = () => {
             setBathroom(propertyList?.data?.bathrooms);
             setImage(propertyList?.data?.imageUrl);
             setOtherImage(propertyList?.data?.otherImageUrls);
+            setStatus(propertyList?.data?.status || "Draft");
 
             // setNewContent(propertyList?.data?.content);
             // let content = JSON.parse(propertyList.data.content);
@@ -99,7 +119,7 @@ const Page = () => {
         }
     };
 
-    // CREATE PROPERTY API
+    // UPDATE PROPERTY API
     async function handleUpdateProperty(e) {
         // e.preventDefault();
 
@@ -123,7 +143,7 @@ const Page = () => {
         // const data = { name: username, ownerName: ownerName, description: description, accomodation: accommodation, bedrooms: bedroom, bathrooms: bathroom, checkIn: checkIn, checkOut: checkOut, amenities: amenities, image: image, price: prices }
 
         try {
-            const response = await axios.PATCH(
+            const response = await axios.patch(
                 `${process.env.NEXT_PUBLIC_API_URL}/property/${PropertyId}`, data, {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -165,66 +185,131 @@ const Page = () => {
             <div className="flex flex-col bg-white rounded-lg p-5 gap-4 z-50">
                 <h2 className="mb-1 font-medium text-2xl">Update Property</h2>
 
+                <div>
+                    <h5>Status: <span className="text-green-500 font-medium">{status}</span></h5>
+                    <div className="flex gap-2">
+                        <input
+                            type='radio'
+                            checked={status === 'Active'}
+                            onChange={() => setStatus('Active')}
+                        />
+                        <p>Active</p>
+                    </div>
+                    <div className="flex gap-2">
+                        <input
+                            type='radio'
+                            checked={status === 'Inactive'}
+                            onChange={() => setStatus('Inactive')}
+                        />
+                        <p>Inactive</p>
+                    </div>
+                    <div className="flex gap-2">
+                        <input
+                            type='radio'
+                            checked={status === 'Draft'}
+                            onChange={() => setStatus('Draft')}
+                        />
+                        <p>Draft</p>
+                    </div>
+                </div>
+
                 <form className="flex flex-col gap-5">
                     <div className="flex gap-5">
                         <div className="flex flex-col gap-5 w-full">
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Property Name</label>
-                                <input type="text" value={newPropertyName} className="border border-black rounded-[10px] px-4 py-2.5" placeholder="Sample Golf Course" onChange={(e) => setNewPropertyName(e.target.value)} />
-                            </div>
-                            <div className="flex flex-col gap-1.5">
-                                <label className="text-[#404040] text-md font-medium">Amenities</label>
-                                <input type="text" value={amenities} className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Example wifi pool etc' onChange={(e) => setAmenities(e.target.value)} />
+                                <input
+                                    type="text"
+                                    value={newPropertyName}
+                                    className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
+                                    placeholder="Sample Golf Course"
+                                    onChange={(e) => setNewPropertyName(e.target.value)}
+                                />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Check In</label>
-                                <input type="text" pattern="\d*" value={checkIn} className="border border-black rounded-[10px] px-4 py-2.5" placeholder='20:30' onChange={(e) => setCheckIn(e.target.value)} />
+                                <input type="text" pattern="\d*" value={checkIn} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='20:30' onChange={(e) => setCheckIn(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Address</label>
-                                <input type="text" value={address} className="border border-black rounded-[10px] px-4 py-2.5" placeholder="B-20, Street name" onChange={(e) => setAddress(e.target.value)} />
+                                <input type="text" value={address}
+                                    className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
+                                    placeholder="B-20, Street name" onChange={(e) => setAddress(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Bedrooms</label>
-                                <input type="text" pattern="\d*" value={bedroom} className="border border-black rounded-[10px] px-4 py-2.5" placeholder='7' onChange={(e) => setBedroom(e.target.value)} />
-                            </div>
-                            <div className="flex flex-col gap-1.5">
-                                <label className="text-[#404040] text-md font-medium">Description</label>
-                                <textarea rows={3} cols={6} value={description} className="border border-black rounded-[10px] px-4 py-2.5" placeholder='This is sample description' onChange={(e) => setDescription(e.target.value)} />
-                            </div>
-                        </div>
-
-                        <div className="flex flex-col gap-5 w-full">
-                            <div className="flex flex-col gap-1.5">
-                                <label className="text-[#404040] text-md font-medium">Owner name</label>
-                                <input type="text" value={ownerName} className="border border-black rounded-[10px] px-4 py-2.5" placeholder="Alexendar Jones" onChange={(e) => setOwnerName(e.target.value)} />
-                            </div>
-                            <div className="flex flex-col gap-1.5">
-                                <label className="text-[#404040] text-md font-medium">Prices(Day/Night)</label>
-                                <input type="text" pattern="\d*" value={prices} className="border border-black rounded-[10px] px-4 py-2.5" placeholder='$200' onChange={(e) => setPrices(e.target.value)} />
-                            </div>
-                            <div className="flex flex-col gap-1.5">
-                                <label className="text-[#404040] text-md font-medium">Check out</label>
-                                <input type="text" pattern="\d*" value={checkOut} className="border border-black rounded-[10px] px-4 py-2.5" placeholder='09:30' onChange={(e) => setCheckOut(e.target.value)} />
+                                <input type="text" pattern="\d*" value={bedroom} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='7' onChange={(e) => setBedroom(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Accommodation</label>
-                                <input type="text" value={accommodation} className="border border-black rounded-[10px] px-4 py-2.5" placeholder="20:40" onChange={(e) => setAccommodation(e.target.value)} />
+                                <input type="text" value={accommodation} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="20:40" onChange={(e) => setAccommodation(e.target.value)} />
+                            </div>
+                        </div>
+                        <div className="flex flex-col gap-5 w-full">
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Owner name</label>
+                                <input type="text" value={ownerName} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Alexendar Jones" onChange={(e) => setOwnerName(e.target.value)} />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Check out</label>
+                                <input type="text" pattern="\d*" value={checkOut} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='09:30' onChange={(e) => setCheckOut(e.target.value)} />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Prices(Day/Night)</label>
+                                <input type="text" pattern="\d*" value={prices} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='$200' onChange={(e) => setPrices(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Bathrooms</label>
-                                <input type="text" pattern="\d*" value={bathroom} className="border border-black rounded-[10px] px-4 py-2.5" placeholder='6' onChange={(e) => setBathroom(e.target.value)} />
+                                <input type="text" pattern="\d*" value={bathroom} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='6' onChange={(e) => setBathroom(e.target.value)} />
                             </div>
                         </div>
                     </div>
+                    <div className="flex flex-col gap-5">
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-[#404040] text-md font-medium">Amenities</label>
+                            <div className="amenities-input-container">
+                                <ul className="list-disc">
+                                    {amenityList.map((amenity, index) => (
+                                        <li key={index} className="text-sm amenity-tag">
+                                            {amenity}
+                                            <span onClick={() => handleRemoveAmenity(index)} className="cursor-pointer">&times;</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                                {!isSubmitting && (
+                                    <input
+                                        type="text"
+                                        value={amenities}
+                                        className="w-full text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
+                                        placeholder="Example wifi pool etc"
+                                        onChange={handleInputChange}
+                                        onBlur={handleAddAmenity}
+                                    />
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-[#404040] text-md font-medium">Description</label>
+                            <textarea
+                                rows={12}
+                                cols={6}
+                                value={description}
+                                className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
+                                placeholder="This is sample description"
+                                onChange={(e) => setDescription(e.target.value)}
+                            />
+                        </div>
+                    </div>
+
                     <div className="flex gap-5">
                         <div className="flex flex-col gap-1.5 w-full">
                             <label className="text-[#404040] text-md font-medium">Image</label>
                             <div onClick={handleImageClick}>
                                 {selectedImage ? (
-                                    <Image src={selectedImage} alt="selected" width={120} height={120} className="border border-[#636363] px-5 py-2 rounded-lg my-3" />
+                                    <Image src={selectedImage} alt="selected" width={120} height={120} className="border border-[#636363] rounded-md my-3" />
                                 ) : (
-                                    <Image src={image} alt="background" width={120} height={120} className="border border-[#636363] px-5 py-2 rounded-lg my-3" />
+                                    <Image src={image} alt="background" width={120} height={120} className="border border-[#636363] rounded-md my-3" />
                                 )}
                             </div>
                             <input
@@ -232,7 +317,7 @@ const Page = () => {
                                 ref={fileInputRef}
                                 style={{ display: 'none' }}
                                 onChange={handleFileChange}
-                                className="border border-black rounded-[10px] px-4 py-2.5"
+                                className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
                             />
                         </div>
 
@@ -240,9 +325,9 @@ const Page = () => {
                             <label className="text-[#404040] text-md font-medium">Other Image</label>
                             <div onClick={handleImageClick}>
                                 {selectedImage ? (
-                                    <Image src={selectedImage} alt="selected" width={120} height={120} className="border border-[#636363] px-5 py-2 rounded-lg my-3" />
+                                    <Image src={selectedImage} alt="selected" width={120} height={120} className="border border-[#636363] rounded-md my-3" />
                                 ) : (
-                                    <Image src={otherImage} alt="background" width={120} height={120} className="border border-[#636363] px-5 py-2 rounded-lg my-3" />
+                                    <Image src={otherImage} alt="background" width={120} height={120} className="border border-[#636363] rounded-md my-3" />
                                 )}
                             </div>
                             <input
@@ -250,7 +335,7 @@ const Page = () => {
                                 ref={fileInputRef}
                                 style={{ display: 'none' }}
                                 onChange={handleFileChange}
-                                className="border border-black rounded-[10px] px-4 py-2.5"
+                                className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
                             />
                         </div>
                     </div>

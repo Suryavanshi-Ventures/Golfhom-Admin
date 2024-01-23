@@ -125,7 +125,6 @@ const Page = () => {
                 {blogList?.map((data) => (
                     <div key={data.id} className="flex flex-col gap-3 justify-between p-4 bg-white rounded-lg border border-[#C2C2C2] shadow-md">
                         <Link
-                            // href={`/Dashboard/ViewBlog/IndividualBlog/${data.id}`} 
                             href={{
                                 pathname: "/Dashboard/ViewBlog/IndividualBlog",
                                 query: { id: data.slug },
@@ -140,10 +139,15 @@ const Page = () => {
                                     dangerouslySetInnerHTML={{
                                         __html: DOMPurify.sanitize(truncateWords(data?.body, 25)),
                                     }}>
-                                </h5><Link href="/Dashboard/ViewBlog/IndividualBlog" className="text-[#FF6764] font-medium">Read More</Link>
+                                </h5><Link
+                                    href={{
+                                        pathname: "/Dashboard/ViewBlog/IndividualBlog",
+                                        query: { id: data.slug },
+                                    }}
+                                    className="text-[#FF6764] font-medium">Read More</Link>
                             </div>
                             <div className="flex justify-between py-4">
-                                <h3 className="text-[#888]"><span className="font-medium">Created at:</span> {formatDate(data.createdAt)}</h3>
+                                <h3><span className="font-medium">Created at:</span> {formatDate(data.createdAt)}</h3>
                                 <Image src="/icons/Delete.svg" alt='Delete' width={20} height={20} onClick={() => handleModalOpen(data.id)} className="cursor-pointer" />
                             </div>
                         </div>

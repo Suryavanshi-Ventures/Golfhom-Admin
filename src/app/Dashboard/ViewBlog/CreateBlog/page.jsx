@@ -117,7 +117,7 @@ const Page = () => {
                         <div className="flex flex-col gap-5 w-full">
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Title</label>
-                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder="Enter Title" onChange={(e) => setTitleName(e.target.value)} />
+                                <input type="text" className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Enter Title" onChange={(e) => setTitleName(e.target.value)} />
                                 {titleError && <div className="text-danger text-red-500 mt-1">Title is mandatory</div>}
                             </div>
                             <div className="flex flex-col gap-1.5">
@@ -127,7 +127,7 @@ const Page = () => {
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Tags</label>
-                                <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Tags' onChange={(e) => setTag(e.target.value)} />
+                                <input type="text" className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='Enter Tags' onChange={(e) => setTag(e.target.value)} />
                                 {tagError && <div className="text-danger text-red-500 mt-1">Tags is mandatory</div>}
                             </div>
                             <div className="flex flex-col gap-1.5 w-full">
@@ -144,7 +144,7 @@ const Page = () => {
                                     ref={fileInputRef}
                                     style={{ display: 'none' }}
                                     onChange={handleFileChange}
-                                    className="border border-black rounded-[10px] px-4 py-2.5"
+                                    className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
                                 />
                                 {imageError && <div className="text-danger text-red-500 mt-1">Blog Image is mandatory</div>}
                             </div>

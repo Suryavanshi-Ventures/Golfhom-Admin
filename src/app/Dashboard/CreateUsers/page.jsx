@@ -132,17 +132,17 @@ const Page = () => {
                     <form className="flex flex-col gap-5">
                         <div className="flex flex-col gap-1.5">
                             <label className="text-[#404040] text-md">Username</label>
-                            <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder="Enter Username" onChange={(e) => setCreateUsername(e.target.value)} />
+                            <input type="text" className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Enter Username" onChange={(e) => setCreateUsername(e.target.value)} />
                             {createUsernameError && <div className="text-danger text-red-500 mt-1">Username is mandatory</div>}
                         </div>
                         <div className="flex flex-col gap-1.5">
                             <label className="text-[#404040] text-md">Email</label>
-                            <input className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Your Email' onChange={(e) => setCreateEmail(e.target.value)} />
+                            <input className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='Enter Your Email' onChange={(e) => setCreateEmail(e.target.value)} />
                             {createEmailError && <div className="text-danger text-red-500 mt-1">Email is mandatory</div>}
                         </div>
                         <div className="flex flex-col gap-1.5">
                             <label className="text-[#404040] text-md">Password</label>
-                            <input type="password" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter your password' />
+                            <input type="password" className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='Enter your password' />
                         </div>
                         <div className="flex justify-center items-center">
                             <button type="Submit" onClick={handleCreateUser} className="bg-[#FF6764] border border-red-400 py-2.5 text-white font-medium my-4 rounded-[4px] w-1/3">Submit</button>
@@ -160,17 +160,17 @@ const Page = () => {
                     <form className="flex flex-col gap-5">
                         <div className="flex flex-col gap-1.5">
                             <label className="text-[#404040] text-md">Username</label>
-                            <input type="text" className="border border-black rounded-[10px] px-4 py-2.5" placeholder="Enter Username" onChange={(e) => setUsername(e.target.value)} />
+                            <input type="text" className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Enter Username" onChange={(e) => setUsername(e.target.value)} />
                             {usernameError && <div className="text-danger text-red-500 mt-1">Username is mandatory</div>}
                         </div>
                         <div className="flex flex-col gap-1.5">
                             <label className="text-[#404040] text-md">Email</label>
-                            <input className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter Your Email' onChange={(e) => setEmail(e.target.value)} />
+                            <input className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='Enter Your Email' onChange={(e) => setEmail(e.target.value)} />
                             {emailError && <div className="text-danger text-red-500 mt-1">Email is mandatory</div>}
                         </div>
                         <div className="flex flex-col gap-1.5">
                             <label className="text-[#404040] text-md">Password</label>
-                            <input type="password" className="border border-black rounded-[10px] px-4 py-2.5" placeholder='Enter your password' />
+                            <input type="password" className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='Enter your password' />
                         </div>
                         <div className="flex justify-center items-center">
                             <button type="Submit" onClick={createAdmin} className="bg-[#FF6764] border border-red-400 py-2.5 text-white font-medium my-4 rounded-[4px] w-1/3">Submit</button>
