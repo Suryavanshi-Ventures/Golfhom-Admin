@@ -149,7 +149,12 @@ const Page = () => {
                         </div>
                         <div className="flex justify-between p-4 gap-6">
                             <button className="bg-[#4BAF4F] text-white rounded-lg px-3 py-1">${data.price}</button>
-                            <Link href="/Dashboard/ViewProperty/UpdateProperty" className="bg-[#FF6764] text-white border border-[#FF6764] rounded-md py-1 w-24 text-center">Update</Link>
+                            <Link
+                                //  href={`/Dashboard/ViewProperty/UpdateProperty/${data.id}`} 
+                                href={{
+                                    pathname: "/Dashboard/ViewProperty/UpdateProperty",
+                                    query: { id: data.id },
+                                }} className="bg-[#FF6764] text-white border border-[#FF6764] rounded-md py-1 w-24 text-center">Update</Link>
                             {/* <button onClick={() => handleModalOpen(data.id)} className="bg-black text-white border border-black rounded-md py-1 w-24">Delete</button> */}
                         </div>
                     </div>

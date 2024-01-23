@@ -116,7 +116,13 @@ const Page = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 shadow-md">
                 {blogList?.map((data) => (
                     <div key={data.id} className="flex flex-col gap-3 p-4 bg-white rounded-lg border border-[#C2C2C2]">
-                        <Link href="/Dashboard/ViewBlog/IndividualBlog" className="w-full">
+                        <Link
+                            // href={`/Dashboard/ViewBlog/IndividualBlog/${data.id}`} 
+                            href={{
+                                pathname: "/Dashboard/ViewBlog/IndividualBlog",
+                                query: { id: data.id },
+                            }}
+                            className="w-full">
                             <Image src={data.image} alt='Sort' width={100} height={70} className="w-full" layout="responsive" />
                         </Link>
                         <h4 className="text-lg font-medium">{data.title}</h4>

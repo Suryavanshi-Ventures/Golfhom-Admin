@@ -55,8 +55,7 @@ const Page = () => {
         let newTags = typeof tag === "string" ? [tag] : tag;
         formData.append("tag", JSON.stringify(newTags));
         formData.append("image", image);
-        console.log("typeof", newTags)
-        // return false;
+
         try {
             const response = await axios.post(
                 `${process.env.NEXT_PUBLIC_API_URL}/blog`,

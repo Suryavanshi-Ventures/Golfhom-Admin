@@ -2,16 +2,18 @@
 import React, { useEffect, useState } from "react";
 import ProtectedRoute from "@/component/Protected Route/page";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
-const ViewBlog = ({ blogId }) => {
-    const router = useRouter();
-    const [blogData, setBlogData] = useState(null);
+const Page = () => {
     const [token, setToken] = useState(null);
+    const SearchParams = useSearchParams();
+    const BlogId = SearchParams.get("id");
+    const [blogList, setBlogList] = useState([]);
+    const [blogData, setBlogData] = useState(null);
 
-    const [data, setData] = useState({
-        blocks: [],
-    });
+    // const [data, setData] = useState({
+    //     blocks: [],
+    // });
 
     useEffect(() => {
         const item = localStorage.getItem("access_token");
@@ -19,18 +21,31 @@ const ViewBlog = ({ blogId }) => {
     }, []);
 
     useEffect(() => {
-        if (blogId) {
-            fetchBlogData();
+        if (BlogId) {
+            listBlog();
         }
-    }, [blogId, token]);
+    }, [BlogId, token]);
+
+    useEffect(() => {
+        if (blogList && blogList?.data) {
+            setNewPropertyName(blogList?.data?.name);
+            setAmenities(blogList?.data?.amenities);
+            setCheckIn(blogList?.data?.checkIn);
+            setAddress(blogList?.data?.address);
+            setBedroom(blogList?.data?.bedrooms);
+            setDescription(blogList?.data?.description);
+            setOwnerName(blogList?.data?.ownerName);
+            // setNewContent(propertyList?.data?.content);
+            // let content = JSON.parse(propertyList.data.content);
+            // setData({ blocks: content.blocks });
+        }
+        console.log("blogs blogList Data", blogList)
+    }, [blogList]);
 
     // GET PREVIOUS DATA ID
-    const fetchBlogData = async (blogId) => {
-        console.log("blogId")
-
+    const listBlog = async () => {
         try {
-            const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/blog/${blogId}`,
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/${BlogId}`,
                 {
                     method: "GET",
                     headers: {
@@ -43,24 +58,13 @@ const ViewBlog = ({ blogId }) => {
             if (!response.ok) {
                 throw new Error("Failed to fetch list");
             }
-            const blogListData = await response.json();
-            console.log("blogListData", blogListData)
-            if (blogListData.status === "success") {
-                setBlogData(blogListData.result);
-            } else {
-                throw new Error("Failed to fetch blog data");
+            const blogData = await response.json();
+            console.log("blogData", blogData)
+            if (blogData.status === "success") {
+                setBlogList(blogData);
             }
         } catch (error) {
-            toast.error('No previous data', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            console.log("error message", error)
         }
     };
 
@@ -87,4 +91,4 @@ const ViewBlog = ({ blogId }) => {
     );
 };
 
-export default ViewBlog;
+export default Page;
