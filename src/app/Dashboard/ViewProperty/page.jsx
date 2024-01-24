@@ -179,23 +179,24 @@ const Page = () => {
             )} */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {propertyList?.map((data) => (
-                    <div key={data.id} className="flex-shrink-0 flex-grow-0 w-full bg-white rounded-lg shadow-md">
-                        <div className="w-full">
-                            <Image src={data.imageUrl} alt='Property' width={260} height={170} className="w-full mb-4 rounded-t-lg" />
-                        </div>
-                        <div className="flex flex-wrap justify-between mx-4 my-1">
-                            <h4 className="font-semibold text-base">{data.name}</h4>
-                        </div>
-                        {/* <div className="flex justify-end px-4">
+                    <div key={data.id} className="flex flex-col justify-between flex-shrink-0 flex-grow-0 w-full bg-white rounded-lg shadow-md">
+                        <div>
+                            <div className="w-full">
+                                <Image src={data.imageUrl} alt='Property' width={260} height={170} className="w-full mb-4 rounded-t-lg" />
+                            </div>
+                            <div className="flex flex-wrap justify-between mx-4 my-1">
+                                <h4 className="font-semibold text-base">{data.name}</h4>
+                            </div>
+                            {/* <div className="flex justify-end px-4">
                         </div> */}
-                        <div className="flex flex-col px-4">
-                            <small className="font-normal">{data.bedrooms} Bedroom</small>
-                            <small className="font-normal">{data.bathrooms} Bathroom</small>
+                            <div className="flex flex-col px-4">
+                                <small className="font-normal">{data.bedrooms} Bedroom</small>
+                                <small className="font-normal">{data.bathrooms} Bathroom</small>
+                            </div>
                         </div>
                         <div className="flex justify-between p-4 gap-6">
                             <button className="bg-[#4BAF4F] text-white rounded-lg px-3 py-1">${data.price}</button>
                             <Link
-                                //  href={`/Dashboard/ViewProperty/UpdateProperty/${data.id}`} 
                                 href={{
                                     pathname: "/Dashboard/ViewProperty/UpdateProperty",
                                     query: { id: data.id },

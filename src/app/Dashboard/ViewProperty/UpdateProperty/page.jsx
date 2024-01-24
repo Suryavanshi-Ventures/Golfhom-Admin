@@ -27,26 +27,34 @@ const Page = () => {
     const [accommodation, setAccommodation] = useState("");
     const [bathroom, setBathroom] = useState("");
     const [image, setImage] = useState("");
-    const [otherImage, setOtherImage] = useState("");
+    const [otherImage, setOtherImage] = useState([]);
     const [amenityList, setAmenityList] = useState([]);
     const [status, setStatus] = useState("");
 
-    const handleInputChange = (e) => {
-        setAmenities(e.target.value);
+    const handleAmenityChange = (e) => {
+        const AmenityValue = e.target.value;
+        setAmenities(AmenityValue);
     };
-
-    const handleAddAmenity = () => {
-        const trimmedAmenity = amenities.toString().trim();
-        if (trimmedAmenity !== '') {
-            setAmenityList([...amenityList, trimmedAmenity]);
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleAddTag();
+        }
+    };
+    const handleAddTag = () => {
+        if (amenities) {
+            setAmenityList((prevAmenity) => [...prevAmenity, amenities]);
             setAmenities('');
         }
     };
 
+    const handleOtherImageChange = (e) => {
+        const selectedOtherImages = Array.from(e.target.files);
+        const otherImageUrls = selectedOtherImages.map(image => URL.createObjectURL(image));
+        setOtherImage(otherImageUrls);
+    };
     const handleRemoveAmenity = (index) => {
-        const updatedAmenities = [...amenityList];
-        updatedAmenities.splice(index, 1);
-        setAmenityList(updatedAmenities);
+        setAmenityList((prevAmenity) => prevAmenity.filter((_, i) => i !== index));
     };
 
     const fileInputRef = useRef(null);
@@ -57,6 +65,11 @@ const Page = () => {
     };
     const handleImageClick = () => {
         fileInputRef.current.click();
+    };
+    const handleRemoveOtherImage = (index) => {
+        const updatedOtherImages = [...otherImage];
+        updatedOtherImages.splice(index, 1);
+        setOtherImage(updatedOtherImages);
     };
 
     useEffect(() => {
@@ -73,7 +86,7 @@ const Page = () => {
     useEffect(() => {
         if (propertyList && propertyList?.data) {
             setNewPropertyName(propertyList?.data?.name);
-            setAmenities(propertyList?.data?.amenities);
+            setAmenityList(propertyList?.data?.amenities);
             setCheckIn(propertyList?.data?.checkIn);
             setAddress(propertyList?.data?.address);
             setBedroom(propertyList?.data?.bedrooms);
@@ -86,10 +99,6 @@ const Page = () => {
             setImage(propertyList?.data?.imageUrl);
             setOtherImage(propertyList?.data?.otherImageUrls);
             setStatus(propertyList?.data?.status || "Draft");
-
-            // setNewContent(propertyList?.data?.content);
-            // let content = JSON.parse(propertyList.data.content);
-            // setData({ blocks: content.blocks });
         }
     }, [propertyList]);
 
@@ -121,32 +130,30 @@ const Page = () => {
 
     // UPDATE PROPERTY API
     async function handleUpdateProperty(e) {
-        // e.preventDefault();
+        setIsSubmitting(true);
+        e.preventDefault();
 
-        // setUsernameError(!username);
-        // setAmenitiesError(!amenities);
-        // setCheckInError(!checkIn);
-        // setAddressError(!address);
-        // setBedroomError(!bedroom);
-        // setDescriptionError(!description);
-        // setOwnerNameError(!ownerName);
-        // setPricesError(!prices);
-        // setCheckOutError(!checkOut);
-        // setAccommodationError(!accommodation);
-        // setBathroomError(!bathroom);
-        // setImageError(!image);
-
-        // if (!username || !amenities || !checkIn || !address || !bedroom || !description || !ownerName || !prices || !checkOut || !accommodation || !bathroom || !image) {
-        //     return;
-        // }
-
-        // const data = { name: username, ownerName: ownerName, description: description, accomodation: accommodation, bedrooms: bedroom, bathrooms: bathroom, checkIn: checkIn, checkOut: checkOut, amenities: amenities, image: image, price: prices }
+        const data = {
+            name: newPropertyName,
+            ownerName: ownerName,
+            description: description,
+            accomodation: accommodation,
+            bedrooms: bedroom,
+            bathrooms: bathroom,
+            checkIn: checkIn,
+            checkOut: checkOut,
+            amenities: Array.isArray(amenityList) ? 'amenityList' : [amenityList],
+            // image: image,
+            otherImageUrls: otherImage,
+            price: prices,
+            status: status,
+        };
 
         try {
             const response = await axios.patch(
                 `${process.env.NEXT_PUBLIC_API_URL}/property/${PropertyId}`, data, {
                 headers: {
-                    "Content-Type": "multipart/form-data",
+                    "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`
                 }
             });
@@ -177,6 +184,9 @@ const Page = () => {
             });
             console.log("error", error)
         }
+        finally {
+            setIsSubmitting(false);
+        }
     }
 
     return (
@@ -185,31 +195,33 @@ const Page = () => {
             <div className="flex flex-col bg-white rounded-lg p-5 gap-4 z-50">
                 <h2 className="mb-1 font-medium text-2xl">Update Property</h2>
 
-                <div>
+                <div className="flex flex-col gap-2 mb-3">
                     <h5>Status: <span className="text-green-500 font-medium">{status}</span></h5>
-                    <div className="flex gap-2">
-                        <input
-                            type='radio'
-                            checked={status === 'Active'}
-                            onChange={() => setStatus('Active')}
-                        />
-                        <p>Active</p>
-                    </div>
-                    <div className="flex gap-2">
-                        <input
-                            type='radio'
-                            checked={status === 'Inactive'}
-                            onChange={() => setStatus('Inactive')}
-                        />
-                        <p>Inactive</p>
-                    </div>
-                    <div className="flex gap-2">
-                        <input
-                            type='radio'
-                            checked={status === 'Draft'}
-                            onChange={() => setStatus('Draft')}
-                        />
-                        <p>Draft</p>
+                    <div>
+                        <div className="flex gap-2">
+                            <input
+                                type='radio'
+                                checked={status === 'Active'}
+                                onChange={() => setStatus('Active')}
+                            />
+                            <p>Active</p>
+                        </div>
+                        <div className="flex gap-2">
+                            <input
+                                type='radio'
+                                checked={status === 'Inactive'}
+                                onChange={() => setStatus('Inactive')}
+                            />
+                            <p>Inactive</p>
+                        </div>
+                        <div className="flex gap-2">
+                            <input
+                                type='radio'
+                                checked={status === 'Draft'}
+                                onChange={() => setStatus('Draft')}
+                            />
+                            <p>Draft</p>
+                        </div>
                     </div>
                 </div>
 
@@ -265,27 +277,31 @@ const Page = () => {
                         </div>
                     </div>
                     <div className="flex flex-col gap-5">
-                        <div className="flex flex-col gap-1.5">
+                        <div className="flex flex-col gap-1.5 w-full">
                             <label className="text-[#404040] text-md font-medium">Amenities</label>
-                            <div className="amenities-input-container">
-                                <ul className="list-disc">
-                                    {amenityList.map((amenity, index) => (
-                                        <li key={index} className="text-sm amenity-tag">
-                                            {amenity}
-                                            <span onClick={() => handleRemoveAmenity(index)} className="cursor-pointer">&times;</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                                {!isSubmitting && (
-                                    <input
-                                        type="text"
-                                        value={amenities}
-                                        className="w-full text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
-                                        placeholder="Example wifi pool etc"
-                                        onChange={handleInputChange}
-                                        onBlur={handleAddAmenity}
-                                    />
-                                )}
+                            <div className="flex flex-row flex-wrap gap-2 mt-2 bg-gray-100 rounded-md px-4 py-2.5">
+                                {amenityList.map((amenityItem, index) => (
+                                    <div key={index} className="flex flex-row items-center bg-gray-200 rounded-full py-1 px-4 w-fit">
+                                        <span className="mr-2">{amenityItem}</span>
+                                        <button
+                                            type="button"
+                                            onClick={() => handleRemoveAmenity(index)}
+                                            className="text-gray-600 font-semibold text-sm cursor-pointer"
+                                        >
+                                            &times;
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="flex flex-col gap-2 items-center">
+                                <input
+                                    type="text"
+                                    value={amenities}
+                                    className="w-full text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
+                                    placeholder="Example wifi pool etc"
+                                    onChange={handleAmenityChange}
+                                    onKeyDown={handleKeyDown}
+                                />
                             </div>
                         </div>
 
@@ -302,14 +318,14 @@ const Page = () => {
                         </div>
                     </div>
 
-                    <div className="flex gap-5">
+                    <div className="flex flex-col gap-5">
                         <div className="flex flex-col gap-1.5 w-full">
                             <label className="text-[#404040] text-md font-medium">Image</label>
                             <div onClick={handleImageClick}>
                                 {selectedImage ? (
-                                    <Image src={selectedImage} alt="selected" width={120} height={120} className="border border-[#636363] rounded-md my-3" />
+                                    <Image src={selectedImage} alt="selected" width={320} height={320} className="border border-[#636363] rounded-md my-3" />
                                 ) : (
-                                    <Image src={image} alt="background" width={120} height={120} className="border border-[#636363] rounded-md my-3" />
+                                    <Image src={image} alt="background" width={320} height={320} className="border border-[#636363] rounded-md my-3" />
                                 )}
                             </div>
                             <input
@@ -322,21 +338,41 @@ const Page = () => {
                         </div>
 
                         <div className="flex flex-col gap-1.5 w-full">
-                            <label className="text-[#404040] text-md font-medium">Other Image</label>
-                            <div onClick={handleImageClick}>
-                                {selectedImage ? (
-                                    <Image src={selectedImage} alt="selected" width={120} height={120} className="border border-[#636363] rounded-md my-3" />
-                                ) : (
-                                    <Image src={otherImage} alt="background" width={120} height={120} className="border border-[#636363] rounded-md my-3" />
-                                )}
+                            <label className="text-[#404040] text-md font-medium">Other Images Preview</label>
+                            <div className="flex flex-wrap gap-2 mt-2">
+                                {otherImage.slice(0, 8).map((imageUrl, index) => (
+                                    <div key={index} className="relative">
+                                        <span
+                                            onClick={() => handleRemoveOtherImage(index)}
+                                            className="absolute top-2 right-2 cursor-pointer text-red-500 bg-gray-100 rounded-full px-2 py-0.5 font-bold text-lg opacity-1"
+                                        >
+                                            &times;
+                                        </span>
+                                        <Image
+                                            src={imageUrl}
+                                            alt={`other-image-${index}`}
+                                            width={220}
+                                            height={220}
+                                            className="border border-[#636363] rounded-md"
+                                        />
+                                    </div>
+                                ))}
                             </div>
                             <input
                                 type="file"
                                 ref={fileInputRef}
                                 style={{ display: 'none' }}
-                                onChange={handleFileChange}
+                                onChange={handleOtherImageChange}
                                 className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
+                                multiple
                             />
+                            <button
+                                type="button"
+                                onClick={handleImageClick}
+                                className="bg-gray-400 w-fit rounded-[4px] px-4 py-1 mt-2 text-white"
+                            >
+                                Add Images
+                            </button>
                         </div>
                     </div>
                     <div className="flex gap-4 justify-start">
@@ -349,4 +385,4 @@ const Page = () => {
     )
 }
 
-export default Page
+export default Page;

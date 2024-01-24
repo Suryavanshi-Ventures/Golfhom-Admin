@@ -4,7 +4,6 @@ import ProtectedRoute from "@/component/Protected Route/page";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import DOMPurify from "dompurify";
 import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -78,7 +77,7 @@ const Page = () => {
         if (blogList && blogList?.data) {
             setTitle(blogList?.data?.title);
             setBody(blogList?.data?.body);
-            setTag(blogList?.data?.tag);
+            setTags(blogList?.data?.tag);
             setBlogImage(blogList?.data?.image);
             setCreatedAt(blogList?.data?.createdAt);
         }
@@ -111,26 +110,23 @@ const Page = () => {
 
     // UPDATE BLOG API
     async function handleUpdateBlog(e) {
+        setIsSubmitting(true);
         e.preventDefault();
 
         const formData = new FormData();
         formData.append("title", title);
         formData.append("body", editorContent);
-        let newTags = typeof tag === "string" ? [tag] : tag;
-        formData.append("tag", JSON.stringify(newTags));
+        formData.append("tag", JSON.stringify(tags));
         formData.append("image", blogImage);
         formData.append("createdAt", createdAt);
-
         try {
             const response = await axios.patch(
-                `${process.env.NEXT_PUBLIC_API_URL}/blog/${BlogId}`, formData, {
+                `${process.env.NEXT_PUBLIC_API_URL}/blog/${blogList.data.id}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${token}`
                 }
             });
-            console.log("formData", formData)
-
             toast.success('Successfully Submitted', {
                 position: "top-right",
                 autoClose: 5000,
@@ -156,6 +152,9 @@ const Page = () => {
             });
             console.log("error", error)
         }
+        finally {
+            setIsSubmitting(false);
+        }
     }
 
     return (
@@ -179,6 +178,20 @@ const Page = () => {
 
                 <div className="flex flex-col gap-1">
                     <label className="font-bold text-xl px-2">Tag Name</label>
+                    <div className="flex gap-2 mt-2">
+                        {tags.map((tagItem, index) => (
+                            <div key={index} className="flex items-center bg-gray-200 rounded-full py-1 px-4">
+                                <span className="mr-2">{tagItem}</span>
+                                <button
+                                    type="button"
+                                    onClick={() => handleRemoveTag(index)}
+                                    className="text-gray-600 font-semibold text-sm"
+                                >
+                                    &times;
+                                </button>
+                            </div>
+                        ))}
+                    </div>
                     <div className="flex gap-2 items-center">
                         <input
                             type="text"
@@ -189,20 +202,6 @@ const Page = () => {
                             onChange={handleTagChange}
                             onKeyDown={handleKeyDown}
                         />
-                    </div>
-                    <div className="flex gap-2 mt-2">
-                        {tags.map((tagItem, index) => (
-                            <div key={index} className="flex items-center bg-gray-200 rounded-full py-1 px-4">
-                                <span className="mr-2">{tagItem}</span>
-                                <button
-                                    type="button"
-                                    onClick={() => handleRemoveTag(index)}
-                                    className="text-gray-600 font-semibold text-sm"
-                                >
-                                    X
-                                </button>
-                            </div>
-                        ))}
                     </div>
                 </div>
 

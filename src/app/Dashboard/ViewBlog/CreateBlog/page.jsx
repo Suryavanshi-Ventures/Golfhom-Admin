@@ -25,6 +25,26 @@ const Page = () => {
     const [image, setImage] = useState(null);
     const [editorContent, setEditorContent] = useState('');
     const [data, setData] = useState({});
+    const [tags, setTags] = useState([]);
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleAddTag();
+        }
+    };
+
+    const handleAddTag = () => {
+        if (tag) {
+            setTags((prevTags) => [...prevTags, tag]);
+            setTag('');
+        }
+        console.log("tag", tag)
+    };
+
+    const handleRemoveTag = (index) => {
+        setTags((prevTags) => prevTags.filter((_, i) => i !== index));
+    };
 
     const handleImageClick = () => {
         fileInputRef.current.click();
@@ -51,19 +71,18 @@ const Page = () => {
         e.preventDefault();
 
         setTitleError(!titleName);
-        setTagError(!tag);
+        setTagError(!tags.length);
         setImageError(!image);
         setEditorContentError(!data);
 
-        if (!titleName || !tag || !image || !editorContent) {
+        if (!titleName || !tags.length || !image || !editorContent) {
             return;
         }
 
         const formData = new FormData();
         formData.append("title", titleName);
         formData.append("body", editorContent);
-        let newTags = typeof tag === "string" ? [tag] : tag;
-        formData.append("tag", JSON.stringify(newTags));
+        formData.append('tag', JSON.stringify(tags));
         formData.append("image", image);
 
         try {
@@ -125,10 +144,35 @@ const Page = () => {
                                 <Editor data={data.body} onChangeEditor={setEditorContent} />
                                 {editorContentError && <div className="text-danger text-red-500 mt-1">Content is mandatory</div>}
                             </div>
-                            <div className="flex flex-col gap-1.5">
-                                <label className="text-[#404040] text-md font-medium">Tags</label>
-                                <input type="text" className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='Enter Tags' onChange={(e) => setTag(e.target.value)} />
-                                {tagError && <div className="text-danger text-red-500 mt-1">Tags is mandatory</div>}
+                            <div className="flex flex-col gap-1">
+                                <div className="flex flex-col gap-1.5">
+                                    <label className="text-[#404040] text-md font-medium">Tags</label>
+                                    <div className="flex flex-wrap gap-2">
+                                        {tags.map((tag, index) => (
+                                            <div key={index} className="flex items-center bg-gray-200 rounded-full py-1 px-4">
+                                                <span className="mr-2">{tag}</span>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => handleRemoveTag(index)}
+                                                    className="text-gray-600 font-semibold"
+                                                >
+                                                    &times;
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <input
+                                        type="text"
+                                        placeholder="Enter Tag"
+                                        className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
+                                        value={tag}
+                                        onChange={(e) => setTag(e.target.value)}
+                                        onKeyDown={handleKeyDown}
+                                    />
+                                    {tagError && (
+                                        <div className="text-danger text-red-500 mt-1">Tags is mandatory</div>
+                                    )}
+                                </div>
                             </div>
                             <div className="flex flex-col gap-1.5 w-full">
                                 <label className="text-[#404040] text-md font-medium">Blog Image</label>
