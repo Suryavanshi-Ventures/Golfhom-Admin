@@ -266,7 +266,7 @@ const Page = () => {
                             <div className="col-span-6 xl:col-span-4">
                                 {selectedMessage && (
                                     <div className="mt-4">
-                                        <h4 className="font-medium text-lg">{selectedMessage.subject}</h4>
+                                        <h4 className="font-medium text-lg mb-2.5">{selectedMessage.subject}</h4>
                                         <p className="font-normal text-base">{selectedMessage.message}</p>
                                     </div>
                                 )}

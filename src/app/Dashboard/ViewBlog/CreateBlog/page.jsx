@@ -116,7 +116,7 @@ const Page = () => {
                 });
             toast.success('Successfully Created', {
                 position: "top-right",
-                autoClose: 5000,
+                autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -129,7 +129,7 @@ const Page = () => {
         } catch (error) {
             toast.error('Blog Already Exists', {
                 position: "top-right",
-                autoClose: 5000,
+                autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,

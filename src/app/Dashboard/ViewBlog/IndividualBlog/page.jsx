@@ -127,9 +127,9 @@ const Page = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            toast.success('Successfully Submitted', {
+            toast.success('Successfully Updated', {
                 position: "top-right",
-                autoClose: 5000,
+                autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -140,9 +140,9 @@ const Page = () => {
             setTimeout(() => { router.push('/Dashboard/ViewBlog') }, 1500);
             setIsEditable(false);
         } catch (error) {
-            toast.error('Data Already Exists', {
+            toast.error('Not Updated', {
                 position: "top-right",
-                autoClose: 5000,
+                autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
