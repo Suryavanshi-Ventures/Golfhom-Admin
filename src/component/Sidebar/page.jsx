@@ -42,7 +42,7 @@ const Page = () => {
 
                         <Link href="/Dashboard" className='cursor-pointer'>
                             <div className={`${isLinkActive('/Dashboard') ? 'text-white bg-[#FF6764] w-full' : 'bg-white'} py-2 px-3 flex gap-2 rounded-lg inline-block`}>
-                                <Image src="/icons/Dashboard.svg" alt='Dashboard' width={20} height={10} className={`${isLinkActive('/Dashboard') ? 'invert' : ''}`} />
+                                <Image src="/icons/dashboard.svg" alt='Dashboard' width={20} height={10} className={`${isLinkActive('/Dashboard') ? 'invert' : ''}`} />
                                 <h4>Dashboard</h4>
                             </div>
                         </Link>
