@@ -126,7 +126,7 @@ const Page = () => {
                 <div>
                     <h4
                         onClick={() => handleStatusClick('All')}
-                        className={`${activeStatus === 'All' ? 'bg-[#FF6764] border border-[#FF6764] text-white' : 'bg-white text-black'
+                        className={`${activeStatus === 'All' ? 'bg-[#FF6764] opacity-[0.8] border border-[#FF6764] text-white' : 'bg-white text-black'
                             } cursor-pointer px-3 py-1 w-24 text-center rounded-md font-normal`}
                     >
                         All
@@ -135,7 +135,7 @@ const Page = () => {
                 <div>
                     <h4
                         onClick={() => handleStatusClick('Draft')}
-                        className={`${activeStatus === 'Draft' ? 'bg-[#FF6764] border border-[#FF6764] text-white' : 'bg-white text-black'
+                        className={`${activeStatus === 'Draft' ? 'bg-[#FF6764] opacity-[0.8] border border-[#FF6764] text-white' : 'bg-white text-black'
                             } cursor-pointer px-3 py-1 w-24 text-center rounded-md font-normal`}
                     >
                         Draft
@@ -144,7 +144,7 @@ const Page = () => {
                 <div>
                     <h4
                         onClick={() => handleStatusClick('Active')}
-                        className={`${activeStatus === 'Active' ? 'bg-[#FF6764] border border-[#FF6764] text-white' : 'bg-white text-black'
+                        className={`${activeStatus === 'Active' ? 'bg-[#FF6764] opacity-[0.8] border border-[#FF6764] text-white' : 'bg-white text-black'
                             } cursor-pointer px-3 py-1 w-24 text-center rounded-md font-normal`}
                     >
                         Active
@@ -153,7 +153,7 @@ const Page = () => {
                 <div>
                     <h4
                         onClick={() => handleStatusClick('Inactive')}
-                        className={`${activeStatus === 'Inactive' ? 'bg-[#FF6764] border border-[#FF6764] text-white' : 'bg-white text-black'
+                        className={`${activeStatus === 'Inactive' ? 'bg-[#FF6764] opacity-[0.8] border border-[#FF6764] text-white' : 'bg-white text-black'
                             } cursor-pointer px-3 py-1 w-24 text-center rounded-md font-normal`}
                     >
                         Inactive
@@ -171,7 +171,7 @@ const Page = () => {
                         <p>Property Id : {userToDelete}</p>
                         <p>You want to delete this property</p>
                         <div className="flex gap-4 justify-center">
-                            <button onClick={() => handleDeleteProperty(userToDelete)} className="bg-[#FF6764] rounded-full px-4 py-1 text-white w-fit">Delete</button>
+                            <button onClick={() => handleDeleteProperty(userToDelete)} className="bg-[#FF6764] opacity-[0.8] rounded-full px-4 py-1 text-white w-fit">Delete</button>
                             <button onClick={handleCancelDelete} className="bg-gray-400 rounded-full px-4 py-1 text-white">Cancel</button>
                         </div>
                     </div>
@@ -182,7 +182,7 @@ const Page = () => {
                     <div key={data.id} className="flex flex-col justify-between flex-shrink-0 flex-grow-0 w-full bg-white rounded-lg shadow-md">
                         <div>
                             <div className="w-full">
-                                <Image src={data.imageUrl} alt='Property' width={260} height={170} className="w-full h-52 object-cover mb-4 rounded-t-lg" />
+                                <Image src={data.imageUrl ?? "/noImageFound.png"} alt='Property' width={260} height={170} className="w-full h-52 object-cover mb-4 rounded-t-lg" />
                             </div>
                             <div className="flex flex-wrap justify-between mx-4 my-1">
                                 <h4 className="font-semibold text-base">{data.name}</h4>
@@ -200,7 +200,7 @@ const Page = () => {
                                 href={{
                                     pathname: "/Dashboard/ViewProperty/UpdateProperty",
                                     query: { id: data.id },
-                                }} className="bg-[#FF6764] text-white border border-[#FF6764] rounded-md py-1 w-24 text-center">View</Link>
+                                }} className="bg-[#FF6764] opacity-[0.8] text-white border border-[#FF6764] rounded-md py-1 w-24 text-center">View</Link>
                             {/* <button onClick={() => handleModalOpen(data.id)} className="bg-black text-white border border-black rounded-md py-1 w-24">Delete</button> */}
                         </div>
                     </div>

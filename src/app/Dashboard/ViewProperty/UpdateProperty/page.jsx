@@ -376,7 +376,7 @@ const Page = () => {
                         </div>
                     </div>
                     <div className="flex gap-4 justify-start">
-                        <button onClick={(e) => handleUpdateProperty(e, userUpdate)} className="bg-[#FF6764] rounded-[4px] px-4 py-1 text-white w-fit" disabled={isSubmitting}>{isSubmitting ? 'Updating...' : 'Update'}</button>
+                        <button onClick={(e) => handleUpdateProperty(e, userUpdate)} className="bg-[#FF6764] opacity-[0.8] rounded-[4px] px-4 py-1 text-white w-fit" disabled={isSubmitting}>{isSubmitting ? 'Updating...' : 'Update'}</button>
                         <Link href="/Dashboard/ViewProperty" className="bg-gray-400 rounded-[4px] px-4 py-1 text-white">Cancel</Link>
                     </div>
                 </form>

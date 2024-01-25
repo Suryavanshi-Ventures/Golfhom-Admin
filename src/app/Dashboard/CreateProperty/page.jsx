@@ -223,7 +223,7 @@ const Page = () => {
                         </div>
                     </div>
                     <div className="flex justify-start items-center gap-4">
-                        <button type="Submit" onClick={handleCreateProperty} className="bg-[#FF6764] border border-red-400 px-4 py-1 text-white font-medium rounded-[4px]">Save</button>
+                        <button type="Submit" onClick={handleCreateProperty} className="bg-[#FF6764] opacity-[0.8] border border-red-400 px-4 py-1 text-white font-medium rounded-[4px]">Save</button>
                         <Link href="/Dashboard/ViewProperty" className="bg-gray-400 rounded-[4px] px-4 py-1 text-white">Cancel</Link>
                     </div>
                 </form>

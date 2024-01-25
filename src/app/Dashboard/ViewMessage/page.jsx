@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import ProtectedRoute from '@/component/Protected Route/page';
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify';
 
 const Page = () => {
     const [token, setToken] = useState(null);
@@ -91,8 +92,27 @@ const Page = () => {
             }
             setMessageList((prevMessageList) => prevMessageList.filter(message => message.id !== messageId));
             setDeleteOpen(false);
+            toast.success('Successfully Deleted', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
         } catch (error) {
-            console.error("Error deleting message:", error);
+            toast.error('Not Deleted', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
         }
     };
 
@@ -102,16 +122,16 @@ const Page = () => {
                 <h4 className="text-2xl font-medium">Messages</h4>
             </div>
             {/* <div className="bg-white pt-3 px-4 flex gap-8 items-center rounded-sm">
-                <div><h4 className="bg-[#FF6764] border border-[#FF6764] px-5 py-3 rounded-md text-white font-normal">Contact Us</h4></div>
+                <div><h4 className="bg-[#FF6764] opacity-[0.8] border border-[#FF6764] px-5 py-3 rounded-md text-white font-normal">Contact Us</h4></div>
                 <div><h4 className="font-medium">Contact to host</h4></div>
             </div> */}
             {deleteOpen && (
-                <div className="fixed inset-0 bg-gray-300 bg-opacity-5 flex flex-col items-center justify-center z-50">
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center z-50">
                     <div className="flex flex-col bg-white rounded-lg p-5 gap-4 z-50">
                         <p>Message Id : {userToDelete}</p>
                         <p>You want to delete this message</p>
                         <div className="flex gap-4 justify-center">
-                            <button onClick={() => handleDeleteMessage(userToDelete)} className="bg-[#FF6764] rounded-[4px] px-4 py-1 text-white w-fit">Delete</button>
+                            <button onClick={() => handleDeleteMessage(userToDelete)} className="bg-[#FF6764] opacity-[0.8] rounded-[4px] px-4 py-1 text-white w-fit">Delete</button>
                             <button onClick={handleCancelDelete} className="bg-gray-400 rounded-[4px] px-4 py-1 text-white">Cancel</button>
                         </div>
                     </div>

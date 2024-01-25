@@ -56,19 +56,28 @@ const Page = () => {
         setImage(selectedFile);
     };
 
+    const editorConfig = {
+        toolbar: [
+            "heading",
+            "|",
+            "bold",
+            "italic",
+            'link',
+            "|",
+            "bulletedList",
+            "numberedList",
+            "|",
+            "undo",
+            "redo",
+        ],
+        removeButtons: "Image,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe",
+        removePlugins: "image,uploadimage,mediaembed",
+    };
+    console.log("editorConfig", editorConfig)
+
     useEffect(() => {
         const item = localStorage.getItem("access_token");
         setToken(item);
-        toast.error('Data Already Exists', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
     }, [])
 
 
@@ -105,7 +114,7 @@ const Page = () => {
                         Authorization: `Bearer ${token}`
                     }
                 });
-            toast.success('Successfully Submitted', {
+            toast.success('Successfully Created', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -118,7 +127,7 @@ const Page = () => {
             setTimeout(() => { router.push('/Dashboard/ViewBlog') }, 1500);
 
         } catch (error) {
-            toast.error('Data Already Exists', {
+            toast.error('Blog Already Exists', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -128,7 +137,6 @@ const Page = () => {
                 progress: undefined,
                 theme: "light",
             });
-            console.log("error", error)
         }
     }
 
@@ -151,7 +159,7 @@ const Page = () => {
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Content</label>
-                                <Editor data={data.body} onChangeEditor={setEditorContent} />
+                                <Editor data={data.body} onChangeEditor={setEditorContent} config={editorConfig} />
                                 {editorContentError && <div className="text-danger text-red-500 mt-1">Content is mandatory</div>}
                             </div>
                             <div className="flex flex-col gap-1">
@@ -180,8 +188,9 @@ const Page = () => {
                                         onKeyDown={handleKeyDown}
                                         title="Fill in a tag and press Enter to add"
                                     />
+                                    <small className="text-gray-400 font-medium">Fill in a tag and press Enter to add</small>
                                     {tagError && (
-                                        <div className="text-danger text-red-500 mt-1">Tags is mandatory</div>
+                                        <div className="text-danger text-red-500">Tags is mandatory</div>
                                     )}
                                 </div>
                             </div>
@@ -206,7 +215,7 @@ const Page = () => {
                         </div>
                     </div>
                     <div className="flex justify-start items-center gap-3">
-                        <button type="Submit" onClick={handleCreateUser} className="bg-[#FF6764] border border-red-400 px-4 py-1 text-white font-medium my-4 rounded-[4px]">Save</button>
+                        <button type="Submit" onClick={handleCreateUser} className="bg-[#FF6764] opacity-[0.8] border border-red-400 px-4 py-1 text-white font-medium my-4 rounded-[4px]">Save</button>
                         <Link href="/Dashboard/ViewBlog" className="bg-gray-400 rounded-[4px] px-4 py-1 text-white">Back</Link>
                     </div>
                 </form>

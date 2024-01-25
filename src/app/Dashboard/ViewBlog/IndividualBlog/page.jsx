@@ -225,14 +225,14 @@ const Page = () => {
                 <div className="flex gap-4 justify-end">
                     <button
                         onClick={() => setIsEditable(true)}
-                        className="bg-[#FF6764] rounded-[4px] px-4 py-1 text-white w-fit"
+                        className="bg-[#FF6764] opacity-[0.8] rounded-[4px] px-4 py-1 text-white w-fit"
                         disabled={isEditable}
                     >
                         Edit
                     </button>
                     <button
                         onClick={handleUpdateBlog}
-                        className="bg-[#FF6764] rounded-[4px] px-4 py-1 text-white w-fit"
+                        className="bg-[#FF6764] opacity-[0.8] rounded-[4px] px-4 py-1 text-white w-fit"
                         disabled={isSubmitting || !isEditable}
                     >
                         {isSubmitting ? "Updating..." : "Update"}

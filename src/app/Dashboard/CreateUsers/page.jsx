@@ -145,7 +145,7 @@ const Page = () => {
                             <input type="password" className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='Enter your password' />
                         </div>
                         <div className="flex justify-center items-center">
-                            <button type="Submit" onClick={handleCreateUser} className="bg-[#FF6764] border border-red-400 py-2.5 text-white font-medium my-4 rounded-[4px] w-1/3">Submit</button>
+                            <button type="Submit" onClick={handleCreateUser} className="bg-[#FF6764] opacity-[0.8] border border-red-400 py-2.5 text-white font-medium my-4 rounded-[4px] w-1/3">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -173,7 +173,7 @@ const Page = () => {
                             <input type="password" className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='Enter your password' />
                         </div>
                         <div className="flex justify-center items-center">
-                            <button type="Submit" onClick={createAdmin} className="bg-[#FF6764] border border-red-400 py-2.5 text-white font-medium my-4 rounded-[4px] w-1/3">Submit</button>
+                            <button type="Submit" onClick={createAdmin} className="bg-[#FF6764] opacity-[0.8] border border-red-400 py-2.5 text-white font-medium my-4 rounded-[4px] w-1/3">Submit</button>
                         </div>
                     </form>
                 </div>

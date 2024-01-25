@@ -102,8 +102,27 @@ const ViewUsers = () => {
             setDeleteViewListUsers(responseData);
             setDeleteOpen(false);
             setTimeout(() => { setDeleteOpen(false); }, 10000);
+            toast.success('Successfully Deleted', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
         } catch (error) {
-            console.error("Error deleting user:", error);
+            toast.error('Not Deleted', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
         }
     };
 
@@ -197,7 +216,7 @@ const ViewUsers = () => {
                         <p className="text-black bg-yellow-400 font-semibold">Update API in progress</p>
 
                         <div className="flex gap-4 justify-center">
-                            {/* <button onClick={(e) => handleUpdate(e, userUpdate)} className="bg-[#FF6764] rounded-[4px] px-4 py-1 text-white w-fit" disabled={isSubmitting}>{isSubmitting ? 'Updating...' : 'Update'}</button> */}
+                            {/* <button onClick={(e) => handleUpdate(e, userUpdate)} className="bg-[#FF6764] opacity-[0.8] rounded-[4px] px-4 py-1 text-white w-fit" disabled={isSubmitting}>{isSubmitting ? 'Updating...' : 'Update'}</button> */}
                             <button onClick={handleCancelUpdate} className="bg-gray-400 rounded-[4px] px-4 py-1 text-white">Cancel</button>
                         </div>
                     </form>

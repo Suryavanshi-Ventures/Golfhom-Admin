@@ -250,7 +250,7 @@ const Page = () => {
                                 {messageList?.slice(0, 5).map((data, index) => (
                                     <div
                                         key={index}
-                                        className={`mb-3.5 cursor-pointer ${selectedMessage === data ? 'bg-[#FF6764] text-white rounded-lg py-2' : ''
+                                        className={`mb-3.5 cursor-pointer ${selectedMessage === data ? 'bg-[#FF6764] opacity-[0.8] text-white rounded-lg py-2' : ''
                                             }`}
                                         onClick={() => setSelectedMessage(data)}
                                     >
