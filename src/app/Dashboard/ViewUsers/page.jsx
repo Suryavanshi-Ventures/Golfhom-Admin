@@ -230,7 +230,7 @@ const ViewUsers = () => {
                             <th className="py-8 text-start bg-[#F7F7F7]">Email</th>
                             <th className="py-8 px-3 text-start bg-[#F7F7F7]">Created</th>
                             <th className="py-8 px-5 text-start bg-[#F7F7F7]">Status</th>
-                            <th className="py-8 text-center bg-[#F7F7F7] rounded-tr-lg">Delete</th>
+                            <th className="py-8 text-center bg-[#F7F7F7] rounded-tr-lg pr-2 lg:pr-0">Delete</th>
                             {/* <th className="py-8 px-4 text-center bg-[#F7F7F7] rounded-tr-lg">Update</th> */}
                         </tr>
                     </thead>
@@ -242,7 +242,7 @@ const ViewUsers = () => {
                                     <td className="text-start">{data.email}</td>
                                     <td className="text-start">{formatDate(data.createdAt)}</td>
                                     <td><button className="text-center text-white px-6 py-1.5 rounded-sm bg-[#4BAF4F]">Active</button></td>
-                                    <td className="pl-6" onClick={() => handleModalOpen(data.id)}><Image src="/icons/trash.svg" alt="Trash" width={20} height={20} /></td>
+                                    <td className="px-6 lg:pl-6 lg:pr-0" onClick={() => handleModalOpen(data.id)}><Image src="/icons/trash.svg" alt="Trash" width={20} height={20} /></td>
                                     {/* <td className="pl-12 text-center"><Image src="/icons/edit.svg" alt="Edit" width={20} height={20} onClick={() => handleUpdateOpen(data)} /></td> */}
                                 </tr>
                                 <tr>

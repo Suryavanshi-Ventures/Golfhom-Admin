@@ -51,8 +51,8 @@ const Page = () => {
             <div>
                 <div className='flex justify-between lg:items-center px-5 py-3'>
                     <Image src="/GOLFHOM-Logo.png" alt='Golfhom' width={160} height={160} className="block md:hidden lg:block" />
-                    <button className="toggle-sidebar bg-[#C2C2C2] px-4 py-2 md:p-4 rounded-full text-white block lg:hidden" onClick={toggleSidebar}>
-                        <Image src="/icons/hamburger.svg" alt='Menu' width={20} height={20} />
+                    <button className="toggle-sidebar bg-[#C2C2C2] px-2.5 py-2 md:p-2.5 rounded-full text-white block lg:hidden" onClick={toggleSidebar}>
+                        <Image src="/icons/hamburger.svg" alt='Menu' width={14} height={14} />
                     </button>
                     <h2 className='font-bold text-xl hidden md:block'>Welcome to Golfhom Dashboard</h2>
                     <div className='flex gap-3'>
