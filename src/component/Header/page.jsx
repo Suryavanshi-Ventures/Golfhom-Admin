@@ -25,7 +25,7 @@ const Page = () => {
     const toggleSidebar = () => {
         setIsSidebarVisible(!isSidebarVisible);
     };
-
+    console.log("isSidebarVisible", isSidebarVisible)
     useEffect(() => {
         if (isLargeScreen) {
             setIsSidebarVisible(false);
@@ -48,9 +48,9 @@ const Page = () => {
 
     return (
         <>
-            <div className='flex justify-between px-5 py-3'>
-                <Image src="/GOLFHOM-Logo.png" alt='Golfhom' width={160} height={160} />
-                <button className="toggle-sidebar bg-[#C2C2C2] p-4 rounded-full text-white lg:hidden" onClick={toggleSidebar}>
+            <div className='flex justify-between items-center px-5 py-3'>
+                <Image src="/GOLFHOM-Logo.png" alt='Golfhom' width={160} height={160} className="hidden lg:block" />
+                <button className="toggle-sidebar bg-[#C2C2C2] p-4 rounded-full text-white block lg:hidden" onClick={toggleSidebar}>
                     <Image src="/icons/hamburger.svg" alt='Menu' width={20} height={20} />
                 </button>
                 <h2 className='font-bold text-xl'>Welcome to Golfhom Dashboard</h2>

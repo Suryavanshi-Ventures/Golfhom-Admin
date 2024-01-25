@@ -119,7 +119,7 @@ const Page = () => {
 
     return (
         <div className="flex flex-col gap-8">
-            <h5 className="text-2xl font-medium">Dashboard</h5>
+            <h5 className="text-2xl font-semibold">Dashboard</h5>
             {/* COUNT */}
             <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4">
                 {/* Card 1 - Revenue */}
@@ -189,18 +189,16 @@ const Page = () => {
             {/* RECENT PROPERTY POSTS */}
             <div className="flex flex-col gap-5">
                 <div className="flex justify-between">
-                    <h4 className="font-medium text-lg">Recent Property Posts</h4>
+                    <h4 className="font-semibold text-lg">Recent Properties</h4>
                     <div>
                         <Link href="/Dashboard/ViewProperty" type="button" className="bg-[#FF6764] border border-[#FF6764] px-4 py-1.5 rounded-lg text-white font-normal">View More</Link>
                     </div>
                 </div>
-                <div className="flex flex-wrap">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                     {propertyListData.slice(0, 5).map((data, index) => (
-                        <div key={index} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5" style={{ height: '300px' }}>
-                            <div className="flex flex-col h-[270px] w-52 relative bg-cover bg-center rounded-lg justify-end"
-                                style={{ backgroundImage: `url(${data.imageUrl})` }}
-                            >
-                                <div className="flex flex-col gap-1 text-white bg-gray bg-opacity-50 p-4 rounded-b-lg backdrop-blur-sm">
+                        <div key={index} className="w-full">
+                            <div className="relative bg-cover bg-center rounded-lg" style={{ height: '300px', backgroundImage: `url(${data.imageUrl})` }}>
+                                <div className="absolute bottom-0 left-0 right-0 text-white bg-gray bg-opacity-50 p-4 rounded-b-lg backdrop-blur-sm">
                                     <h4 className="font-semibold text-base">{data.name.substring(0, 16) + (data.name.length > 16 ? '...' : '')}</h4>
                                     <div className="flex flex-row justify-between items-center">
                                         <small className="font-semibold">{data.ownerName}</small>
@@ -215,11 +213,11 @@ const Page = () => {
 
             {/* RECENT MESSAGES USER */}
             <div className="grid grid-cols-12 gap-4">
-                {/* First Card - Recent Users */}
+                {/* Recent Users */}
                 <div className="col-span-12 xl:col-span-4">
-                    <div className="card bg-white px-4 py-5 rounded-xl">
+                    <div className="card bg-white px-4 py-5 rounded-xl border border-black">
                         <div className="flex justify-between align-items-center mb-4">
-                            <h5 className="font-medium text-lg">Recent Users</h5>
+                            <h5 className="font-semibold text-lg">Recent Users</h5>
                             <Link href="/Dashboard/ViewUsers">
                                 <button type="button" className="bg-[#FF6764] border border-[#FF6764] px-4 py-1.5 rounded-lg text-white font-normal">More</button>
                             </Link>
@@ -238,11 +236,11 @@ const Page = () => {
                     </div>
                 </div>
 
-                {/* Second Card - Recent Messages */}
+                {/* Recent Messages */}
                 <div className="col-span-12 xl:col-span-8">
-                    <div className="card bg-white px-4 py-5 rounded-xl">
-                        <div className="flex justify-between align-items-center mb-4">
-                            <h5 className="font-medium text-lg">Recent Messages</h5>
+                    <div className="card bg-white px-4 py-5 rounded-xl border border-black">
+                        <div className="flex flex-wrap md:flex-nowrap justify-between align-items-center mb-3.5">
+                            <h5 className="font-semibold text-lg">Recent Messages</h5>
                             <Link href="/Dashboard/ViewMessage">
                                 <button type="button" className="bg-[#FF6764] border border-[#FF6764] px-4 py-1.5 rounded-lg text-white font-normal">View More</button>
                             </Link>
@@ -252,7 +250,7 @@ const Page = () => {
                                 {messageList?.slice(0, 5).map((data, index) => (
                                     <div
                                         key={index}
-                                        className={`mb-4 cursor-pointer ${selectedMessage === data ? 'bg-[#FF6764] text-white rounded-lg py-2' : ''
+                                        className={`mb-3.5 cursor-pointer ${selectedMessage === data ? 'bg-[#FF6764] text-white rounded-lg py-2' : ''
                                             }`}
                                         onClick={() => setSelectedMessage(data)}
                                     >

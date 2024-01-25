@@ -43,8 +43,7 @@ export default function Page() {
 
       // Input validation
       if (!email || !password) {
-        setErrorMessage('email and password are required');
-        return;
+        setErrorMessage('Email and Password are required');
       }
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/admin/login`, {
@@ -80,15 +79,15 @@ export default function Page() {
   };
 
   return <>
-    <div className="w-full flex flex-col justify-center items-center gap-10 pt-20 bg-gray-100 min-h-screen">
-      <div className="flex flex-col justify-center items-center gap-6 w-[28%]">
+    <div className="w-full flex flex-col justify-center items-center gap-10 bg-gray-100 min-h-screen">
+      <div className="flex flex-col justify-center items-center gap-6 md:w-[50%] lg:w-[30%]">
         <Image src="/GOLFHOM-Logo.png" alt="GOLFHOM" width={200} height={200} className="flex px-5" />
         <h1 className="text-4xl font-medium text-center w-full">Welcome <span className="text-[#FF6764]">back!</span></h1>
 
         <form className="flex flex-col w-full gap-6 shadow-xl p-8 bg-white rounded-lg">
           <h1 className="text-2xl font-medium text-center w-full">Admin Login</h1>
-          <input type="email" placeholder="Please Enter Email" className="rounded-lg w-full py-4 px-5 border border-gray-300" onChange={(e) => setEmail(e.target.value)} />
-          <input type="password" placeholder="Please Enter Password" className="rounded-lg w-full py-4 px-5 border border-gray-300" onChange={(e) => setPassword(e.target.value)} />
+          <input type="email" placeholder="Please Enter Email" className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" onChange={(e) => setEmail(e.target.value)} />
+          <input type="password" placeholder="Please Enter Password" className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" onChange={(e) => setPassword(e.target.value)} />
 
           {errorMessage && <p className="text-red-500 mb-1 mt-3">{errorMessage}</p>}
 

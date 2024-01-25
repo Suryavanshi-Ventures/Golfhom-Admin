@@ -111,18 +111,19 @@ const Page = () => {
                         <p>Message Id : {userToDelete}</p>
                         <p>You want to delete this message</p>
                         <div className="flex gap-4 justify-center">
-                            <button onClick={() => handleDeleteMessage(userToDelete)} className="bg-[#FF6764] rounded-full px-4 py-1 text-white w-fit">Delete</button>
-                            <button onClick={handleCancelDelete} className="bg-gray-400 rounded-full px-4 py-1 text-white">Cancel</button>
+                            <button onClick={() => handleDeleteMessage(userToDelete)} className="bg-[#FF6764] rounded-[4px] px-4 py-1 text-white w-fit">Delete</button>
+                            <button onClick={handleCancelDelete} className="bg-gray-400 rounded-[4px] px-4 py-1 text-white">Cancel</button>
                         </div>
                     </div>
                 </div>
             )}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 bg-white rounded-sm py-5 pl-5 pr-8 overflow-y-auto max-h-screen shadow-md">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 bg-white rounded-sm py-10 pl-5 pr-8 overflow-y-auto max-h-screen shadow-md">
                 {messageList?.map((data, index) => (
                     <div key={index} className="bg-white rounded-lg shadow-xl flex flex-col justify-between gap-2">
                         <div>
-                            <h4 className="border-b-2 px-5 py-4"><span className="font-medium mr-1">Message Sender Name:</span> {data.name}</h4>
+                            <h4 className="border-b-2 px-5 py-4"><span className="font-medium mr-1">Sender Name:</span> {data.name}</h4>
                             <h4 className="border-b-2 px-5 py-4"><span className="font-medium mr-1">Subject:</span> {data.subject}</h4>
+                            <h4 className="border-y-2 px-5 py-4"><span className="font-medium mr-1">Email:</span> {data.email}</h4>
                             <div className="px-5 py-4">
                                 <p className={expandedMessages.includes(data.id) ? '' : 'line-clamp-1'}>
                                     <span className="font-medium mr-1">Message:</span> {data.message}
@@ -133,8 +134,6 @@ const Page = () => {
                                     </span>
                                 )}
                             </div>
-
-                            <h4 className="border-y-2 px-5 py-4"><span className="font-medium mr-1">Email:</span> {data.email}</h4>
                         </div>
                         <div className="flex justify-between px-5 py-4">
                             <p className="text-[#FF6764]"><span className="font-medium mr-1">Received on:</span> {formatDate(data.updatedAt)}</p>

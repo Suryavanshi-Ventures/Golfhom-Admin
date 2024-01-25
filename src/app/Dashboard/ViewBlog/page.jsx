@@ -106,7 +106,7 @@ const Page = () => {
     return (
         <ProtectedRoute>
             <div className="flex justify-between">
-                <h4 className="text-2xl font-medium">View Blog</h4>
+                <h4 className="text-2xl font-medium">Blogs</h4>
                 <Link href="/Dashboard/ViewBlog/CreateBlog" className="bg-[#FF6764] border border-[#FF6764] px-4 py-1.5 rounded-lg text-white font-normal">Create blog</Link>
             </div>
             {deleteOpen && (
@@ -115,8 +115,8 @@ const Page = () => {
                         <p>Blog Id : {blogToDelete}</p>
                         <p>You want to delete this blog</p>
                         <div className="flex gap-4 justify-center">
-                            <button onClick={() => handleDeleteBlog(blogToDelete)} className="bg-[#FF6764] rounded-full px-4 py-1 text-white w-fit">Delete</button>
-                            <button onClick={handleCancelDelete} className="bg-gray-400 rounded-full px-4 py-1 text-white">Cancel</button>
+                            <button onClick={() => handleDeleteBlog(blogToDelete)} className="bg-[#FF6764] rounded-[4px] px-4 py-1 text-white w-fit">Delete</button>
+                            <button onClick={handleCancelDelete} className="bg-gray-400 rounded-[4px] px-4 py-1 text-white">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -130,14 +130,14 @@ const Page = () => {
                                 query: { id: data.slug },
                             }}
                             className="w-full">
-                            <Image src={data.image} alt='Sort' width={100} height={70} className="w-full" layout="responsive" />
+                            <Image src={data.image} alt='Sort' width={100} height={70} className="w-full h-40 object-cover" layout="responsive" />
                         </Link>
                         <div className="flex flex-col gap-3">
                             <h4 className="text-lg font-medium">{data.title}</h4>
                             <div className="flex flex-col">
                                 <h5
                                     dangerouslySetInnerHTML={{
-                                        __html: DOMPurify.sanitize(truncateWords(data?.body, 25)),
+                                        __html: DOMPurify.sanitize(truncateWords(data?.body, 18)),
                                     }}>
                                 </h5><Link
                                     href={{

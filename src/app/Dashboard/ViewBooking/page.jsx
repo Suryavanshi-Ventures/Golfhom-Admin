@@ -22,7 +22,7 @@ const Page = () => {
                             <th className="py-8 px-5 text-start bg-[#F7F7F7] rounded-tr-lg">Actions</th>
                         </tr>
                     </thead>
-                    <tbody className="w-full bg-white">
+                    <tbody className="w-full">
                         <React.Fragment>
                             <tr>
                                 <td colSpan="12" className="border-b-2 border-[#C2C2C2] text-center py-5">No Booking...</td>

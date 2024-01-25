@@ -151,15 +151,15 @@ const Page = () => {
 
     return (
         <ProtectedRoute>
-            <h5 className="text-2xl font-medium">All Admin Table</h5>
+            <h5 className="text-2xl font-medium">All Admin</h5>
             {deleteOpen && (
                 <div className="fixed inset-0 bg-gray-300 bg-opacity-5 flex flex-col items-center justify-center z-50">
                     <div className="flex flex-col bg-white rounded-lg p-5 gap-4 z-50">
                         <p>Admin Id : {adminToDelete}</p>
                         <p>You want to delete this Admin</p>
                         <div className="flex gap-4 justify-center">
-                            <button onClick={() => handleDelete(adminToDelete)} className="bg-[#FF6764] rounded-full px-4 py-1 text-white w-fit">Delete</button>
-                            <button onClick={handleCancelDelete} className="bg-gray-400 rounded-full px-4 py-1 text-white">Cancel</button>
+                            <button onClick={() => handleDelete(adminToDelete)} className="bg-[#FF6764] rounded-[4px] px-4 py-1 text-white w-fit">Delete</button>
+                            <button onClick={handleCancelDelete} className="bg-gray-400 rounded-[4px] px-4 py-1 text-white">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -178,8 +178,8 @@ const Page = () => {
                         <p className="text-black bg-yellow-400 font-semibold">Update API in progress</p>
 
                         <div className="flex gap-4 justify-center">
-                            {/* <button onClick={(e) => handleUpdate(e, adminUpdate)} className="bg-[#FF6764] rounded-sm px-4 py-1 text-white w-fit" disabled={isSubmitting}>{isSubmitting ? 'Updating...' : 'Update'}</button> */}
-                            <button onClick={handleCancelUpdate} className="bg-gray-400 rounded-full px-4 py-1 text-white">Cancel</button>
+                            {/* <button onClick={(e) => handleUpdate(e, adminUpdate)} className="bg-[#FF6764] rounded-[4px] px-4 py-1 text-white w-fit" disabled={isSubmitting}>{isSubmitting ? 'Updating...' : 'Update'}</button> */}
+                            <button onClick={handleCancelUpdate} className="bg-gray-400 rounded-[4px] px-4 py-1 text-white">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -188,7 +188,7 @@ const Page = () => {
                 <table className="w-full table-auto">
                     <thead className="font-semibold text-sm">
                         <tr>
-                            <th className="p-8 text-start bg-[#F7F7F7] rounded-ss-lg">Profile</th>
+                            <th className="p-8 text-start bg-[#F7F7F7] rounded-ss-lg">Name</th>
                             <th className="py-8 text-start bg-[#F7F7F7]">Email</th>
                             <th className="py-8 px-3 text-start bg-[#F7F7F7]">Created</th>
                             <th className="py-8 px-5 text-start bg-[#F7F7F7]">Status</th>
@@ -196,7 +196,7 @@ const Page = () => {
                             {/* <th className="py-8 px-4 text-center bg-[#F7F7F7] rounded-tr-lg">Update</th> */}
                         </tr>
                     </thead>
-                    <tbody className="w-full bg-white">
+                    <tbody className="w-full">
                         {viewListAdmin?.map((data) => (
                             <React.Fragment key={data.id}>
                                 <tr>
