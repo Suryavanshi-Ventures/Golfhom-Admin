@@ -191,7 +191,7 @@ const Page = () => {
                 <div className="flex justify-between">
                     <h4 className="font-semibold text-lg">Recent Properties</h4>
                     <div>
-                        <Link href="/Dashboard/ViewProperty" type="button" className="bg-[#FF6764] border border-[#FF6764] px-4 py-1.5 rounded-lg text-white font-normal">View More</Link>
+                        <Link href="/Dashboard/ViewProperty" type="button" className="bg-[#FF6764] border border-[#FF6764] opacity-[0.8] px-4 py-1.5 rounded-lg text-white font-normal">View More</Link>
                     </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
@@ -219,7 +219,7 @@ const Page = () => {
                         <div className="flex justify-between align-items-center mb-4">
                             <h5 className="font-semibold text-lg">Recent Users</h5>
                             <Link href="/Dashboard/ViewUsers">
-                                <button type="button" className="bg-[#FF6764] border border-[#FF6764] px-4 py-1.5 rounded-lg text-white font-normal">More</button>
+                                <button type="button" className="bg-[#FF6764] border border-[#FF6764] opacity-[0.8] px-4 py-1.5 rounded-lg text-white font-normal">More</button>
                             </Link>
                         </div>
                         <div>
@@ -242,7 +242,7 @@ const Page = () => {
                         <div className="flex flex-wrap md:flex-nowrap justify-between align-items-center mb-3.5">
                             <h5 className="font-semibold text-lg">Recent Messages</h5>
                             <Link href="/Dashboard/ViewMessage">
-                                <button type="button" className="bg-[#FF6764] border border-[#FF6764] px-4 py-1.5 rounded-lg text-white font-normal">View More</button>
+                                <button type="button" className="bg-[#FF6764] border border-[#FF6764] opacity-[0.8] px-4 py-1.5 rounded-lg text-white font-normal">View More</button>
                             </Link>
                         </div>
                         <div className="grid grid-cols-6 gap-5">

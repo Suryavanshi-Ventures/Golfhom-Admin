@@ -59,6 +59,16 @@ const Page = () => {
     useEffect(() => {
         const item = localStorage.getItem("access_token");
         setToken(item);
+        toast.error('Data Already Exists', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
     }, [])
 
 
@@ -149,7 +159,7 @@ const Page = () => {
                                     <label className="text-[#404040] text-md font-medium">Tags</label>
                                     <div className="flex flex-wrap gap-2">
                                         {tags.map((tag, index) => (
-                                            <div key={index} className="flex items-center bg-gray-200 rounded-full py-1 px-4">
+                                            <div key={index} className="flex items-center bg-gray-200 rounded-full py-1 px-4" title="Click to remove">
                                                 <span className="mr-2">{tag}</span>
                                                 <button
                                                     type="button"
@@ -168,6 +178,7 @@ const Page = () => {
                                         value={tag}
                                         onChange={(e) => setTag(e.target.value)}
                                         onKeyDown={handleKeyDown}
+                                        title="Fill in a tag and press Enter to add"
                                     />
                                     {tagError && (
                                         <div className="text-danger text-red-500 mt-1">Tags is mandatory</div>

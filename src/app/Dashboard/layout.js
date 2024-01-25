@@ -1,5 +1,7 @@
 import Sidebar from "@/component/Sidebar/page"
 import Header from "@/component/Header/page";
+import { ToastContainer } from "../../component/nexToastify";
+import 'react-toastify/dist/ReactToastify.css';
 import '@/app/globals.css'
 export const metadata = {
     title: 'Golfhom | Admin',
@@ -9,10 +11,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <>
-            <div className="flex flex-col">
+            <div className="lg:flex lg:flex-col">
+                <ToastContainer />
                 <Header />
-                <div className="flex flex-row bg-gray-200">
-                    <div className="lg:basis-[22%] z-50 py-8 pl-8">
+                <div className="lg:flex lg:flex-row bg-gray-200">
+                    <div className="lg:basis-[22%] z-50 py-8 pl-8 hidden lg:block">
                         <Sidebar />
                     </div>
 

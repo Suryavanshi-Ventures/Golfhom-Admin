@@ -160,7 +160,7 @@ const ViewUsers = () => {
         <ProtectedRoute>
             <h5 className="text-2xl font-medium">All Users</h5>
             {deleteOpen && (
-                <div className="fixed inset-0 bg-gray-300 bg-opacity-5 flex flex-col items-center justify-center z-50">
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center z-50">
                     <div className="flex flex-col bg-white rounded-lg p-5 gap-4 z-50">
                         <p>User Id : {userToDelete}</p>
                         <p>You want to delete this user</p>

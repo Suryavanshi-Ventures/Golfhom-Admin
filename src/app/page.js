@@ -91,7 +91,7 @@ export default function Page() {
 
           {errorMessage && <p className="text-red-500 mb-1 mt-3">{errorMessage}</p>}
 
-          <button type="submit" onClick={handleLogin} className="bg-[#FF6764] text-white flex gap-4 rounded-lg py-4 px-5 justify-center items-center shadow-lg cursor-pointer w-full"
+          <button type="submit" onClick={handleLogin} className="bg-[#FF6764] opacity-[0.8] text-white flex gap-4 rounded-lg py-4 px-5 justify-center items-center shadow-lg cursor-pointer w-full"
             disabled={loading}>{loading ? 'Loging in...' : 'Login'}
           </button>
         </form>

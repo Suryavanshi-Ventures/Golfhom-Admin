@@ -153,8 +153,8 @@ const Page = () => {
         <ProtectedRoute>
             <h5 className="text-2xl font-medium">All Admin</h5>
             {deleteOpen && (
-                <div className="fixed inset-0 bg-gray-300 bg-opacity-5 flex flex-col items-center justify-center z-50">
-                    <div className="flex flex-col bg-white rounded-lg p-5 gap-4 z-50">
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center">
+                    <div className="flex flex-col bg-white rounded-lg p-5 gap-4">
                         <p>Admin Id : {adminToDelete}</p>
                         <p>You want to delete this Admin</p>
                         <div className="flex gap-4 justify-center">

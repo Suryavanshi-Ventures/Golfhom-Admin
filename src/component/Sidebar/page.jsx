@@ -31,17 +31,17 @@ const Page = () => {
 
     return (
         <>
-            <div className='sidebar-container bg-white rounded-xl hidden lg:block min-h-screen'>
+            <div className='sidebar-container md:w-[44%] lg:w-full bg-white rounded-xl lg:block min-h-screen'>
                 <div className='py-5 px-3 overflow-y-auto h-screen shadow-lg'>
                     <div className='px-5 pb-5'>
                         <div className='flex flex-col mb-4 px-3'>
                             <Image src="/icons/avatar.svg" alt='Profile' width={70} height={70} className='rounded-full' />
                             <h3>Golfhom Admin</h3>
-                            <h4 className='text-[#C2C2C2]'>admin@golfhom.com.</h4>
+                            <h4 className='text-[#C2C2C2]'>admin@golfhom.com</h4>
                         </div>
 
                         <Link href="/Dashboard" className='cursor-pointer'>
-                            <div className={`${isLinkActive('/Dashboard') ? 'text-white bg-[#FF6764] w-full' : 'bg-white'} py-2 px-3 flex gap-2 rounded-lg inline-block`}>
+                            <div className={`${isLinkActive('/Dashboard') ? 'text-white bg-[#FF6764] opacity-[0.8] w-full' : 'bg-white'} py-2 px-3 flex gap-2 rounded-lg inline-block`}>
                                 <Image src="/icons/dashboard.svg" alt='Dashboard' width={20} height={10} className={`${isLinkActive('/Dashboard') ? 'invert' : ''}`} />
                                 <h4>Dashboard</h4>
                             </div>
@@ -52,25 +52,25 @@ const Page = () => {
                     <div className='p-5 flex flex-col'>
                         <h3 className='text-[#C2C2C2] font-medium'>User</h3>
                         {/* <Link href="/Dashboard/CreateUsers" className="my-1 flex gap-2 cursor-pointer">
-                            <div className={`${isLinkActive('/Dashboard/CreateUsers') ? 'text-white bg-[#FF6764] w-full' : 'bg-white'} py-2 px-3 flex gap-2 rounded-lg inline-block`}>
+                            <div className={`${isLinkActive('/Dashboard/CreateUsers') ? 'text-white bg-[#FF6764] opacity-[0.8] w-full' : 'bg-white'} py-2 px-3 flex gap-2 rounded-lg inline-block`}>
                                 <Image src="/icons/user.svg" alt='User' width={20} height={10} className={`${isLinkActive('/Dashboard/CreateUsers') ? 'invert' : ''}`} />
                                 <h3>Create users</h3>
                             </div>
                         </Link> */}
                         <Link href="/Dashboard/ViewUsers" className="my-1 flex gap-2 cursor-pointer">
-                            <div className={`${isLinkActive('/Dashboard/ViewUsers') ? 'text-white bg-[#FF6764] w-full' : 'bg-white'} py-2 px-3 flex gap-2 rounded-lg inline-block`}>
+                            <div className={`${isLinkActive('/Dashboard/ViewUsers') ? 'text-white bg-[#FF6764] opacity-[0.8] w-full' : 'bg-white'} py-2 px-3 flex gap-2 rounded-lg inline-block`}>
                                 <Image src="/icons/viewAllUser.svg" alt='User' width={20} height={20} className={`${isLinkActive('/Dashboard/ViewUsers') ? 'invert' : ''}`} />
                                 <h3>All users</h3>
                             </div>
                         </Link>
                         <Link href="/Dashboard/ViewAdmin" className="my-1 flex gap-2 cursor-pointer">
-                            <div className={`${isLinkActive('/Dashboard/ViewAdmin') ? 'text-white bg-[#FF6764] w-full' : 'bg-white'} py-2 px-3 flex gap-2 rounded-lg inline-block`}>
+                            <div className={`${isLinkActive('/Dashboard/ViewAdmin') ? 'text-white bg-[#FF6764] opacity-[0.8] w-full' : 'bg-white'} py-2 px-3 flex gap-2 rounded-lg inline-block`}>
                                 <Image src="/icons/Admin.svg" alt='Admin' width={20} height={10} className={`${isLinkActive('/Dashboard/ViewAdmin') ? 'invert' : ''}`} />
                                 <h3>All admin</h3>
                             </div>
                         </Link>
                         <Link href="/Dashboard/ViewBooking" className="my-1 flex gap-2 cursor-pointer">
-                            <div className={`${isLinkActive('/Dashboard/ViewBooking') ? 'text-white bg-[#FF6764] w-full' : 'bg-white'} py-2 px-3 flex gap-2 rounded-lg inline-block`}>
+                            <div className={`${isLinkActive('/Dashboard/ViewBooking') ? 'text-white bg-[#FF6764] opacity-[0.8] w-full' : 'bg-white'} py-2 px-3 flex gap-2 rounded-lg inline-block`}>
                                 <Image src="/icons/booking.svg" alt='Booking' width={20} height={10} className={`${isLinkActive('/Dashboard/ViewBooking') ? 'invert' : ''}`} />
                                 <h3>Bookings</h3>
                             </div>
@@ -85,7 +85,7 @@ const Page = () => {
                             <h3>Create property</h3>
                         </Link> */}
                         <Link href="/Dashboard/ViewProperty" className="my-1 flex gap-2 cursor-pointer">
-                            <div className={`${isLinkActive('/Dashboard/ViewProperty') ? 'text-white bg-[#FF6764] w-full' : 'bg-white'} py-2 px-3 flex gap-2 rounded-lg inline-block`}>
+                            <div className={`${isLinkActive('/Dashboard/ViewProperty') ? 'text-white bg-[#FF6764] opacity-[0.8] w-full' : 'bg-white'} py-2 px-3 flex gap-2 rounded-lg inline-block`}>
                                 <Image src="/icons/rental.svg" alt='Property' width={20} height={10} className={`${isLinkActive('/Dashboard/ViewProperty') ? 'invert' : ''}`} />
                                 <h3>All property</h3>
                             </div>
@@ -95,13 +95,13 @@ const Page = () => {
                             <h3>Location</h3>
                         </Link> */}
                         <Link href="/Dashboard/ViewBlog" className="my-1 flex gap-2 cursor-pointer">
-                            <div className={`${isLinkActive('/Dashboard/ViewBlog') ? 'text-white bg-[#FF6764] w-full' : 'bg-white'} py-2 px-3 flex gap-2 rounded-lg inline-block`}>
+                            <div className={`${isLinkActive('/Dashboard/ViewBlog') ? 'text-white bg-[#FF6764] opacity-[0.8] w-full' : 'bg-white'} py-2 px-3 flex gap-2 rounded-lg inline-block`}>
                                 <Image src="/icons/blog.svg" alt='Blog' width={20} height={10} className={`${isLinkActive('/Dashboard/ViewBlog') ? 'invert' : ''}`} />
                                 <h3>All Blogs</h3>
                             </div>
                         </Link>
                         <Link href="/Dashboard/ViewMessage" className="my-1 flex gap-2 cursor-pointer">
-                            <div className={`${isLinkActive('/Dashboard/ViewMessage') ? 'text-white bg-[#FF6764] w-full' : 'bg-white'} py-2 px-3 flex gap-2 rounded-lg inline-block`}>
+                            <div className={`${isLinkActive('/Dashboard/ViewMessage') ? 'text-white bg-[#FF6764] opacity-[0.8] w-full' : 'bg-white'} py-2 px-3 flex gap-2 rounded-lg inline-block`}>
                                 <Image src="/icons/Message.svg" alt='Message' width={20} height={10} className={`${isLinkActive('/Dashboard/ViewMessage') ? 'invert' : ''}`} />
                                 <h3>All messages</h3>
                             </div>
@@ -115,7 +115,7 @@ const Page = () => {
                     </div>
                     <hr /> */}
 
-                    <button className={`${isActive ? 'text-white bg-[#FF6764] w-full' : 'bg-white'} py-2 my-4 px-8 flex gap-2 rounded-lg inline-block flex items-center gap-2 cursor-pointer`} onClick={handleLogout}>
+                    <button className={`${isActive ? 'text-white bg-[#FF6764] opacity-[0.8] w-full' : 'bg-white'} py-2 my-4 px-8 flex gap-2 rounded-lg inline-block flex items-center gap-2 cursor-pointer`} onClick={handleLogout}>
                         <Image src="/icons/logout.svg" alt='Exit' width={20} height={20} className={`${isActive ? 'invert' : ''}`} />
                         <h3>Log out</h3>
                     </button>
