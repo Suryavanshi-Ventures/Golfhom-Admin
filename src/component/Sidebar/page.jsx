@@ -37,7 +37,7 @@ const Page = () => {
                         <div className='flex flex-col mb-4 px-3'>
                             <Image src="/icons/avatar.svg" alt='Profile' width={70} height={70} className='rounded-full' />
                             <h3>Golfhom Admin</h3>
-                            <h4 className='text-[#C2C2C2]'>admin@golfhom.com</h4>
+                            <h4 className='text-[#C2C2C2]'>admin@golfhom.com.</h4>
                         </div>
 
                         <Link href="/Dashboard" className='cursor-pointer'>
