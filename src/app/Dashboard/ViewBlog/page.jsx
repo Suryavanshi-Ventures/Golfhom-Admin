@@ -71,14 +71,12 @@ const Page = () => {
                 throw new Error("Failed to fetch list");
             }
             const blogData = await response.json();
-            console.log("blogData", blogData)
             if (blogData.status === "success") {
                 setBlogList(blogData.data);
                 setTotalPages(blogData.data.length);
             }
 
         } catch (error) {
-            console.log("error blog", error)
         }
     };
 

@@ -25,7 +25,6 @@ const Page = () => {
     const toggleSidebar = () => {
         setIsSidebarVisible(!isSidebarVisible);
     };
-    console.log("isSidebarVisible", isSidebarVisible)
     useEffect(() => {
         if (isLargeScreen) {
             setIsSidebarVisible(false);

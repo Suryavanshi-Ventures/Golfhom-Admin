@@ -65,7 +65,6 @@ const Page = () => {
                 throw new Error("Failed to fetch list");
             }
             const viewPropertyData = await response.json();
-            console.log("viewPropertyData", viewPropertyData)
             if (viewPropertyData.status === "success") {
                 const sortedProperties = viewPropertyData.data
                 setPropertyList(sortedProperties);
@@ -80,7 +79,6 @@ const Page = () => {
                 setNoPropertiesMessage("Error fetching properties.");
             }
         } catch (error) {
-            console.log("error message", error)
         }
     };
 
@@ -102,7 +100,6 @@ const Page = () => {
     //         setDeleteOpen(false);
     //         setTimeout(() => { setDeleteOpen(false); }, 10000);
     //     } catch (error) {
-    //         console.error("Error deleting property:", error);
     //     }
     // };
 

@@ -39,7 +39,6 @@ const Page = () => {
             setTags((prevTags) => [...prevTags, tag]);
             setTag('');
         }
-        console.log("tag", tag)
     };
 
     const handleRemoveTag = (index) => {
@@ -73,7 +72,6 @@ const Page = () => {
         removeButtons: "Image,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe",
         removePlugins: "image,uploadimage,mediaembed",
     };
-    console.log("editorConfig", editorConfig)
 
     useEffect(() => {
         const item = localStorage.getItem("access_token");

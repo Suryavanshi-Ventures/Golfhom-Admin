@@ -64,14 +64,12 @@ const Page = () => {
                 throw new Error("Failed to fetch list");
             }
             const messageData = await response.json();
-            console.log("messageData", messageData)
             if (messageData.status === "success") {
                 const sortedMessages = messageData.data.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
                 setMessageList(sortedMessages);
             }
 
         } catch (error) {
-            console.log("error message", error)
         }
     };
 

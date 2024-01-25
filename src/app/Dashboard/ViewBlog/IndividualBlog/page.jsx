@@ -104,7 +104,6 @@ const Page = () => {
                 setBlogList(blogData);
             }
         } catch (error) {
-            console.log("error message", error)
         }
     };
 
@@ -150,7 +149,6 @@ const Page = () => {
                 progress: undefined,
                 theme: "light",
             });
-            console.log("error", error)
         }
         finally {
             setIsSubmitting(false);

@@ -67,7 +67,6 @@ const Page = () => {
                 progress: undefined,
                 theme: "light",
             });
-            console.log("error", error)
         }
     }
 

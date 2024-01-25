@@ -72,7 +72,6 @@ const ViewUsers = () => {
                 throw new Error("Failed to fetch list");
             }
             const viewUsersData = await response.json();
-            console.log("viewUsersData", viewUsersData)
             if (viewUsersData.status === "success") {
                 const sortedUsers = viewUsersData.data.sort((a, b) => {
                     return new Date(b.createdAt) - new Date(a.createdAt);
@@ -81,7 +80,6 @@ const ViewUsers = () => {
             }
 
         } catch (error) {
-            console.log("error message", error)
         }
     };
 
@@ -130,7 +128,6 @@ const ViewUsers = () => {
     // const handleUpdate = async (e, userUpdate) => {
     //     setIsSubmitting(true);
     //     e.preventDefault();
-    //     console.log("rr", userUpdate)
     //     try {
     //         const formData = new FormData();
     //         formData.append('username', newUserName);
@@ -157,7 +154,6 @@ const ViewUsers = () => {
     //         setTimeout(() => { router.push('/Dashboard/ViewUsers') }, 1500);
 
     //     } catch (error) {
-    //         console.log("error", error)
     //         setError(error.message || 'An error occurred during the update.');
     //         toast.error('Not Updated', {
     //             position: "top-right",

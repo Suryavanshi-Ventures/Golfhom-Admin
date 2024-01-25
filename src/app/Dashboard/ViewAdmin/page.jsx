@@ -76,7 +76,6 @@ const Page = () => {
                 setViewListAdmin(sortedAdmins);
             }
         } catch (error) {
-            console.log("error message", error)
         }
     };
 

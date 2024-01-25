@@ -48,7 +48,6 @@ const Page = () => {
                 throw new Error("Failed to fetch list");
             }
             const viewUsersDataDashboard = await response.json();
-            console.log("viewUsersDataDashboard", viewUsersDataDashboard)
             if (viewUsersDataDashboard.status === "success") {
                 const sortedUsers = viewUsersDataDashboard.data.sort((a, b) => {
                     return new Date(b.createdAt) - new Date(a.createdAt);
@@ -57,7 +56,6 @@ const Page = () => {
             }
 
         } catch (error) {
-            console.log("error message", error)
         }
     };
 
@@ -78,14 +76,12 @@ const Page = () => {
                 throw new Error("Failed to fetch list");
             }
             const viewPropertyData = await response.json();
-            console.log("viewPropertyData", viewPropertyData)
             if (viewPropertyData.status === "success") {
                 setPropertyList(viewPropertyData.count);
                 setPropertyListData(viewPropertyData.data);
             }
 
         } catch (error) {
-            console.log("error message", error)
         }
     };
 
@@ -106,14 +102,12 @@ const Page = () => {
                 throw new Error("Failed to fetch list");
             }
             const messageData = await response.json();
-            console.log("messageData", messageData)
             if (messageData.status === "success") {
                 const sortedMessages = messageData.data.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
                 setMessageList(sortedMessages);
             }
 
         } catch (error) {
-            console.log("error message", error)
         }
     };
 

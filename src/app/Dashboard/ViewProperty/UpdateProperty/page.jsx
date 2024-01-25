@@ -119,12 +119,10 @@ const Page = () => {
                 throw new Error("Failed to fetch list");
             }
             const viewPropertyData = await response.json();
-            console.log("viewPropertyData", viewPropertyData)
             if (viewPropertyData.status === "success") {
                 setPropertyList(viewPropertyData);
             }
         } catch (error) {
-            console.log("error message", error)
         }
     };
 
@@ -157,8 +155,6 @@ const Page = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            console.log("response", response)
-
             toast.success('Successfully Submitted', {
                 position: "top-right",
                 autoClose: 2000,
@@ -182,7 +178,6 @@ const Page = () => {
                 progress: undefined,
                 theme: "light",
             });
-            console.log("error", error)
         }
         finally {
             setIsSubmitting(false);

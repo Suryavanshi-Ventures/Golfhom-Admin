@@ -35,13 +35,11 @@ const Page = () => {
                 throw new Error("Failed to fetch list");
             }
             const viewLocationData = await response.json();
-            console.log("viewLocationData", viewLocationData)
             if (viewLocationData.status === "success") {
                 setLocationList(viewLocationData.data);
             }
 
         } catch (error) {
-            console.log("error message", error)
         }
     };
 
