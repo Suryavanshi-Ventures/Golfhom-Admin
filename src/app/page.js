@@ -8,9 +8,14 @@ export default function Page() {
   const router = useRouter()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   useEffect(() => {
     setCurrentYear(new Date().getFullYear());
@@ -87,7 +92,17 @@ export default function Page() {
         <form className="flex flex-col w-full gap-6 shadow-xl p-8 bg-white rounded-lg">
           <h1 className="text-2xl font-medium text-center w-full">Admin Login</h1>
           <input type="email" placeholder="Please Enter Email" className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" onChange={(e) => setEmail(e.target.value)} />
-          <input type="password" placeholder="Please Enter Password" className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" onChange={(e) => setPassword(e.target.value)} />
+          <div className="form-floating relative w-full">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Please Enter Password"
+              className="border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none pr-12 w-full" // Add pr-12 and w-full
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <span className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer" onClick={togglePasswordVisibility}>
+              {showPassword ? <Image src="/open.svg" alt="open" width={20} height={20} /> : <Image src="/close.svg" alt="open" width={20} height={20} />}
+            </span>
+          </div>
 
           {errorMessage && <p className="text-red-500 mb-1 mt-3">{errorMessage}</p>}
 
