@@ -14,7 +14,7 @@ const Page = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [blogToDelete, setBlogToDelete] = useState(null);
     const [deleteOpen, setDeleteOpen] = useState(false);
-    const itemsPerPage = 10;
+    const itemsPerPage = 12;
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);

@@ -22,6 +22,9 @@ const Page = () => {
     const [bedroom, setBedroom] = useState("");
     const [description, setDescription] = useState("");
     const [ownerName, setOwnerName] = useState("");
+    const [country, setCountry] = useState("");
+    const [stateName, setStateName] = useState("");
+    const [city, setCity] = useState("");
     const [prices, setPrices] = useState("");
     const [checkOut, setCheckOut] = useState("");
     const [accommodation, setAccommodation] = useState("");
@@ -92,6 +95,9 @@ const Page = () => {
             setBedroom(propertyList?.data?.bedrooms);
             setDescription(propertyList?.data?.description);
             setOwnerName(propertyList?.data?.ownerName);
+            setCountry(propertyList?.data?.country);
+            setStateName(propertyList?.data?.state);
+            setCity(propertyList?.data?.city);
             setPrices(propertyList?.data?.price);
             setCheckOut(propertyList?.data?.checkOut);
             setAccommodation(propertyList?.data?.accomodation);
@@ -119,6 +125,7 @@ const Page = () => {
                 throw new Error("Failed to fetch list");
             }
             const viewPropertyData = await response.json();
+            console.log("viewPropertyData", viewPropertyData)
             if (viewPropertyData.status === "success") {
                 setPropertyList(viewPropertyData);
             }
@@ -234,6 +241,20 @@ const Page = () => {
                                 />
                             </div>
                             <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Country</label>
+                                <input
+                                    type="text"
+                                    value={country}
+                                    className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
+                                    placeholder="Sample Golf Course"
+                                    onChange={(e) => setCountry(e.target.value)}
+                                />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">City</label>
+                                <input type="text" value={city} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Alexendar Jones" onChange={(e) => setCity(e.target.value)} />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Check In</label>
                                 <input type="text" pattern="\d*" value={checkIn} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='20:30' onChange={(e) => setCheckIn(e.target.value)} />
                             </div>
@@ -247,15 +268,19 @@ const Page = () => {
                                 <label className="text-[#404040] text-md font-medium">Bedrooms</label>
                                 <input type="text" pattern="\d*" value={bedroom} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='7' onChange={(e) => setBedroom(e.target.value)} />
                             </div>
-                            <div className="flex flex-col gap-1.5">
-                                <label className="text-[#404040] text-md font-medium">Accommodation</label>
-                                <input type="text" value={accommodation} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="20:40" onChange={(e) => setAccommodation(e.target.value)} />
-                            </div>
                         </div>
                         <div className="flex flex-col gap-5 w-full">
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Owner name</label>
                                 <input type="text" value={ownerName} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Alexendar Jones" onChange={(e) => setOwnerName(e.target.value)} />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">State</label>
+                                <input type="text" value={stateName} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Alexendar Jones" onChange={(e) => setStateName(e.target.value)} />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Accommodation</label>
+                                <input type="text" value={accommodation} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="20:40" onChange={(e) => setAccommodation(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Check out</label>
