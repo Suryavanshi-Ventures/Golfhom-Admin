@@ -24,6 +24,9 @@ const Page = () => {
     const [ownerName, setOwnerName] = useState("");
     const [country, setCountry] = useState("");
     const [stateName, setStateName] = useState("");
+    const [companyName, setCompanyName] = useState("");
+    const [ownerEmail, setOwnerEmail] = useState("");
+    const [ownerPhone, setOwnerPhone] = useState("");
     const [city, setCity] = useState("");
     const [prices, setPrices] = useState("");
     const [checkOut, setCheckOut] = useState("");
@@ -98,6 +101,9 @@ const Page = () => {
             setCountry(propertyList?.data?.country);
             setStateName(propertyList?.data?.state);
             setCity(propertyList?.data?.city);
+            setOwnerPhone(propertyList?.data?.ownerDetail?.phone);
+            setCompanyName(propertyList?.data?.ownerDetail?.companyName);
+            setOwnerEmail(propertyList?.data?.ownerDetail?.email);
             setPrices(propertyList?.data?.price);
             setCheckOut(propertyList?.data?.checkOut);
             setAccommodation(propertyList?.data?.accomodation);
@@ -241,6 +247,58 @@ const Page = () => {
                                 />
                             </div>
                             <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Company Name</label>
+                                <input
+                                    type="text"
+                                    value={companyName}
+                                    className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
+                                    placeholder="Sample Golf Course"
+                                    onChange={(e) => setCompanyName(e.target.value)}
+                                />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Owner Phone</label>
+                                <input
+                                    type="text"
+                                    value={ownerPhone}
+                                    className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
+                                    placeholder="Sample Golf Course"
+                                    onChange={(e) => setOwnerPhone(e.target.value)}
+                                />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">State</label>
+                                <input type="text" value={stateName} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Alexendar Jones" onChange={(e) => setStateName(e.target.value)} />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Accommodation</label>
+                                <input type="text" value={accommodation} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="20:40" onChange={(e) => setAccommodation(e.target.value)} />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Check In</label>
+                                <input type="text" pattern="\d*" value={checkIn} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='20:30' onChange={(e) => setCheckIn(e.target.value)} />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Bedrooms</label>
+                                <input type="text" pattern="\d*" value={bedroom} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='7' onChange={(e) => setBedroom(e.target.value)} />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Address</label>
+                                <input type="text" value={address}
+                                    className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
+                                    placeholder="B-20, Street name" onChange={(e) => setAddress(e.target.value)} />
+                            </div>
+                        </div>
+                        <div className="flex flex-col gap-5 w-full">
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Owner name</label>
+                                <input type="text" value={ownerName} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Alexendar Jones" onChange={(e) => setOwnerName(e.target.value)} />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Owner Email</label>
+                                <input type="text" value={ownerEmail} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Alexendar Jones" onChange={(e) => setOwnerEmail(e.target.value)} />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Country</label>
                                 <input
                                     type="text"
@@ -255,40 +313,12 @@ const Page = () => {
                                 <input type="text" value={city} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Alexendar Jones" onChange={(e) => setCity(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
-                                <label className="text-[#404040] text-md font-medium">Check In</label>
-                                <input type="text" pattern="\d*" value={checkIn} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='20:30' onChange={(e) => setCheckIn(e.target.value)} />
-                            </div>
-                            <div className="flex flex-col gap-1.5">
-                                <label className="text-[#404040] text-md font-medium">Address</label>
-                                <input type="text" value={address}
-                                    className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
-                                    placeholder="B-20, Street name" onChange={(e) => setAddress(e.target.value)} />
-                            </div>
-                            <div className="flex flex-col gap-1.5">
-                                <label className="text-[#404040] text-md font-medium">Bedrooms</label>
-                                <input type="text" pattern="\d*" value={bedroom} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='7' onChange={(e) => setBedroom(e.target.value)} />
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-5 w-full">
-                            <div className="flex flex-col gap-1.5">
-                                <label className="text-[#404040] text-md font-medium">Owner name</label>
-                                <input type="text" value={ownerName} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Alexendar Jones" onChange={(e) => setOwnerName(e.target.value)} />
-                            </div>
-                            <div className="flex flex-col gap-1.5">
-                                <label className="text-[#404040] text-md font-medium">State</label>
-                                <input type="text" value={stateName} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Alexendar Jones" onChange={(e) => setStateName(e.target.value)} />
-                            </div>
-                            <div className="flex flex-col gap-1.5">
-                                <label className="text-[#404040] text-md font-medium">Accommodation</label>
-                                <input type="text" value={accommodation} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="20:40" onChange={(e) => setAccommodation(e.target.value)} />
+                                <label className="text-[#404040] text-md font-medium">Prices(Day/Night)</label>
+                                <input type="text" pattern="\d*" value={prices} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='$200' onChange={(e) => setPrices(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Check out</label>
                                 <input type="text" pattern="\d*" value={checkOut} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='09:30' onChange={(e) => setCheckOut(e.target.value)} />
-                            </div>
-                            <div className="flex flex-col gap-1.5">
-                                <label className="text-[#404040] text-md font-medium">Prices(Day/Night)</label>
-                                <input type="text" pattern="\d*" value={prices} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='$200' onChange={(e) => setPrices(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Bathrooms</label>

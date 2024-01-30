@@ -142,6 +142,7 @@ const Page = () => {
                 </div>
             </div>
             <div className="bg-white py-3 px-4 flex gap-8 items-center rounded-md">
+                {/* <div>Total Properties <small className="text-gray-100">2720</small></div> */}
                 <div>
                     <h4
                         onClick={() => handleStatusClick('All')}
