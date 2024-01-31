@@ -8,19 +8,23 @@ import Link from 'next/link';
 const Page = () => {
     const [propertyList, setPropertyList] = useState([]);
     const [token, setToken] = useState(null);
-    const [totalPages, setTotalPages] = useState(1);
+    const [totalPropertyCount, setTotalPropertyCount] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
     const [propertyName, setPropertyName] = useState("");
     const [noPropertiesMessage, setNoPropertiesMessage] = useState("");
     // const [userToDelete, setUserToDelete] = useState(null);
     // const [deleteOpen, setDeleteOpen] = useState(false);
     const [activeStatus, setActiveStatus] = useState('All');
+    const itemsPerPage = 12;
+    const totalPages = Math.ceil(totalPropertyCount / itemsPerPage);
+    const [totalDraftProperties, setTotalDraftProperties] = useState(0);
+    const [totalActiveProperties, setTotalActiveProperties] = useState(0);
+    const [totalInactiveProperties, setTotalInactiveProperties] = useState(0);
 
     const handleStatusClick = (status) => {
         setActiveStatus(status);
+        listProperty(status);
     };
-
-    const itemsPerPage = 10;
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
@@ -90,7 +94,10 @@ const Page = () => {
             if (viewPropertyData.status === "success") {
                 const sortedProperties = viewPropertyData.data
                 setPropertyList(sortedProperties);
-                setTotalPages(viewPropertyData.count);
+                setTotalPropertyCount(viewPropertyData.count);
+                // setTotalDraftProperties(viewPropertyData.totalDraftCount);
+                // setTotalActiveProperties(viewPropertyData.totalActiveCount);
+                // setTotalInactiveProperties(viewPropertyData.totalInactiveCount);
 
                 if (sortedProperties.length === 0) {
                     setNoPropertiesMessage("No properties found with the given name...");
@@ -141,8 +148,21 @@ const Page = () => {
                     </svg>
                 </div>
             </div>
+            <div>
+                {/* {activeStatus === 'All' && ( */}
+                <h5>{activeStatus === 'All' ? "Total" : activeStatus} Properties: <span className="text-gray-500 font-medium">{totalPropertyCount}</span></h5>
+                {/* )} */}
+                {/* {activeStatus === 'Draft' && (
+                    <h5>Draft Properties: <span className="text-gray-500 font-medium">{totalPropertyCount}</span></h5>
+                )}
+                {activeStatus === 'Active' && (
+                    <h5>Active Properties: <span className="text-gray-500 font-medium">{totalPropertyCount}</span></h5>
+                )}
+                {activeStatus === 'Inactive' && (
+                    <h5>Inactive Properties: <span className="text-gray-500 font-medium">{totalPropertyCount}</span></h5>
+                )} */}
+            </div>
             <div className="bg-white py-3 px-4 flex gap-8 items-center rounded-md">
-                {/* <div>Total Properties <small className="text-gray-100">2720</small></div> */}
                 <div>
                     <h4
                         onClick={() => handleStatusClick('All')}

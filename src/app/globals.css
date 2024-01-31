@@ -16,5 +16,5 @@
 }
 
 .text-primary-foreground {
-    background-color: #FF6764;
+    background-color: #FF6764 !important;
 }

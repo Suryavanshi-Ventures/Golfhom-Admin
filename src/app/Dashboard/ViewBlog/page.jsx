@@ -3,18 +3,19 @@ import Image from 'next/image'
 import ProtectedRoute from '@/component/Protected Route/page';
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
-import { Pagination } from "@nextui-org/react";
 import DOMPurify from "dompurify";
 import { toast } from 'react-toastify';
+import { Pagination } from "@nextui-org/react";
 
 const Page = () => {
     const [token, setToken] = useState(null);
     const [blogList, setBlogList] = useState([]);
-    const [totalPages, setTotalPages] = useState(1);
+    const [totalBlogCount, setTotalBlogCount] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
     const [blogToDelete, setBlogToDelete] = useState(null);
     const [deleteOpen, setDeleteOpen] = useState(false);
     const itemsPerPage = 12;
+    const totalPages = Math.ceil(totalBlogCount / itemsPerPage);
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
@@ -73,9 +74,9 @@ const Page = () => {
             const blogData = await response.json();
             if (blogData.status === "success") {
                 setBlogList(blogData.data);
-                setTotalPages(blogData.data.length);
+                setTotalBlogCount(blogData.count);
             }
-
+            console.log("blogData", blogData)
         } catch (error) {
         }
     };
@@ -157,7 +158,8 @@ const Page = () => {
                                     dangerouslySetInnerHTML={{
                                         __html: DOMPurify.sanitize(truncateWords(data?.body, 18)),
                                     }}>
-                                </h5><Link
+                                </h5>
+                                <Link
                                     href={{
                                         pathname: "/Dashboard/ViewBlog/IndividualBlog",
                                         query: { id: data.slug },

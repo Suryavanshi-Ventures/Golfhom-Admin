@@ -30,6 +30,12 @@ const Page = () => {
     const [city, setCity] = useState("");
     const [prices, setPrices] = useState("");
     const [checkOut, setCheckOut] = useState("");
+    const [beds, setBeds] = useState("");
+    const [vicinity, setVicinity] = useState("");
+    const [videoUrl, setVideoUrl] = useState("");
+    const [maxNights, setMaxNights] = useState("");
+    const [minNights, setMinNights] = useState("");
+    const [paymentMethods, setPaymentMethods] = useState("");
     const [accommodation, setAccommodation] = useState("");
     const [bathroom, setBathroom] = useState("");
     const [image, setImage] = useState("");
@@ -90,22 +96,33 @@ const Page = () => {
     }, [PropertyId]);
 
     useEffect(() => {
+        const addressParts = [];
+        if (propertyList?.data?.address) addressParts.push(propertyList.data.address);
+        if (propertyList?.data?.city) addressParts.push(propertyList.data.city + ',');
+        if (propertyList?.data?.state) addressParts.push(propertyList.data.state + ',');
+        if (propertyList?.data?.country) addressParts.push(propertyList.data.country + '.');
+
         if (propertyList && propertyList?.data) {
             setNewPropertyName(propertyList?.data?.name);
             setAmenityList(propertyList?.data?.amenities);
             setCheckIn(propertyList?.data?.checkIn);
-            setAddress(propertyList?.data?.address);
-            setBedroom(propertyList?.data?.bedrooms);
-            setDescription(propertyList?.data?.description);
-            setOwnerName(propertyList?.data?.ownerName);
+            setAddress(addressParts.join(' '));
             setCountry(propertyList?.data?.country);
             setStateName(propertyList?.data?.state);
             setCity(propertyList?.data?.city);
+            setBedroom(propertyList?.data?.bedrooms);
+            setDescription(propertyList?.data?.description);
+            setOwnerName(propertyList?.data?.ownerName);
             setOwnerPhone(propertyList?.data?.ownerDetail?.phone);
             setCompanyName(propertyList?.data?.ownerDetail?.companyName);
             setOwnerEmail(propertyList?.data?.ownerDetail?.email);
             setPrices(propertyList?.data?.price);
             setCheckOut(propertyList?.data?.checkOut);
+            setBeds(propertyList?.data?.beds);
+            setVideoUrl(propertyList?.data?.videoUrl);
+            setMaxNights(propertyList?.data?.maxNightsOfBooking);
+            setMinNights(propertyList?.data?.minNightsOfBooking);
+            setPaymentMethods(propertyList?.data?.paymentMethods);
             setAccommodation(propertyList?.data?.accomodation);
             setBathroom(propertyList?.data?.bathrooms);
             setImage(propertyList?.data?.imageUrl);
@@ -131,7 +148,7 @@ const Page = () => {
                 throw new Error("Failed to fetch list");
             }
             const viewPropertyData = await response.json();
-            console.log("viewPropertyData", viewPropertyData)
+            console.log("viewPropertyDataupdateproperty", viewPropertyData)
             if (viewPropertyData.status === "success") {
                 setPropertyList(viewPropertyData);
             }
@@ -240,7 +257,7 @@ const Page = () => {
                                 <label className="text-[#404040] text-md font-medium">Property Name</label>
                                 <input
                                     type="text"
-                                    value={newPropertyName}
+                                    value={newPropertyName || 'N/A'}
                                     className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
                                     placeholder="Sample Golf Course"
                                     onChange={(e) => setNewPropertyName(e.target.value)}
@@ -250,7 +267,7 @@ const Page = () => {
                                 <label className="text-[#404040] text-md font-medium">Company Name</label>
                                 <input
                                     type="text"
-                                    value={companyName}
+                                    value={companyName || 'N/A'}
                                     className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
                                     placeholder="Sample Golf Course"
                                     onChange={(e) => setCompanyName(e.target.value)}
@@ -260,7 +277,7 @@ const Page = () => {
                                 <label className="text-[#404040] text-md font-medium">Owner Phone</label>
                                 <input
                                     type="text"
-                                    value={ownerPhone}
+                                    value={ownerPhone || 'N/A'}
                                     className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
                                     placeholder="Sample Golf Course"
                                     onChange={(e) => setOwnerPhone(e.target.value)}
@@ -268,41 +285,55 @@ const Page = () => {
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">State</label>
-                                <input type="text" value={stateName} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Alexendar Jones" onChange={(e) => setStateName(e.target.value)} />
+                                <input type="text" value={stateName || 'N/A'} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Alexendar Jones" onChange={(e) => setStateName(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Accommodation</label>
-                                <input type="text" value={accommodation} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="20:40" onChange={(e) => setAccommodation(e.target.value)} />
+                                <input type="text" value={accommodation || 'N/A'} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="20:40" onChange={(e) => setAccommodation(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
-                                <label className="text-[#404040] text-md font-medium">Check In</label>
-                                <input type="text" pattern="\d*" value={checkIn} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='20:30' onChange={(e) => setCheckIn(e.target.value)} />
+                                <label className="text-[#404040] text-md font-medium">Video Url</label>
+                                <input type="text" pattern="\d*" value={videoUrl || 'N/A'} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='7' onChange={(e) => setVideoUrl(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Bedrooms</label>
-                                <input type="text" pattern="\d*" value={bedroom} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='7' onChange={(e) => setBedroom(e.target.value)} />
+                                <input type="text" pattern="\d*" value={bedroom || 'N/A'} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='7' onChange={(e) => setBedroom(e.target.value)} />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Check In</label>
+                                <input type="text" pattern="\d*" value={checkIn || 'N/A'} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='20:30' onChange={(e) => setCheckIn(e.target.value)} />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Min Nights of Booking</label>
+                                <input type="text" pattern="\d*" value={minNights || 'N/A'} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='09:30' onChange={(e) => setMinNights(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Address</label>
-                                <input type="text" value={address}
+                                <input type="text" value={address || 'N/A'}
                                     className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
                                     placeholder="B-20, Street name" onChange={(e) => setAddress(e.target.value)} />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Payment Methods</label>
+                                <input type="text" value={paymentMethods || 'N/A'}
+                                    className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
+                                    placeholder="B-20, Street name" onChange={(e) => setPaymentMethods(e.target.value)} />
                             </div>
                         </div>
                         <div className="flex flex-col gap-5 w-full">
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Owner name</label>
-                                <input type="text" value={ownerName} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Alexendar Jones" onChange={(e) => setOwnerName(e.target.value)} />
+                                <input type="text" value={ownerName || 'N/A'} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Alexendar Jones" onChange={(e) => setOwnerName(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Owner Email</label>
-                                <input type="text" value={ownerEmail} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Alexendar Jones" onChange={(e) => setOwnerEmail(e.target.value)} />
+                                <input type="text" value={ownerEmail || 'N/A'} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Alexendar Jones" onChange={(e) => setOwnerEmail(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Country</label>
                                 <input
                                     type="text"
-                                    value={country}
+                                    value={country || 'N/A'}
                                     className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
                                     placeholder="Sample Golf Course"
                                     onChange={(e) => setCountry(e.target.value)}
@@ -310,19 +341,39 @@ const Page = () => {
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">City</label>
-                                <input type="text" value={city} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Alexendar Jones" onChange={(e) => setCity(e.target.value)} />
+                                <input type="text" value={city || 'N/A'} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder="Alexendar Jones" onChange={(e) => setCity(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Prices(Day/Night)</label>
-                                <input type="text" pattern="\d*" value={prices} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='$200' onChange={(e) => setPrices(e.target.value)} />
+                                <input type="text" pattern="\d*" value={prices || 'N/A'} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='$200' onChange={(e) => setPrices(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
-                                <label className="text-[#404040] text-md font-medium">Check out</label>
-                                <input type="text" pattern="\d*" value={checkOut} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='09:30' onChange={(e) => setCheckOut(e.target.value)} />
+                                <label className="text-[#404040] text-md font-medium">Beds</label>
+                                <input type="text" pattern="\d*" value={beds || 'N/A'} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='6' onChange={(e) => setBeds(e.target.value)} />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[#404040] text-md font-medium">Bathrooms</label>
-                                <input type="text" pattern="\d*" value={bathroom} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='6' onChange={(e) => setBathroom(e.target.value)} />
+                                <input type="text" pattern="\d*" value={bathroom || 'N/A'} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='6' onChange={(e) => setBathroom(e.target.value)} />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Check out</label>
+                                <input type="text" pattern="\d*" value={checkOut || 'N/A'} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='09:30' onChange={(e) => setCheckOut(e.target.value)} />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Max Nights of Booking</label>
+                                <input type="text" pattern="\d*" value={maxNights || 'N/A'} className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none" placeholder='09:30' onChange={(e) => setMaxNights(e.target.value)} />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[#404040] text-md font-medium">Vicinity Golf Course</label>
+                                <div className="text-sm space-y-2 border rounded-md px-4 py-2.5 bg-gray-100 hover:ring-0.5 hover:shadow-sm hover:shadow-[#FF6764] hover:ring-[#FF6764] hover:border-[#FF6764] transition-all border-transparent outline-none">
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <h4 className="flex flex-row items-center bg-gray-200 border border-gray-400 rounded-full py-1 px-4 w-full">Shingle Creek Golf Club</h4>
+                                        <h4 className="flex flex-row items-center bg-gray-200 border border-gray-400 rounded-full py-1 px-4 w-full">Ritz Carlton Golf Club</h4>
+                                        <h4 className="flex flex-row items-center bg-gray-200 border border-gray-400 rounded-full py-1 px-4 w-full">Grande Vista Golf Club</h4>
+                                        <h4 className="flex flex-row items-center bg-gray-200 border border-gray-400 rounded-full py-1 px-4 w-full">Orange Tree Golf Club</h4>
+                                    </div>
+                                    <h4 className="flex flex-row items-center bg-gray-200 border border-gray-400 rounded-full py-1 px-4 w-full">Arnold Palmer's Bay Hill Club & Lodge</h4>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -360,7 +411,7 @@ const Page = () => {
                             <textarea
                                 rows={12}
                                 cols={6}
-                                value={description}
+                                value={description || 'N/A'}
                                 className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
                                 placeholder="This is sample description"
                                 onChange={(e) => setDescription(e.target.value)}
