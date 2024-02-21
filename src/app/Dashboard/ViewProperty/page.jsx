@@ -4,6 +4,7 @@ import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { Pagination } from "@nextui-org/react";
 import Link from "next/link";
+import CustomSelect from "@/component/DropDown/CustomSelect";
 
 const Page = () => {
   const [propertyList, setPropertyList] = useState([]);
@@ -11,6 +12,7 @@ const Page = () => {
   const [totalPropertyCount, setTotalPropertyCount] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [propertyName, setPropertyName] = useState("");
+  const [ownerName, setOwnerName] = useState("");
   const [noPropertiesMessage, setNoPropertiesMessage] = useState("");
   // const [userToDelete, setUserToDelete] = useState(null);
   // const [deleteOpen, setDeleteOpen] = useState(false);
@@ -21,6 +23,7 @@ const Page = () => {
   const [totalActiveProperties, setTotalActiveProperties] = useState(0);
   const [totalInactiveProperties, setTotalInactiveProperties] = useState(0);
   const [searchCriteria, setSearchCriteria] = useState("propertyName");
+  const [ownerList, setOwnerList] = useState([]);
 
   const handleStatusClick = (status) => {
     setActiveStatus(status);
@@ -73,23 +76,27 @@ const Page = () => {
     if (token) {
       listProperty(activeStatus);
     }
-  }, [token, currentPage, propertyName, activeStatus]);
+  }, [token, currentPage, activeStatus]);
+
+  useEffect(() => {
+    if (token) {
+      getOwnerList();
+    }
+  }, [token]);
 
   // LIST API
   const listProperty = async (status) => {
-    const statusQueryParam = status !== "All" ? `&status=${status}` : "";
+    // const statusQueryParam = status !== "All" ? `&status=${status}` : "";
 
     const queryParams = {
       limit: itemsPerPage,
       page: currentPage,
       sort: "createdAt",
       sortBy: "DESC",
-      ...(searchCriteria === "propertyName" &&
-        propertyName.length && {
-          searchQuery: propertyName,
-        }),
-      ...(searchCriteria === "ownerName" &&
-        propertyName.length && { ownerName: propertyName }),
+      ...(propertyName.length && {
+        searchQuery: propertyName,
+      }),
+      ...(ownerName.length && { ownerName: ownerName }),
       ...(status !== "All" && { status: status }),
     };
     const urlSearchParams = new URLSearchParams(queryParams);
@@ -115,9 +122,6 @@ const Page = () => {
         const sortedProperties = viewPropertyData.data;
         setPropertyList(sortedProperties);
         setTotalPropertyCount(viewPropertyData.count);
-        // setTotalDraftProperties(viewPropertyData.totalDraftCount);
-        // setTotalActiveProperties(viewPropertyData.totalActiveCount);
-        // setTotalInactiveProperties(viewPropertyData.totalInactiveCount);
 
         if (sortedProperties.length === 0) {
           setNoPropertiesMessage("No properties found with the given name...");
@@ -151,6 +155,40 @@ const Page = () => {
   //     }
   // };
 
+  const getOwnerList = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/property/getOwnerName`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch list");
+      }
+      const owner_response = await response.json();
+
+      if (owner_response.status === "success") {
+        const owners = owner_response.data.map((value) => {
+          return { id: value.ownerName, name: value.ownerName };
+        });
+        setOwnerList(owners);
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    const timeOutId = setTimeout(() => {
+      listProperty(activeStatus);
+    }, 500);
+    return () => clearTimeout(timeOutId);
+  }, [propertyName, ownerName]);
+
   return (
     <ProtectedRoute>
       <div className="flex justify-between">
@@ -165,7 +203,16 @@ const Page = () => {
         </h5>
         <div className="flex justify-start xl:justify-end gap-3">
           <div>
-            <label htmlFor="searchBy">Search by:</label>
+            <CustomSelect
+              defaultValue={""}
+              name={"property_type"}
+              placeholder={"Search By Onwner Name"}
+              optionalFunction={(e) => {
+                setOwnerName(e?.name || "");
+              }}
+              listItem={ownerList}
+            />
+            {/* <label htmlFor="searchBy">Search by:</label>
             <select
               className="ml-2 w-50 h-12 border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#9c9c8a] focus:ring-[#9c9c8a] focus:border-[#9c9c8a] transition-all border-transparent outline-none"
               value={searchCriteria}
@@ -173,7 +220,7 @@ const Page = () => {
             >
               <option value="ownerName">Owner Name</option>
               <option value="propertyName">Property Name</option>
-            </select>
+            </select> */}
           </div>
           {/* Add search by option for owner name and property name */}
           <div className="flex md:flex-row gap-4 items-center">
