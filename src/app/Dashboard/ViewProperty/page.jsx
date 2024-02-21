@@ -313,12 +313,21 @@ const Page = () => {
               </button>
               <Link
                 href={{
+                  pathname: `${process.env.NEXT_PUBLIC_WEB_URL}/search/${data.slug}`,
+                }}
+                target="_blank"
+                className="bg-[#FF6764] opacity-[0.8] text-white border border-[#FF6764] rounded-md py-1 w-24 text-center"
+              >
+                Preview
+              </Link>
+              <Link
+                href={{
                   pathname: "/Dashboard/ViewProperty/UpdateProperty",
                   query: { id: data.id },
                 }}
                 className="bg-[#FF6764] opacity-[0.8] text-white border border-[#FF6764] rounded-md py-1 w-24 text-center"
               >
-                View
+                Update
               </Link>
               {/* <button onClick={() => handleModalOpen(data.id)} className="bg-black text-white border border-black rounded-md py-1 w-24">Delete</button> */}
             </div>
