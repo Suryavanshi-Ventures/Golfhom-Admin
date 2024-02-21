@@ -206,7 +206,7 @@ const Page = () => {
             <CustomSelect
               defaultValue={""}
               name={"property_type"}
-              placeholder={"Search By Onwner Name"}
+              placeholder={"Search by property manager"}
               optionalFunction={(e) => {
                 setOwnerName(e?.name || "");
               }}
