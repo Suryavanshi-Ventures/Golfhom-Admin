@@ -15,7 +15,7 @@ const Page = () => {
   const PropertyId = SearchParams.get("id");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [propertyList, setPropertyList] = useState([]);
+  const [propertyList, setPropertyList] = useState(null);
   const [newPropertyName, setNewPropertyName] = useState("");
   const [amenities, setAmenities] = useState("");
   const [checkIn, setCheckIn] = useState("");
@@ -43,6 +43,7 @@ const Page = () => {
   const [otherImage, setOtherImage] = useState([]);
   const [amenityList, setAmenityList] = useState([]);
   const [status, setStatus] = useState("");
+  const [golfCourses, setGolfCourses] = useState([]);
 
   const handleAmenityChange = (e) => {
     const AmenityValue = e.target.value;
@@ -136,6 +137,10 @@ const Page = () => {
       setOtherImage(propertyList?.data?.otherImageUrls);
       setStatus(propertyList?.data?.status || "Draft");
     }
+
+    if (propertyList) {
+      getGolfCourses();
+    }
   }, [propertyList]);
 
   // GET PREVIOUS DATA ID
@@ -168,7 +173,6 @@ const Page = () => {
     setIsSubmitting(true);
     e.preventDefault();
 
-    console.log("paymentMethods:", typeof paymentMethods);
     const data = {
       name: newPropertyName,
       ownerName: ownerName,
@@ -241,6 +245,34 @@ const Page = () => {
       setIsSubmitting(false);
     }
   }
+  // GET GOLF COURSES
+  const getGolfCourses = async () => {
+    try {
+      if (propertyList?.data?.latitude && propertyList?.data?.longitude) {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/golfcourse?latitude=${propertyList?.data?.latitude}&longitude=${propertyList?.data?.longitude}&distance=7&limit=7`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch list");
+        }
+        const golf_response = await response.json();
+
+        if (golf_response.status === "success") {
+          setGolfCourses(golf_response.data);
+        }
+      }
+    } catch (error) {}
+  };
+
+  console.log("golfCourses:", golfCourses);
 
   return (
     <ProtectedRoute>
@@ -539,23 +571,15 @@ const Page = () => {
                   Vicinity Golf Course
                 </label>
                 <div className="text-sm space-y-2 border rounded-md px-4 py-2.5 bg-gray-100 hover:ring-0.5 hover:shadow-sm hover:shadow-[#FF6764] hover:ring-[#FF6764] hover:border-[#FF6764] transition-all border-transparent outline-none">
-                  <div className="grid grid-cols-2 gap-2">
-                    <h4 className="flex flex-row items-center bg-gray-200 border border-gray-400 rounded-full py-1 px-4 w-full">
-                      Shingle Creek Golf Club
-                    </h4>
-                    <h4 className="flex flex-row items-center bg-gray-200 border border-gray-400 rounded-full py-1 px-4 w-full">
-                      Ritz Carlton Golf Club
-                    </h4>
-                    <h4 className="flex flex-row items-center bg-gray-200 border border-gray-400 rounded-full py-1 px-4 w-full">
-                      Grande Vista Golf Club
-                    </h4>
-                    <h4 className="flex flex-row items-center bg-gray-200 border border-gray-400 rounded-full py-1 px-4 w-full">
-                      Orange Tree Golf Club
-                    </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {golfCourses.length
+                      ? golfCourses.map((i, inx) => (
+                          <h4 className="flex flex-row items-center bg-gray-200 border border-gray-400 rounded-full py-1 px-4 ">
+                            Shingle Creek Golf Club
+                          </h4>
+                        ))
+                      : ""}
                   </div>
-                  <h4 className="flex flex-row items-center bg-gray-200 border border-gray-400 rounded-full py-1 px-4 w-full">
-                    Arnold Palmer's Bay Hill Club & Lodge
-                  </h4>
                 </div>
               </div>
             </div>
