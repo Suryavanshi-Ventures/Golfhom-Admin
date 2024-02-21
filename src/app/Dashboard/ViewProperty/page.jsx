@@ -294,8 +294,20 @@ const Page = () => {
             className="flex flex-col justify-between flex-shrink-0 flex-grow-0 w-full bg-white rounded-lg shadow-md"
           >
             <div>
-              <div className="w-full">
+              <div className="w-full relative">
                 <CustomImage data={data} inx={inx} />
+
+                <div
+                  className={`text-sm absolute top-2 right-2  text-white py-1 px-2.5 rounded-lg ${
+                    data.status == "Active"
+                      ? "bg-[#4BAF4F]"
+                      : data.status == "Draft"
+                      ? "bg-[#FF6764]"
+                      : "bg-black"
+                  }`}
+                >
+                  {data.status}
+                </div>
               </div>
               <div className="flex flex-wrap justify-between mx-4 my-1">
                 <h4 className="font-semibold text-base">{data.name}</h4>
