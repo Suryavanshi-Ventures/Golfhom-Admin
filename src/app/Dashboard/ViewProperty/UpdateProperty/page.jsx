@@ -649,7 +649,7 @@ const Page = () => {
                   />
                 ) : (
                   <Image
-                    src={image}
+                    src={image || "/noImageFound.png"}
                     alt="background"
                     width={320}
                     height={320}
@@ -671,23 +671,24 @@ const Page = () => {
                 Other Images
               </label>
               <div className="flex flex-wrap gap-2 mt-2">
-                {otherImage.slice(0, 8).map((imageUrl, index) => (
-                  <div key={index} className="relative">
-                    {/* <span
+                {otherImage &&
+                  otherImage.slice(0, 8).map((imageUrl, index) => (
+                    <div key={index} className="relative">
+                      {/* <span
                       onClick={() => handleRemoveOtherImage(index)}
                       className="absolute top-2 right-2 cursor-pointer text-red-500 bg-gray-100 rounded-full px-2 py-0.5 font-bold text-lg opacity-1"
                     >
                       &times;
                     </span> */}
-                    <Image
-                      src={imageUrl}
-                      alt={`other-image-${index}`}
-                      width={220}
-                      height={220}
-                      className="border border-[#636363] rounded-md"
-                    />
-                  </div>
-                ))}
+                      <Image
+                        src={imageUrl}
+                        alt={`other-image-${index}`}
+                        width={220}
+                        height={220}
+                        className="border border-[#636363] rounded-md"
+                      />
+                    </div>
+                  ))}
               </div>
               <input
                 type="file"
