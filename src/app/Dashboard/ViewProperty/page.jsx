@@ -341,7 +341,7 @@ const Page = () => {
             className="flex flex-col justify-between flex-shrink-0 flex-grow-0 w-full bg-white rounded-lg shadow-md"
           >
             <div>
-              <div className="w-full relative">
+              <div className="w-full relative overflow-hidden">
                 <CustomImage data={data} inx={inx} />
 
                 <div
@@ -355,6 +355,13 @@ const Page = () => {
                 >
                   {data.status}
                 </div>
+                {data.isFeatured && (
+                  <div class="absolute left-0 top-0 h-16 w-16">
+                    <div class="absolute transform -rotate-45 bg-[#FF6764] text-center text-white font-semibold py-1 left-[-50px] top-[16px] w-[170px]">
+                      Featured
+                    </div>
+                  </div>
+                )}
               </div>
               <div className="flex flex-wrap justify-between mx-4 my-1">
                 <h4 className="font-semibold text-base">{data.name}</h4>
