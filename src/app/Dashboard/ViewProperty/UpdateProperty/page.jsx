@@ -44,6 +44,7 @@ const Page = () => {
   const [amenityList, setAmenityList] = useState([]);
   const [status, setStatus] = useState("");
   const [golfCourses, setGolfCourses] = useState([]);
+  const [isFeatured, setIsFeatured] = useState(false);
 
   const handleAmenityChange = (e) => {
     const AmenityValue = e.target.value;
@@ -136,6 +137,7 @@ const Page = () => {
       setImage(propertyList?.data?.imageUrl);
       setOtherImage(propertyList?.data?.otherImageUrls);
       setStatus(propertyList?.data?.status || "Draft");
+      setIsFeatured(propertyList?.data?.isFeatured || false);
     }
 
     if (propertyList) {
@@ -204,6 +206,7 @@ const Page = () => {
         email: ownerEmail,
         phone: ownerPhone,
       },
+      isFeatured: isFeatured,
     };
 
     try {
@@ -284,7 +287,7 @@ const Page = () => {
           <h5>
             Status: <span className="text-green-500 font-medium">{status}</span>
           </h5>
-          <div>
+          <div className="ml-5">
             <div className="flex gap-2">
               <input
                 type="radio"
@@ -308,6 +311,19 @@ const Page = () => {
                 onChange={() => setStatus("Draft")}
               />
               <p>Draft</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2 mb-3">
+          <div>
+            <div className="flex gap-2">
+              <input
+                type="checkbox"
+                checked={isFeatured}
+                onChange={() => setIsFeatured(!isFeatured)}
+              />
+              <label className="font-medium">Is featured property ?</label>
             </div>
           </div>
         </div>
@@ -508,7 +524,7 @@ const Page = () => {
                 </label>
                 <input
                   type="text"
-                  pattern="\d*"
+                  pattern="[0-9]+([\.,][0-9]+)?"
                   value={prices || ""}
                   className="text-sm border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none"
                   placeholder="Prices(Day/Night)"
