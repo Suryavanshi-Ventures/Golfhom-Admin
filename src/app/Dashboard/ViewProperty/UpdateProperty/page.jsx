@@ -323,7 +323,7 @@ const Page = () => {
                 checked={isFeatured}
                 onChange={() => setIsFeatured(!isFeatured)}
               />
-              <label className="font-medium">Is featured property ?</label>
+              <label className="font-medium">Feature this property</label>
             </div>
           </div>
         </div>
