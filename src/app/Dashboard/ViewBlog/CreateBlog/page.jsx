@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import ProtectedRoute from "@/component/Protected Route/page";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import EditorContainer from "@/component/Editor/EditorContainer";
 
 const Editor = dynamic(() => import("../../../../component/Editor/page"), {
   ssr: false,
@@ -28,6 +29,7 @@ const Page = () => {
   const [tags, setTags] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isEditorLoading, setIsEditorLoading] = useState(false);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -80,10 +82,6 @@ const Page = () => {
     const item = localStorage.getItem("access_token");
     setToken(item);
   }, []);
-
-  useEffect(() => {
-    setEditorContent(JSON.stringify(data));
-  }, [data]);
 
   // CREATE USER API
   async function handleCreateUser(e) {
@@ -177,10 +175,18 @@ const Page = () => {
                 <label className="text-[#404040] text-md font-medium">
                   Content
                 </label>
-                <Editor
+                {/* <Editor
                   data={data.body}
                   onChangeEditor={setEditorContent}
                   config={editorConfig}
+                /> */}
+                <EditorContainer
+                  value={editorContent}
+                  onChange={(newValue) => {
+                    setEditorContent(newValue);
+                  }}
+                  setIsEditorLoading={setIsEditorLoading}
+                  // isEditorLoading={isEditorLoading}
                 />
                 {editorContentError && (
                   <div className="text-danger text-red-500 mt-1">

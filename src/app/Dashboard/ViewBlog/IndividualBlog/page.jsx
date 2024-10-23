@@ -7,6 +7,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
 import axios from "axios";
+import EditorContainer from "@/component/Editor/EditorContainer";
 
 const Editor = dynamic(() => import("../../../../component/Editor/page"), {
   ssr: false,
@@ -28,6 +29,8 @@ const Page = () => {
   const [isEditable, setIsEditable] = useState(false);
   const [editorContent, setEditorContent] = useState("");
   const [data, setData] = useState({});
+
+  const [isEditorLoading, setIsEditorLoading] = useState(false);
 
   const formatDate = (dateString) => {
     const options = { month: "long", day: "numeric", year: "numeric" };
@@ -67,19 +70,15 @@ const Page = () => {
   }, []);
 
   useEffect(() => {
-    if (BlogId) {
+    if (BlogId && token) {
       listBlog();
     }
   }, [BlogId, token]);
 
   useEffect(() => {
-    setEditorContent(JSON.stringify(data));
-  }, [data]);
-
-  useEffect(() => {
     if (blogList && blogList?.data) {
       setTitle(blogList?.data?.title);
-      setBody(blogList?.data?.body);
+      setEditorContent(blogList?.data?.body);
       setTags(blogList?.data?.tag);
       setBlogImage(blogList?.data?.image);
       setCreatedAt(blogList?.data?.createdAt);
@@ -228,10 +227,19 @@ const Page = () => {
 
         <div className="flex flex-col gap-1">
           <label className="font-bold text-xl px-2">Blog Content</label>
-          <Editor
+          {/* <Editor
             data={body}
             onChangeEditor={setEditorContent}
             disabled={!isEditable}
+          /> */}
+
+          <EditorContainer
+            value={editorContent}
+            onChange={(newValue) => {
+              setEditorContent(newValue);
+            }}
+            setIsEditorLoading={setIsEditorLoading}
+            // isEditorLoading={isEditorLoading}
           />
         </div>
 

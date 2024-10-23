@@ -20,8 +20,10 @@
     "eslint": "^8.56.0",
     "eslint-config-next": "^14.0.4",
     "next": "14.0.4",
+    "quill-better-table": "^1.2.10",
     "react": "^18",
     "react-dom": "^18",
+    "react-quill": "^2.0.0",
     "react-toastify": "^9.1.3"
   },
   "devDependencies": {
