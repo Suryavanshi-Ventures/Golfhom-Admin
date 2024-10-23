@@ -18,7 +18,7 @@ const Page = () => {
   const [token, setToken] = useState(null);
   const SearchParams = useSearchParams();
   const BlogId = SearchParams.get("id");
-  const [blogList, setBlogList] = useState([]);
+  const [blogList, setBlogList] = useState(null);
   const [title, setTitle] = useState(null);
   const [body, setBody] = useState(null);
   const [tags, setTags] = useState([]);
@@ -163,122 +163,154 @@ const Page = () => {
 
   return (
     <ProtectedRoute>
-      <form className="w-full bg-white rounded-xl p-7 shadow-md flex flex-col gap-4">
-        <div className="flex flex-col gap-1">
-          <label className="font-bold text-xl px-2">Title</label>
-          <input
-            type="text"
-            value={title}
-            placeholder="Enter Title"
-            className={`border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none ${
-              isEditable ? "" : "cursor-not-allowed"
-            }`}
-            disabled={!isEditable}
-            onChange={(e) => isEditable && setTitle(e.target.value)}
-          />
-        </div>
-
-        <div>
-          {blogImage && (
-            <Image
-              src={blogImage}
-              alt="Sort"
-              width={100}
-              height={70}
-              className="w-full text-md font-medium p-2 rounded-[4px]"
-              layout="responsive"
-            />
-          )}
-        </div>
-
-        <div className="flex flex-col gap-1">
-          <label className="font-bold text-xl px-2">Tag Name</label>
-          <div className="flex gap-2 mt-2">
-            {tags.map((tagItem, index) => (
-              <div
-                key={index}
-                className="flex items-center bg-gray-200 rounded-full py-1 px-4"
-              >
-                <span className="mr-2">{tagItem}</span>
-                <button
-                  type="button"
-                  onClick={() => handleRemoveTag(index)}
-                  className="text-gray-600 font-semibold text-sm"
-                >
-                  &times;
-                </button>
-              </div>
-            ))}
-          </div>
-          <div className="flex gap-2 items-center">
+      {blogList ? (
+        <form className="w-full bg-white rounded-xl p-7 shadow-md flex flex-col gap-4">
+          <div className="flex flex-col gap-1">
+            <label className="font-bold text-xl px-2">Title</label>
             <input
               type="text"
-              value={tag}
-              placeholder="Enter Tag"
-              className={`w-full border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none ${
+              value={title}
+              placeholder="Enter Title"
+              className={`border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none ${
                 isEditable ? "" : "cursor-not-allowed"
               }`}
               disabled={!isEditable}
-              onChange={handleTagChange}
-              onKeyDown={handleKeyDown}
+              onChange={(e) => isEditable && setTitle(e.target.value)}
             />
           </div>
-        </div>
 
-        <div className="flex flex-col gap-1">
-          <label className="font-bold text-xl px-2">Blog Content</label>
-          {/* <Editor
+          <div>
+            {blogImage && (
+              <Image
+                src={blogImage}
+                alt="Sort"
+                width={100}
+                height={70}
+                className="w-full text-md font-medium p-2 rounded-[4px]"
+                layout="responsive"
+              />
+            )}
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <label className="font-bold text-xl px-2">Tag Name</label>
+            <div className="flex gap-2 mt-2">
+              {tags.map((tagItem, index) => (
+                <div
+                  key={index}
+                  className="flex items-center bg-gray-200 rounded-full py-1 px-4"
+                >
+                  <span className="mr-2">{tagItem}</span>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveTag(index)}
+                    className="text-gray-600 font-semibold text-sm"
+                  >
+                    &times;
+                  </button>
+                </div>
+              ))}
+            </div>
+            <div className="flex gap-2 items-center">
+              <input
+                type="text"
+                value={tag}
+                placeholder="Enter Tag"
+                className={`w-full border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none ${
+                  isEditable ? "" : "cursor-not-allowed"
+                }`}
+                disabled={!isEditable}
+                onChange={handleTagChange}
+                onKeyDown={handleKeyDown}
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <label className="font-bold text-xl px-2">Blog Content</label>
+            {/* <Editor
             data={body}
             onChangeEditor={setEditorContent}
             disabled={!isEditable}
           /> */}
 
-          <EditorContainer
-            value={editorContent}
-            onChange={(newValue) => {
-              setEditorContent(newValue);
-            }}
-            setIsEditorLoading={setIsEditorLoading}
-            readOnly={!isEditable}
-            // isEditorLoading={isEditorLoading}
-          />
-        </div>
+            <EditorContainer
+              value={editorContent}
+              onChange={(newValue) => {
+                setEditorContent(newValue);
+              }}
+              setIsEditorLoading={setIsEditorLoading}
+              readOnly={!isEditable}
+              // isEditorLoading={isEditorLoading}
+            />
+          </div>
 
-        <div className="flex gap-2">
-          <h5 className="font-medium">Created at:</h5>
-          {/* <input
+          <div className="flex gap-2">
+            <h5 className="font-medium">Created at:</h5>
+            {/* <input
                         type="text"
                         value={formatDate(createdAt)}
                         placeholder="Enter Created At"
                         className={`text-[#FF6764] ${isEditable ? '' : 'cursor-not-allowed'}`}
                         disabled={!isEditable}
                     /> */}
-          <p className="text-[#FF6764]">{formatDate(createdAt)}</p>
-        </div>
+            <p className="text-[#FF6764]">{formatDate(createdAt)}</p>
+          </div>
 
-        <div className="flex gap-4 justify-end">
-          <button
-            onClick={() => setIsEditable(true)}
-            className="bg-[#FF6764]  rounded-[4px] px-4 py-1 text-white w-fit disabled:opacity-[0.8] disabled:cursor-not-allowed"
-            disabled={isEditable}
-          >
-            Edit
-          </button>
-          <button
-            onClick={handleUpdateBlog}
-            className="bg-[#FF6764] rounded-[4px] px-4 py-1 text-white w-fit disabled:opacity-[0.8] disabled:cursor-not-allowed"
-            disabled={isSubmitting || !isEditable}
-          >
-            {isSubmitting ? "Updating..." : "Update"}
-          </button>
-          <Link
-            href="/Dashboard/ViewBlog"
-            className="bg-gray-400 rounded-[4px] px-4 py-1 text-white"
-          >
-            Back
-          </Link>
+          <div className="flex gap-4 justify-end">
+            <button
+              onClick={() => setIsEditable(true)}
+              className="bg-[#FF6764]  rounded-[4px] px-4 py-1 text-white w-fit disabled:opacity-[0.8] disabled:cursor-not-allowed"
+              disabled={isEditable}
+            >
+              Edit
+            </button>
+            <button
+              onClick={handleUpdateBlog}
+              className="bg-[#FF6764] rounded-[4px] px-4 py-1 text-white w-fit disabled:opacity-[0.8] disabled:cursor-not-allowed"
+              disabled={isSubmitting || !isEditable}
+            >
+              {isSubmitting ? "Updating..." : "Update"}
+            </button>
+            <Link
+              href="/Dashboard/ViewBlog"
+              className="bg-gray-400 rounded-[4px] px-4 py-1 text-white"
+            >
+              Back
+            </Link>
+          </div>
+        </form>
+      ) : (
+        <div class=" mt-4 w-full">
+          <div class="relative p-4 w-full bg-white rounded-lg overflow-hidden shadow hover:shadow-md rounded-lg">
+            <div class="animate-pulse flex flex-col">
+              <div class="rounded w-full h-52 bg-gray-200"></div>
+              <div class="flex flex-col mt-5">
+                <div class="w-full h-5 bg-gray-200 rounded"></div>
+                <div class="mt-2 w-10/12 h-3 bg-gray-200 rounded"></div>
+                <div class="mt-2 w-8/12 h-3 bg-gray-200 rounded"></div>
+              </div>
+
+              <div class="grid grid-cols-2 mt-5 gap-x-2 gap-y-1">
+                <div class="mt-2 w-full h-3 bg-gray-200 rounded"></div>
+                <div class="mt-2 w-full h-3 bg-gray-200 rounded"></div>
+                <div class="mt-2 w-full h-3 bg-gray-200 rounded"></div>
+                <div class="mt-2 w-full h-3 bg-gray-200 rounded"></div>
+              </div>
+
+              <div class="flex items-center mt-5">
+                <div>
+                  <div class="rounded-full bg-gray-200 w-10 h-10"></div>
+                </div>
+                <div class="flex justify-between w-full ml-3">
+                  <div class="w-5/12 h-3 bg-gray-200 rounded"></div>
+                  <div class="w-2/12 h-3 bg-gray-200 rounded"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </form>
+      )}
     </ProtectedRoute>
   );
 };
