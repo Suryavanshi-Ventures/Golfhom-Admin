@@ -173,7 +173,7 @@ const Page = () => {
                     isLinkActive("/Dashboard/ViewProperty") ? "invert" : ""
                   }`}
                 />
-                <h3>All property</h3>
+                <h3>All Property</h3>
               </div>
             </Link>
             {/* <Link href="/Dashboard/Location" className="my-1 flex gap-2 cursor-pointer">
@@ -223,7 +223,7 @@ const Page = () => {
                     isLinkActive("/Dashboard/ViewMessage") ? "invert" : ""
                   }`}
                 />
-                <h3>All messages</h3>
+                <h3>All Messages</h3>
               </div>
             </Link>
             <Link
