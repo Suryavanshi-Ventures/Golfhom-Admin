@@ -239,6 +239,7 @@ const Page = () => {
               setEditorContent(newValue);
             }}
             setIsEditorLoading={setIsEditorLoading}
+            readOnly={!isEditable}
             // isEditorLoading={isEditorLoading}
           />
         </div>

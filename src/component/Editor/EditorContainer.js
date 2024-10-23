@@ -15,7 +15,7 @@ const ReactQuill = dynamic(
   },
   { ssr: false }
 );
-const EditorContainer = ({ onChange, value, editorContainerClassName = "", setIsEditorLoading }) => {
+const EditorContainer = ({ onChange, value, readOnly = false, editorContainerClassName = "", setIsEditorLoading }) => {
   const editorRef = useRef(null);
 
 
@@ -95,7 +95,7 @@ const EditorContainer = ({ onChange, value, editorContainerClassName = "", setIs
     <div className="text-editor h-full">
       <ReactQuill
         modules={modules}
-        readOnly={false}
+        readOnly={readOnly}
         theme="snow"
         value={value}
         onChange={onChange}

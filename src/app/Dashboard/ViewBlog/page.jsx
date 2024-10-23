@@ -184,12 +184,13 @@ const Page = () => {
             </Link>
             <div className="flex flex-col gap-3">
               <h4 className="text-lg font-medium">{data.title}</h4>
-              <div className="flex flex-col">
-                <h5
+              <div className="flex flex-col line-clamp-2">
+                <div
                   dangerouslySetInnerHTML={{
                     __html: DOMPurify.sanitize(truncateWords(data?.body, 18)),
                   }}
-                ></h5>
+                  className="line-clamp-2"
+                ></div>
                 <Link
                   href={{
                     pathname: "/Dashboard/ViewBlog/IndividualBlog",
