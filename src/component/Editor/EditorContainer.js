@@ -59,7 +59,7 @@ const EditorContainer = ({ onChange, value, readOnly = false, editorContainerCla
           ["bold", "italic", "underline", "strike"],
           [{ color: [] }, { background: [] }],
           // [{ script: "sub" }, { script: "super" }],
-          ["blockquote", "code-block"],
+          // ["blockquote", "code-block"],
           [{ list: "ordered" }, { list: "bullet" }],
           [{ indent: "-1" }, { indent: "+1" }, { align: [] }],
           // ["link"],
