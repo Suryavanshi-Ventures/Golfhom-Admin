@@ -46,6 +46,19 @@ const Page = () => {
   const [golfCourses, setGolfCourses] = useState([]);
   const [isFeatured, setIsFeatured] = useState(false);
 
+  const [amenityListFiltered, setAmenityListFiltered] = useState([]);
+  const [showAllAmenities, setShowHideMoreAmenities] = useState(false);
+
+  useEffect(() => {
+    setAmenityListFiltered((prev) => {
+      if (!showAllAmenities) {
+        const filtered = [...amenityList].splice(amenityList.length - 10, 10);
+        return filtered;
+      }
+      return [...amenityList];
+    });
+  }, [showAllAmenities, amenityList]);
+
   const handleAmenityChange = (e) => {
     const AmenityValue = e.target.value;
     setAmenities(AmenityValue);
@@ -274,8 +287,6 @@ const Page = () => {
       }
     } catch (error) {}
   };
-
-  console.log("golfCourses:", golfCourses);
 
   return (
     <ProtectedRoute>
@@ -609,7 +620,7 @@ const Page = () => {
                   Amenities
                 </label>
                 <div className="flex flex-row flex-wrap gap-2 mt-2 bg-gray-100 rounded-md px-4 py-2.5">
-                  {amenityList.map((amenityItem, index) => (
+                  {amenityListFiltered.map((amenityItem, index) => (
                     <div
                       key={index}
                       className="flex flex-row items-center bg-gray-200 rounded-full py-1 px-4 w-fit"
@@ -624,6 +635,19 @@ const Page = () => {
                       </button>
                     </div>
                   ))}
+                </div>
+                <div className="text-center">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowHideMoreAmenities((prev) => !prev);
+                    }}
+                    className={`${
+                      showAllAmenities ? "bg-success-500" : "bg-success-500"
+                    } text-white rounded-lg px-2 py-1`}
+                  >
+                    {showAllAmenities ? "Show Less" : "Show All"}
+                  </button>
                 </div>
                 <div className="flex flex-col gap-2 items-center">
                   <input
