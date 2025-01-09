@@ -25,6 +25,7 @@ const Page = () => {
   }, []);
 
   const fetchNewsletters = async () => {
+    setLoading(true);
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/subscribe`, {
         method: "GET",
