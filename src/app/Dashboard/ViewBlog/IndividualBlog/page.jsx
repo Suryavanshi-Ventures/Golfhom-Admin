@@ -257,7 +257,7 @@ const Page = () => {
             <input
               type="text"
               value={metaTitle}
-              placeholder="Enter Title"
+              placeholder="Enter Meta Title"
               className={`border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none ${
                 isEditable ? "" : "cursor-not-allowed"
               }`}
@@ -269,7 +269,7 @@ const Page = () => {
             <label className="font-bold text-xl px-2">Meta Description</label>
             <textarea
               value={metaDescription}
-              placeholder="Enter Title"
+              placeholder="Enter Meta Description"
               className={`border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none ${
                 isEditable ? "" : "cursor-not-allowed"
               }`}
