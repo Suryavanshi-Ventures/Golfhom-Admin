@@ -29,6 +29,8 @@ const Page = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
   const [editorContent, setEditorContent] = useState("");
+  const [metaTitle, setMetaTitle] = useState(null);
+  const [metaDescription, setMetaDescription] = useState(null);
   const [data, setData] = useState({});
 
   const [isEditorLoading, setIsEditorLoading] = useState(false);
@@ -83,6 +85,8 @@ const Page = () => {
       setTags(blogList?.data?.tag);
       setBlogImage(blogList?.data?.image);
       setCreatedAt(blogList?.data?.createdAt);
+      setMetaTitle(blogList?.data?.metaTitle);
+      setMetaDescription(blogList?.data?.metaDescription);
     }
   }, [blogList]);
 
@@ -121,6 +125,8 @@ const Page = () => {
     formData.append("tag", JSON.stringify(tags));
     formData.append("image", blogImage);
     formData.append("createdAt", createdAt);
+    formData.append("metaTitle", metaTitle);
+    formData.append("metaDescription", metaDescription);
     try {
       const response = await axios.patch(
         `${process.env.NEXT_PUBLIC_API_URL}/blog/${blogList.data.id}`,
@@ -246,6 +252,31 @@ const Page = () => {
             />
           </div>
 
+          <div className="flex flex-col gap-1">
+            <label className="font-bold text-xl px-2">Meta Title</label>
+            <input
+              type="text"
+              value={metaTitle}
+              placeholder="Enter Title"
+              className={`border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none ${
+                isEditable ? "" : "cursor-not-allowed"
+              }`}
+              disabled={!isEditable}
+              onChange={(e) => isEditable && setMetaTitle(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label className="font-bold text-xl px-2">Meta Description</label>
+            <textarea
+              value={metaDescription}
+              placeholder="Enter Title"
+              className={`border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none ${
+                isEditable ? "" : "cursor-not-allowed"
+              }`}
+              disabled={!isEditable}
+              onChange={(e) => isEditable && setMetaDescription(e.target.value)}
+            />
+          </div>
           <div className="flex gap-2">
             <h5 className="font-medium">Created at:</h5>
             {/* <input

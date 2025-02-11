@@ -27,6 +27,8 @@ const Page = () => {
   const [editorContent, setEditorContent] = useState("");
   const [data, setData] = useState({});
   const [tags, setTags] = useState([]);
+  const [metaTitle, setMetaTitle] = useState(null);
+  const [metaDescription, setMetaDescription] = useState(null);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isEditorLoading, setIsEditorLoading] = useState(false);
@@ -101,6 +103,8 @@ const Page = () => {
     formData.append("body", editorContent);
     formData.append("tag", JSON.stringify(tags));
     formData.append("image", image);
+    formData.append("metaTitle", metaTitle);
+    formData.append("metaDescription", metaDescription);
 
     try {
       setIsLoading(true);
@@ -271,6 +275,28 @@ const Page = () => {
                     Blog Image is mandatory
                   </div>
                 )}
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <label className="font-bold text-xl px-2">Meta Title</label>
+                <input
+                  type="text"
+                  value={metaTitle}
+                  placeholder="Enter Title"
+                  className={`border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none`}
+                  onChange={(e) => setMetaTitle(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <label className="font-bold text-xl px-2">
+                  Meta Description
+                </label>
+                <textarea
+                  value={metaDescription}
+                  placeholder="Enter Title"
+                  className={`border rounded-md px-4 py-2.5 bg-gray-100 focus:ring-0.5 focus:shadow-sm focus:shadow-[#FF6764] focus:ring-[#FF6764] focus:border-[#FF6764] transition-all border-transparent outline-none`}
+                  onChange={(e) => setMetaDescription(e.target.value)}
+                />
               </div>
             </div>
           </div>
